@@ -1,31 +1,121 @@
 # Product
----
-
+## 장소 데이터를 활용한 경험가치 공유 플랫폼
+### (Location Based Experience Sharing Service)
 
 
 # Members
----
-
 | 이름   | 학과         | 역할 | 소개 페이지                                         |
 | ------ | ------------ | ---- | --------------------------------------------------- |
-| 한승욱 | 컴퓨터공학과 |      | [개인 리포로 이동](https://github.com/SeungWookHan) |
-| 박찬희 | 컴퓨터공학과 |      |                                                     |
-| 이재서 | IT경영학과   |      |                                                     |
-| 주용진 | IT경영학과   |      |                                                     |
-| 김흭   | IT경영학과   |      |                                                     |
+| 한승욱 | 컴퓨터공학과 | PM, DevOps, Backend     | [개인 리포로 이동](https://github.com/SeungWookHan) |
+| 박찬희 | 컴퓨터공학과 | Backend     |                                                   |
+| 이재서 | IT경영학과   | Frontend     |                                                     |
+| 주용진 | IT경영학과   |  DB    |                                                     |
+| 김희구 | IT경영학과   |  UI    |                                                     |
+
+
+# Git Convention
+## Process
+- master/main 브랜치에서 각자 브랜치를 따서 작업한다.
+- 본인의 작업이 완료되면 브랜치를 push한다.
+- master/main 브랜치로 Pull Request를 작성한다.
+```
+git branch feat/back/add-login-api
+git checkout feat/back/add-login-api
+git pull origin master --rebase
+- 본인의 작업 실시 -
+- 완료 되었을 경우-
+git add *
+git commit -m "[feat/back] add-login-api - #2"
+git push origin feat/back/add-login-api
+- 이후 깃헙에 들어가서 PR 작성 및 리뷰 리퀘스트 -
+```
+- 리뷰어의 Code Review를 받고 Pull Request를 Merger한다.
+**아래 상세 규칙 참조**
+
+## Branch
+### {타입}/{역할}/{내용}
+- 브랜치명의 경우에는 아래 Commit Message에서 설명하는 **타입**, **종류**의 형식을 활용한다.
+- **내용**의 경우에는 **-**으로 구분하며 개조식으로 작성한다.
+- 각각 **/** 로 구분한다.
+- ex) feat/front/add-react-app
+- ex) feat/back/add-login-api
+
+## Commit Message
+1. 먼저 커밋 메시지는 크게 **제목, 본문** 두 가지 파트로 나누고, 각 파트는 빈줄을 두어서 구분합니다.
+2. 커밋 메세지는 모두 **한글**로 통일합니다.
+3. 제목의 경우 타입, 역할은 **대괄호 안에 소문자로 작성**합니다.
+4. type 다음에는 **/ 로 분리**하여 **역할을 명시**한다.
+5. 제목 작성후 우측에 **#이슈번호**를 남겨서 어떤 이슈에 대한 작업인지 명시합니다.
+6. ex) #> git commit -m "[fix/front] XSS Vulnerability - #20"
+```
+[type/{front or back or AI or RPI}] Subject - #2 // -> 제목 
+
+(한 줄을 띄워 분리합니다.)
+
+body //  -> 본문 
+```
+---
+## 타입
+- 어떤 의도인지 타입에 명세한다.
+1. feat: 새로운 기능 추가
+```
+ex)
+[feat] 버튼 클릭 시 날짜 선택 하는 기능 추가
+
+body: 버튼 클릭 시 picker를 통해 날짜를 선택하게 구현
+picker뷰는 toolbar를 이용했음
+```
+2. fix: 버그 수정
+```
+ex)
+[fix] 라벨 길이가 짤리는 버그 수정
+
+body: 라벨 길이를 view leading에서 간격 추가
+```
+3. refactor: 코드 리팩토링
+```
+ex)
+[refactor] MainVC 코드 정리
+
+body: convension 내용 중 변수명을 지키지 못한 점 수정
+lowerCamelCase를 지켜서 변수명을 수정했음
+```
+4. docs: 문서 수정하는 경우
+```
+ex)
+[docs] README.md 파일 수정
+
+body: Git Message Convention 방법 정리
+```
+
+## 역할
+- front: 프론트엔드 관련 작업
+- back: 백엔드 관련 작업
+- db: 데이터베이스 관련 작업
+- etc
+
+## body
+- **"body: " 를 앞에 포함**하여 작성합니다.
+- 긴 설명이 필요한 경우에 작성합니다.
+- **어떻게** 했는지가 아니라, **무엇을** **왜** 했는지를 작성합니다.
+- 최대 75자를 넘기지 않도록 합니다.
 
 # Deploy
----
+
 
 
 
 # Tech-Stack
----
-
-
+|분류|기술|
+|------|---|
+|개발환경|Terraform, Aws EC2 Ubuntu 18.04, Docker|
+|DB|redis, Aws RDS Mysql or  MongoDB|
+|Front-end|HTML5, CSS3, JavaScript, React.js, React Native|
+|Back-end|Nginx, Django or Flask|
+|api|Google maps, Mapbox, 상권 정보, 도로명주소|
+|UI|Figma|
 
 # Communication
----
 
 *** 프로젝트 진행은 비대면을 원칙으로 제한적 대면으로 진행 ***
 

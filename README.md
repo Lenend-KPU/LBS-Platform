@@ -10,9 +10,6 @@
 TODO
 ```
 
-## Deploy
-설명(TODO)
-
 ## Architecture
 이미지(TODO)
 
@@ -48,8 +45,8 @@ GIF(TODO)
 ## PORTS
 각 포트 설명(TODO)
 
-## CI/CD
-CI/CD (TODO)
+## Deploy
+CI/CD 등 설명(TODO)
 
 ## Git Convention
 ### Process

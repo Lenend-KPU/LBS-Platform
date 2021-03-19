@@ -14,6 +14,9 @@ pyjwt = "==2.0.0"
 django-cors-headers = "==3.4.0"
 gunicorn = "*"
 django-prometheus = "*"
+drf-yasg = "*"
+flex = "*"
+djangorestframework = "*"
 
 [dev-packages]
 

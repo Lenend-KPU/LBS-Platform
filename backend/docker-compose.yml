@@ -1,0 +1,20 @@
+version: "3"
+
+networks:
+  app-tier:
+    driver: bridge
+
+services:
+  backend:
+    container_name: backend
+    build:
+      context: .
+      args:
+        Django_secret_key: "${Django_secret_key}"
+    command: bash -c "pipenv run python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/code
+    networks:
+      - app-tier
+    ports:
+      - "8000:8000"

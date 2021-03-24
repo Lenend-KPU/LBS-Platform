@@ -1,5 +1,5 @@
 export type integer = number;
-export type date = Date; // JS Date
+export type datetime = number; // JS Date
 export type pk = unknown;
 export type fk = unknown;
 
@@ -27,7 +27,7 @@ export interface IModel<Fields> {
 
 export interface IDocument {
   title: string & pk;
-  datetime?: Date;
+  datetime?: datetime;
   profile?: integer;
   image?: string;
   content?: string;
@@ -48,8 +48,8 @@ export interface IProfile {
 export interface IFollower {
   following: integer;
   follower: integer;
-  sendDate?: Date;
-  acceptDate?: Date;
+  sendDate?: datetime;
+  acceptDate?: datetime;
   status?: boolean;
 }
 
@@ -72,7 +72,7 @@ export interface ILike {
   postNumber: IDocument;
   profileNumber: IProfile;
   like?: boolean;
-  date?: Date;
+  date?: datetime;
 }
 
 export interface IRoute {
@@ -98,8 +98,8 @@ export interface IClient {
 export interface IClientInfo {
   clientNumber: IClient;
   visitedCount?: integer;
-  firstVisit?: date;
-  lastVisit?: date;
+  firstVisit?: datetime;
+  lastVisit?: datetime;
 }
 
 // Database type end

@@ -26,10 +26,9 @@ export interface IModel<Fields> {
 // Database(and data) type start
 
 export interface IDocument {
-  title: string & pk;
+  id: integer & pk;
   datetime?: datetime;
-  profile?: integer;
-  image?: string;
+  title: string;
   content?: string;
   profileNumber?: IProfile & fk;
   isShow?: boolean;

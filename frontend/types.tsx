@@ -1,5 +1,5 @@
 export type integer = number;
-export type date = Date; // UNIX Datetime
+export type date = Date; // JS Date
 export type pk = unknown;
 export type fk = unknown;
 

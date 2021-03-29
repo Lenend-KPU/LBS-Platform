@@ -156,6 +156,8 @@ Thumbs.db #thumbnail cache on Windows
 # profiling data
 .prof
 
+# nginx-logs
+./nginx/logs
 
 ### Python ###
 # Byte-compiled / optimized / DLL files

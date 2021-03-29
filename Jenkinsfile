@@ -6,7 +6,7 @@ node {
 
   stage('Stop previous containers') {
     dir('backend') {
-       withEnv(["PATH=$PATH:~/.local/bin"]){
+       withEnv(["PATH=$PATH:/usr/local/bin"]){
         sh """
             docker-compose down -p LBS_Platform
         """
@@ -15,7 +15,7 @@ node {
   }
   stage('Run current containers') {
     dir('backend') {
-       withEnv(["PATH=$PATH:~/.local/bin"]){
+       withEnv(["PATH=$PATH:/usr/local/bin"]){
         sh """
             docker-compose up -p LBS_Platform
         """

@@ -3,7 +3,7 @@ version: "3"
 services:
   jenkins:
     privileged: true
-    image: jenkins/jenkins:lts
+    build: .
     container_name: jenkins
     restart: always
     user: root

@@ -27,11 +27,7 @@ RUN echo "Starting $NAME as $(whoami)"
 WORKDIR /code
 COPY . /code/
 
-RUN pip install pipenv
-RUN pipenv install --deploy --ignore-pipfile
+RUN apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y netcat
 
-# ENTRYPOINT ["sh -c", "pipenv run python manage.py runserver 0.0.0.0:8000"]
-# RUN chown root board/migrations
-# RUN chown root ./
-
-# ENTRYPOINT ["sh", "/code/bin/gunicorn_start"]
+ENTRYPOINT ["sh", "/code/gunicorn/gunicorn_start.sh"]

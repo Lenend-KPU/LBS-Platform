@@ -5,8 +5,8 @@ networks:
     driver: bridge
 
 services:
-  backend:
-    container_name: backend
+  gunicorn-backend:
+    container_name: gunicorn-backend
     build:
       context: .
       args:

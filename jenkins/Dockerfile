@@ -7,5 +7,4 @@ RUN curl -L "https://github.com/docker/compose/releases/download/1.28.6/docker-c
 RUN usermod -u $HOST_UID jenkins
 RUN groupmod -g $HOST_GID docker
 RUN usermod -aG docker jenkins
-
 USER jenkins

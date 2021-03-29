@@ -1,5 +1,8 @@
 #!groovy
 node {
+  environment {
+    Django_secret_key = credentials('Django_secret_key')
+  }
   stage("Checkout") {
     checkout scm
   }

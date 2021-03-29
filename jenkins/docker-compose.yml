@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+  jenkins:
+    privileged: true
+    image: jenkins/jenkins:lts
+    container_name: jenkins
+    restart: always
+    user: root
+    ports:
+      - 8083:8080
+      - 50003:50000
+    expose:
+      - "8080"
+      - "50000"
+    volumes:
+      - "./jenkins_home:/var/jenkins_home"
+    environment:
+      TZ: "Asia/Seoul"
+volumes:
+  jenkins_home:
+    driver: local

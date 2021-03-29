@@ -8,7 +8,7 @@ node {
     dir('backend') {
        withEnv(["PATH=$PATH:/usr/local/bin"]){
         sh """
-            docker-compose down -p LBS_Platform
+            docker-compose -p LBS_Platform down
         """
        }
     }
@@ -17,7 +17,7 @@ node {
     dir('backend') {
        withEnv(["PATH=$PATH:/usr/local/bin"]){
         sh """
-            docker-compose up -p LBS_Platform
+            docker-compose -p LBS_Platform up 
         """
        }
     }

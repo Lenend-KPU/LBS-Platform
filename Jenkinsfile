@@ -1,9 +1,7 @@
 #!groovy
 node {
-  steps {
-    stage("Checkout") {
-      checkout scm
-    }
+  stage("Checkout") {
+    checkout scm
   }
   post {
     success {

@@ -3,7 +3,8 @@ version: "3"
 services:
   jenkins:
     privileged: true
-    build: .
+    build:
+      context: ./
     container_name: jenkins
     restart: always
     user: root
@@ -14,6 +15,7 @@ services:
       - "8080"
       - "50000"
     volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
       - "./jenkins_home:/var/jenkins_home"
     environment:
       TZ: "Asia/Seoul"

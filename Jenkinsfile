@@ -20,7 +20,7 @@ node {
     dir('backend') {
        withEnv(["PATH=$PATH:/usr/local/bin"]){
         sh """
-            docker-compose -p LBS_Platform up 
+            docker-compose -p LBS_Platform up --build
         """
        }
     }

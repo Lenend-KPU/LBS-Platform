@@ -12,7 +12,6 @@ services:
       context: .
       args:
         Django_secret_key: "${Django_secret_key}"
-    command: bash -c "pipenv run python manage.py runserver 0.0.0.0:8000"
     #    volumes:
     #      - .:/code
     networks:

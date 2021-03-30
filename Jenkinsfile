@@ -5,6 +5,7 @@ node {
   }
 
   stage("Checkout") {
+    cleanWs()
     checkout scm
   }
 

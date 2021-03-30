@@ -25,7 +25,7 @@ services:
     container_name: nginx-backend
     image: nginx:latest
     volumes:
-      - ./nginx/config/app-debug.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx/config/default.conf:/etc/nginx/conf.d
       - ./nginx/logs:/var/backend-logs
     expose:
       - "80"

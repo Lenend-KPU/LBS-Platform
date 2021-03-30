@@ -23,9 +23,8 @@ services:
   nginx-backend:
     restart: always
     container_name: nginx-backend
-    image: nginx:latest
+    build: ./nginx
     volumes:
-      - ./nginx/config/default.conf:/etc/nginx/conf.d/default.conf
       - ./nginx/logs:/var/backend-logs
     expose:
       - "80"

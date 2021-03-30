@@ -32,4 +32,6 @@ COPY . /code/
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y netcat
 
+RUN chmod +x /code/gunicorn/gunicorn_start.sh
+
 ENTRYPOINT ["sh", "/code/gunicorn/gunicorn_start.sh"]

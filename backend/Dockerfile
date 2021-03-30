@@ -9,7 +9,7 @@ ENV BOARD_DEBUG 1
 
 # 유저, 그룹 나중에 수정 TODO
 # the user to run as
-ENV USER jenkins
+ENV USER root
 
 # how many worker processes should Gunicorn spawn
 ENV NUM_WORKERS 3
@@ -24,10 +24,12 @@ ENV PORT 8000
 
 RUN echo "Starting $NAME as $(whoami)"
 
-WORKDIR ~/code
-COPY . ~/code
+RUN mkdir /code
+
+WORKDIR /code
+COPY . /code/
 
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y netcat
 
-ENTRYPOINT ["sh", "~/code/gunicorn/gunicorn_start.sh"]
+ENTRYPOINT ["sh", "/code/gunicorn/gunicorn_start.sh"]

@@ -36,4 +36,4 @@ RUN ls -l
 
 RUN chmod 0755 /code/gunicorn/gunicorn_start.sh
 
-ENTRYPOINT ["sh", "/code/gunicorn/gunicorn_start.sh"]
+# ENTRYPOINT ["sh", "/code/gunicorn/gunicorn_start.sh"]

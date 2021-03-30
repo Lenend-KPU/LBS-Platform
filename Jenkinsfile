@@ -4,11 +4,6 @@ node {
     Django_secret_key = credentials('Django_secret_key')
   }
 
-  stage('Clean Directory') {
-    sh """
-        sudo rm -rf ./*
-    """
-  }
   stage("Checkout") {
     checkout scm
   }

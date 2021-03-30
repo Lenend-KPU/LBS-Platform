@@ -22,9 +22,11 @@ services:
   nginx-backend:
     restart: always
     container_name: nginx-backend
-    build: ./nginx
+    build:
+      context: ./nginx
+      dockerfile: ./Dockerfile
     volumes:
-      - ./nginx/logs:/var/backend-logs
+      - ./logs:/var/backend-logs
     expose:
       - "80"
       - "443"

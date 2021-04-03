@@ -3,6 +3,8 @@ version: "3"
 networks:
   app-tier:
     driver: bridge
+  db-tier:
+    driver: bridge
 
 services:
   gunicorn-backend:
@@ -16,8 +18,11 @@ services:
     #      - .:/code
     networks:
       - app-tier
+      - db-tier
     ports:
       - "8000:8000"
+    depends_on:
+      - database
 
   nginx-backend:
     restart: always
@@ -40,3 +45,19 @@ services:
     environment:
       - NGINX_HOST=0.0.0.0
       - NGINX_PORT=80
+
+  database:
+    image: "postgres"
+    environment:
+      - PGDATA=/var/lib/postgresql/data/django/
+      - POSTGRES_USER=django
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=lbs_platform
+    networks:
+      - db-tier
+    expose:
+      - "5432"
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data/db:/var/lib/postgresql/data/django/

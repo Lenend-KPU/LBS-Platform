@@ -13,7 +13,6 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.conf import settings
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
@@ -35,10 +34,9 @@ schema_view = get_schema_view(
     permission_classes=(permissions.AllowAny,),
 )
 
-if settings.DEBUG:
-    urlpatterns = [
-        path('admin/', admin.site.urls),
-        url('swagger<str:format>', schema_view.without_ui(cache_timeout=0), name='schema-json'),
-        url('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-        url('docs/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
-    ]
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    url('swagger<str:format>', schema_view.without_ui(cache_timeout=0), name='schema-json'),
+    url('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    url('docs/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+]

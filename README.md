@@ -36,7 +36,8 @@ GIF(TODO)
 | 김희구 | IT경영학과   |  UI    |                                                     |
 
 ## 데이터베이스 모델링
-이미지(TODO)
+![Architecture](https://user-images.githubusercontent.com/22572874/113485131-13793980-94e7-11eb-82e6-d3941ca487db.png)
+
 
 ## API
 ### swagger or postman

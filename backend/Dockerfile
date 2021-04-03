@@ -5,6 +5,7 @@ RUN apt-get -y update
 
 ARG Django_secret_key
 ENV Django_secret_key $Django_secret_key
+# jenkins-webhook-test
 
 # 유저, 그룹 나중에 수정 TODO
 # the user to run as

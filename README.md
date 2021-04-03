@@ -29,7 +29,7 @@ GIF(TODO)
 ## Members
 | 이름   | 학과         | 역할 | 소개 페이지                                         |
 | ------ | ------------ | ---- | --------------------------------------------------- |
-| 한승욱 | 컴퓨터공학과 | PM, PO, DevOps, Backend     | [개인 리포로 이동](https://github.com/SeungWookHan) |
+| 한승욱 | 컴퓨터공학과 | PM(PO), DevOps, Backend     | [개인 리포로 이동](https://github.com/SeungWookHan) |
 | 박찬희 | 컴퓨터공학과 | Backend     |                                                   |
 | 이재서 | IT경영학과   | Frontend     |                                                     |
 | 주용진 | IT경영학과   |  DB    |                                                     |
@@ -39,11 +39,17 @@ GIF(TODO)
 이미지(TODO)
 
 ## API
-- swagger or postman
+### swagger or postman
+- 사전 설계: [링크 - postman](https://documenter.getpostman.com/view/15074200/TzCJeUwy)
 링크(TODO)
 
 ## PORTS
-각 포트 설명(TODO)
+ | Name   | Port         | Description | 
+| ------ | ------------ | ---- | 
+| Nginx | 80, 443 | 설명 TODO  | 
+| Django + Gunicorn| 8000 |  설명 TODO  | 
+| Postgresql | 5432 | 설명 TODO    | 
+| Jenkins | 8083, 50003 | 설명 TODO |
 
 ## Deploy
 CI/CD 등 설명(TODO)

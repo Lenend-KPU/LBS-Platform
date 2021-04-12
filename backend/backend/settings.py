@@ -48,7 +48,8 @@ PROJECT_APPS = [
     'profileapp',
     'placeapp',
     'friendapp',
-    'documentapp'
+    'documentapp',
+    'likeapp'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS

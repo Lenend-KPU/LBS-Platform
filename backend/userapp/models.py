@@ -5,3 +5,6 @@ class User(models.Model):
     password = models.CharField(max_length=20)
     name = models.CharField(max_length=20)
     address = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.email

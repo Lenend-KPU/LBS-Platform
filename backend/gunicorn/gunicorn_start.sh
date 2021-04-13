@@ -36,6 +36,13 @@ pip install pipenv
 pipenv install
 pipenv run python manage.py makemigrations
 pipenv run python manage.py migrate
+pipenv run python manage.py collectstatic --noinput
+pipenv run python manage.py createsuperuserwithpassword \
+        --username $DJANGO_SUPERUSER_USERNAME \
+        --password $DJANGO_SUPERUSER_PASSWORD \
+        --email $DJANGO_SUPERUSER_EMAIL \
+        --preserve
+# pipenv run python manage.py createsuperuser --username $DJANGO_SUPERUSER_USERNAME --noinput --password $DJANGO_SUPERUSER_PASSWORD --email $DJANGO_SUPERUSER_EMAIL
 
 # Start your Django Unicorn
 # Programs meant to be run under supervisor should not daemonize themselves (do not use --daemon)

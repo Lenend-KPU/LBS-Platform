@@ -14,8 +14,13 @@ services:
       context: .
       args:
         Django_secret_key: "${Django_secret_key}"
+        DJANGO_SUPERUSER_PASSWORD: "${DJANGO_SUPERUSER_PASSWORD}"
+        DJANGO_SUPERUSER_USERNAME: "${DJANGO_SUPERUSER_USERNAME}"
+        DJANGO_SUPERUSER_EMAIL: "${DJANGO_SUPERUSER_EMAIL}"
     #    volumes:
     #      - .:/code
+    volumes:
+      - ./static/:/code/static/
     networks:
       - app-tier
       - db-tier
@@ -32,6 +37,7 @@ services:
       dockerfile: ./Dockerfile
     volumes:
       - ./logs:/var/backend-logs
+      - ./static/:/static/
     expose:
       - "80"
       - "443"

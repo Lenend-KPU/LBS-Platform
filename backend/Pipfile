@@ -17,6 +17,7 @@ django-prometheus = "*"
 drf-yasg = "*"
 flex = "*"
 djangorestframework = "*"
+django-createsuperuserwithpassword = "*"
 
 [dev-packages]
 

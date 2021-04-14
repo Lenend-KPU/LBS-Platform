@@ -10,15 +10,12 @@ services:
   gunicorn-backend:
     restart: always
     container_name: gunicorn-backend
-    build:
-      context: .
-      args:
-        Django_secret_key: "${Django_secret_key}"
-        DJANGO_SUPERUSER_PASSWORD: "${DJANGO_SUPERUSER_PASSWORD}"
-        DJANGO_SUPERUSER_USERNAME: "${DJANGO_SUPERUSER_USERNAME}"
-        DJANGO_SUPERUSER_EMAIL: "${DJANGO_SUPERUSER_EMAIL}"
-    #    volumes:
-    #      - .:/code
+    build: .
+    environment: 
+      - Django_secret_key=${Django_secret_key}
+      - DJANGO_SUPERUSER_PASSWORD=${DJANGO_SUPERUSER_PASSWORD}
+      - DJANGO_SUPERUSER_USERNAME=${DJANGO_SUPERUSER_USERNAME}
+      - DJANGO_SUPERUSER_EMAIL=${DJANGO_SUPERUSER_EMAIL}
     volumes:
       - ./static/:/code/static/
     networks:
@@ -38,9 +35,6 @@ services:
     volumes:
       - ./logs:/var/backend-logs
       - ./static/:/static/
-    expose:
-      - "80"
-      - "443"
     ports:
       - "80:80"
       - "443:443"
@@ -56,13 +50,11 @@ services:
     image: "postgres"
     environment:
       - PGDATA=/var/lib/postgresql/data/django/
-      - POSTGRES_USER=django
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=lbs_platform
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
     networks:
       - db-tier
-    expose:
-      - "5432"
     ports:
       - "5432:5432"
     volumes:

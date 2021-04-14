@@ -3,23 +3,12 @@ ENV PYTHONUNBUFFERED 1
 
 RUN apt-get -y update 
 
-ARG Django_secret_key
-ARG DJANGO_SUPERUSER_PASSWORD
-ARG DJANGO_SUPERUSER_USERNAME
-ARG DJANGO_SUPERUSER_EMAIL
-
-ENV Django_secret_key $Django_secret_key
-ENV DJANGO_SUPERUSER_PASSWORD $DJANGO_SUPERUSER_PASSWORD
-ENV DJANGO_SUPERUSER_USERNAME $DJANGO_SUPERUSER_USERNAME
-ENV DJANGO_SUPERUSER_EMAIL $DJANGO_SUPERUSER_EMAIL
-# jenkins-webhook-test
-
 # 유저, 그룹 나중에 수정 TODO
 # the user to run as
 ENV USER root
 
 # how many worker processes should Gunicorn spawn
-ENV NUM_WORKERS 3
+ENV NUM_WORKERS 8
 
 # which settings file should Django use
 ENV DJANGO_SETTINGS_MODULE backend.settings

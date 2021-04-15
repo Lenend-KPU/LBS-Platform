@@ -23,7 +23,7 @@ export default function CheckLoginComponent(props: {
   );
   const route = useRoute();
   React.useEffect(() => {
-    if (!isLogin && route.name !== "login") {
+    if (!isLogin && !(route.name === "login" || route.name === "register")) {
       navigation.push("login");
     }
   }, [isLogin]);

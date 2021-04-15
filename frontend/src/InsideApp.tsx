@@ -11,7 +11,6 @@ import { StatusBar } from "expo-status-bar";
 import BackNavigatorComponent from "./component/util/BackNavigatorComponent";
 import CheckLoginComponent from "./component/util/CheckLoginComponent";
 
-
 const Stack = createStackNavigator();
 const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE";
 export default function InsideApp(props: Object) {
@@ -19,8 +18,7 @@ export default function InsideApp(props: Object) {
     InitialState | undefined
   >();
   const navigationRef = React.useRef<NavigationContainerRef>(null);
-
-    return (
+  return (
     <NavigationContainer
       ref={navigationRef}
       initialState={initialState}
@@ -45,4 +43,5 @@ export default function InsideApp(props: Object) {
         />
       </Stack.Navigator>
     </NavigationContainer>
+  );
 }

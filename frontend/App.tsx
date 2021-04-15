@@ -6,11 +6,12 @@ import {
   Provider as PaperProvider,
   DefaultTheme as PaperLightTheme,
   DarkTheme as PaperDarkTheme,
+  DefaultTheme,
 } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import InsideApp from "./src/InsideApp";
 
-export default function App() {
+export default function App(): React.ReactElement {
   const isLoadingComplete = useCachedResources();
   const [theme, setTheme] = React.useState(DefaultTheme);
   React.useEffect(() => {

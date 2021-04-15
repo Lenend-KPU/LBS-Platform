@@ -10,10 +10,11 @@ import LinkingPrefixes from "./LinkingPrefixes";
 import { StatusBar } from "expo-status-bar";
 import BackNavigatorComponent from "./component/util/BackNavigatorComponent";
 import CheckLoginComponent from "./component/util/CheckLoginComponent";
+import LoginScreen from "./component/container/LoginScreen";
 
 const Stack = createStackNavigator();
 const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE";
-export default function InsideApp(props: Object) {
+export default function InsideApp(props: Object): React.ReactElement {
   const [initialState, setInitialState] = React.useState<
     InitialState | undefined
   >();

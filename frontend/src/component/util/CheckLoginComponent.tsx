@@ -8,19 +8,29 @@ import { useRoute } from "@react-navigation/native";
 import CheckLoginStrategy, {
   CheckLoginBuilder,
 } from "../../util/CheckLoginStrategy";
+import LoginHelperStrategy from "../../util/LoginHelperStrategy";
+import DummyCheckLogin from "../../util/DummyCheckLogin";
 
 export default function CheckLoginComponent(props: {
   navigation: StackNavigationHelpers;
 }) {
   const { navigation } = props;
-  const [CheckLoginStrategy, _] = React.useState<CheckLoginStrategy>(
-    CheckLoginBuilder.build()
+  const [CheckLoginStrategy, _] = React.useState<DummyCheckLogin>(
+    new DummyCheckLogin()
   );
-  const isLogin = CheckLoginStrategy.checkLogin();
+  const [isLogin, setIsLogin] = React.useState<Boolean>(
+    CheckLoginStrategy.checkLogin()
+  );
   const route = useRoute();
+  React.useEffect(() => {
+    if (!isLogin && route.name !== "login") {
+      navigation.push("login");
+    }
+  }, [isLogin]);
   const logout = () => {
-    //   TODO
-    return false;
+    if (CheckLoginStrategy.logout()) {
+      setIsLogin(false);
+    }
   };
 
   const onLogoutClick = () => {

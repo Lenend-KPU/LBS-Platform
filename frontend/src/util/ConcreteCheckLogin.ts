@@ -1,8 +1,11 @@
 import CheckLoginStrategy from "./CheckLoginStrategy";
 
 export default class ConcreteCheckLogin implements CheckLoginStrategy {
+  // 구현 TODO
   checkLogin() {
-    // 구현 TODO
     return true;
+  }
+  checkError() {
+    return {};
   }
 }

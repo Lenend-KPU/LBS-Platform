@@ -1,3 +1,5 @@
+import { DEBUG } from "../../Settings";
+import ConcreteCheckLogin from "./ConcreteCheckLogin";
 import DummyCheckLogin from "./DummyCheckLogin";
 
 export default interface CheckLoginStrategy {
@@ -8,6 +10,6 @@ export default interface CheckLoginStrategy {
 export class CheckLoginBuilder {
   static build(): CheckLoginStrategy {
     // 빌더 & 의존성 주입 패턴
-    return new DummyCheckLogin();
+    return DEBUG ? new DummyCheckLogin() : new ConcreteCheckLogin();
   }
 }

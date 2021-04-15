@@ -6,7 +6,7 @@ import { StackNavigationHelpers } from "@react-navigation/stack/lib/typescript/s
 import { useState } from "react";
 import { useRoute } from "@react-navigation/native";
 import CheckLoginStrategy, {
-  checkLoginBuilder,
+  CheckLoginBuilder,
 } from "../../util/CheckLoginStrategy";
 
 export default function CheckLoginComponent(props: {
@@ -14,7 +14,7 @@ export default function CheckLoginComponent(props: {
 }) {
   const { navigation } = props;
   const [CheckLoginStrategy, _] = React.useState<CheckLoginStrategy>(
-    checkLoginBuilder.build()
+    CheckLoginBuilder.build()
   );
   const isLogin = CheckLoginStrategy.checkLogin();
   const route = useRoute();

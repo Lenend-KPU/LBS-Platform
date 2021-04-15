@@ -5,7 +5,7 @@ export default interface CheckLoginStrategy {
   checkLogin: () => Boolean;
 }
 
-export class checkLoginBuilder {
+export class CheckLoginBuilder {
   static build(): CheckLoginStrategy {
     // 빌더 & 의존성 주입 패턴
     return new DummyCheckLogin();

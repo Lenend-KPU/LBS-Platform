@@ -11,6 +11,8 @@ import { StatusBar } from "expo-status-bar";
 import BackNavigatorComponent from "./component/util/BackNavigatorComponent";
 import CheckLoginComponent from "./component/util/CheckLoginComponent";
 import LoginScreen from "./component/container/LoginScreen";
+import HomeScreen from "./component/container/HomeScreen";
+import RegisterScreen from "./component/container/RegisterScreen";
 
 const Stack = createStackNavigator();
 const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE";
@@ -29,10 +31,34 @@ export default function InsideApp(props: Object): React.ReactElement {
       linking={LinkingPrefixes}
     >
       <StatusBar />
-      <Stack.Navigator initialRouteName="main">
+      <Stack.Navigator initialRouteName="home">
         <Stack.Screen
           name="login"
           component={LoginScreen}
+          options={({ navigation, route }) => ({
+            headerLeft: (props) => (
+              <BackNavigatorComponent navigation={navigation} />
+            ),
+            headerRight: (props) => (
+              <CheckLoginComponent navigation={navigation} />
+            ),
+          })}
+        />
+        <Stack.Screen
+          name="register"
+          component={RegisterScreen}
+          options={({ navigation, route }) => ({
+            headerLeft: (props) => (
+              <BackNavigatorComponent navigation={navigation} />
+            ),
+            headerRight: (props) => (
+              <CheckLoginComponent navigation={navigation} />
+            ),
+          })}
+        />
+        <Stack.Screen
+          name="home"
+          component={HomeScreen}
           options={({ navigation, route }) => ({
             headerLeft: (props) => (
               <BackNavigatorComponent navigation={navigation} />

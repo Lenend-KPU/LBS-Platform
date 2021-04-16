@@ -1,13 +1,17 @@
 from django.db import models
 from profileapp.models import Profile
 
+
 class Document(models.Model):
-    name = models.CharField(max_length=20)
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='document')
-    liked = models.IntegerField(default=0)
-    date = models.DateTimeField(auto_now_add=True)
-    private = models.BooleanField(default=False)
-    color = models.CharField(max_length=20)
+    profile = models.ForeignKey(
+        Profile, on_delete=models.CASCADE, related_name="document"
+    )
+    document_name = models.CharField(max_length=20)
+    document_color = models.CharField(max_length=20)
+    document_map = models.CharField(max_length=100)  # 이미지 경로
+    document_date = models.DateTimeField(auto_now_add=True)
+    document_liked = models.IntegerField(default=0)
+    document_private = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name

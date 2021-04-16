@@ -27,7 +27,7 @@ test -d $RUNDIR || mkdir -p $RUNDIR
 
 cd $PARENT_PATH
 
-# # DB 연결될때까지 블로킹 (미그레이션은 DB가 연결되어야 가능하다)
+# # DB 연결될때까지 블로킹 (마이그레이션은 DB가 연결되어야 가능하다)
 while ! nc -z database 5432; do sleep 1; done;
 
 

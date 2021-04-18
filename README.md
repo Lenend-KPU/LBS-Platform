@@ -16,10 +16,10 @@ TODO
 ## Tech-Stack
 |분류|기술|
 |------|---|
-|개발환경|Terraform, Aws EC2 Ubuntu 18.04, Docker|
-|DB|redis, Aws RDS Mysql or  MongoDB|
-|Front-end|HTML5, CSS3, JavaScript, React.js, React Native|
-|Back-end|Nginx, Django or Flask|
+|개발환경|Aws lightsail Ubuntu 20.04, Docker|
+|DB|Redis, Postgresql(container)|
+|Front-end|HTML5, CSS3, JavaScript, React Native, Expo|
+|Back-end|Nginx, Django, Jenkins|
 |api|Google maps, Mapbox, 상권 정보, 도로명주소|
 |UI|Figma|
 

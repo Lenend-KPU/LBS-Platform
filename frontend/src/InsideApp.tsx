@@ -36,36 +36,33 @@ export default function InsideApp(props: Object): React.ReactElement {
           name="login"
           component={LoginScreen}
           options={({ navigation, route }) => ({
-            headerLeft: (props) => (
-              <BackNavigatorComponent navigation={navigation} />
-            ),
             headerRight: (props) => (
               <CheckLoginComponent navigation={navigation} />
             ),
+            title: "Through-Path",
+            headerTitleAlign: "center",
           })}
         />
         <Stack.Screen
           name="register"
           component={RegisterScreen}
           options={({ navigation, route }) => ({
-            headerLeft: (props) => (
-              <BackNavigatorComponent navigation={navigation} />
-            ),
             headerRight: (props) => (
               <CheckLoginComponent navigation={navigation} />
             ),
+            title: "Through-Path",
+            headerTitleAlign: "center",
           })}
         />
         <Stack.Screen
           name="home"
           component={HomeScreen}
           options={({ navigation, route }) => ({
-            headerLeft: (props) => (
-              <BackNavigatorComponent navigation={navigation} />
-            ),
             headerRight: (props) => (
               <CheckLoginComponent navigation={navigation} />
             ),
+            title: "Through-Path",
+            headerTitleAlign: "center",
           })}
         />
       </Stack.Navigator>

@@ -36,9 +36,6 @@ export default function InsideApp(props: Object): React.ReactElement {
           name="login"
           component={LoginScreen}
           options={({ navigation, route }) => ({
-            headerLeft: (props) => (
-              <BackNavigatorComponent navigation={navigation} />
-            ),
             headerRight: (props) => (
               <CheckLoginComponent navigation={navigation} />
             ),
@@ -48,9 +45,6 @@ export default function InsideApp(props: Object): React.ReactElement {
           name="register"
           component={RegisterScreen}
           options={({ navigation, route }) => ({
-            headerLeft: (props) => (
-              <BackNavigatorComponent navigation={navigation} />
-            ),
             headerRight: (props) => (
               <CheckLoginComponent navigation={navigation} />
             ),
@@ -60,9 +54,6 @@ export default function InsideApp(props: Object): React.ReactElement {
           name="home"
           component={HomeScreen}
           options={({ navigation, route }) => ({
-            headerLeft: (props) => (
-              <BackNavigatorComponent navigation={navigation} />
-            ),
             headerRight: (props) => (
               <CheckLoginComponent navigation={navigation} />
             ),

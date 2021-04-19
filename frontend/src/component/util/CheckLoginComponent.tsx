@@ -45,27 +45,5 @@ export default function CheckLoginComponent(props: {
     login();
   };
 
-  const LogoutButton = !isLogin ? (
-    route.name !== "login" ? (
-      <Paper.Button mode="contained" onPress={onLoginClick}>
-        Login
-      </Paper.Button>
-    ) : null
-  ) : (
-    <Paper.Button mode="contained" onPress={onLogoutClick}>
-      Logout
-    </Paper.Button>
-  );
-
-  return (
-    <RN.View
-      style={{
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      {LogoutButton}
-    </RN.View>
-  );
+  return <></>;
 }

@@ -39,6 +39,8 @@ export default function InsideApp(props: Object): React.ReactElement {
             headerRight: (props) => (
               <CheckLoginComponent navigation={navigation} />
             ),
+            title: "Through-Path",
+            headerTitleAlign: "center",
           })}
         />
         <Stack.Screen
@@ -48,6 +50,8 @@ export default function InsideApp(props: Object): React.ReactElement {
             headerRight: (props) => (
               <CheckLoginComponent navigation={navigation} />
             ),
+            title: "Through-Path",
+            headerTitleAlign: "center",
           })}
         />
         <Stack.Screen
@@ -57,6 +61,8 @@ export default function InsideApp(props: Object): React.ReactElement {
             headerRight: (props) => (
               <CheckLoginComponent navigation={navigation} />
             ),
+            title: "Through-Path",
+            headerTitleAlign: "center",
           })}
         />
       </Stack.Navigator>

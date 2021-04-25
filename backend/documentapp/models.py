@@ -4,7 +4,10 @@ from profileapp.models import Profile
 
 class Document(models.Model):
     profile = models.ForeignKey(
-        Profile, on_delete=models.CASCADE, related_name="document"
+        Profile, on_delete=models.CASCADE, related_name="document_profile"
+    )
+    profile_friend = models.ForeignKey(
+        Profile, on_delete=models.CASCADE, related_name="document_profile_friend"
     )
     document_name = models.CharField(max_length=20)
     document_color = models.CharField(max_length=20)

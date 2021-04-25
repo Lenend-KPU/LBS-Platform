@@ -36,7 +36,7 @@ GIF(TODO)
 | 김희구 | IT경영학과   |  UI    |                                                     |
 
 ## 데이터베이스 모델링
-이미지(TODO)
+![디비](https://user-images.githubusercontent.com/22572874/115986401-f4a02b80-a5ea-11eb-9973-85481376ed39.png)
 
 
 ## API

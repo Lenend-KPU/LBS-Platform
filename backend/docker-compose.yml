@@ -11,7 +11,7 @@ services:
     restart: always
     container_name: gunicorn-backend
     build: .
-    environment: 
+    environment:
       - Django_secret_key=${Django_secret_key}
       - DJANGO_SUPERUSER_PASSWORD=${DJANGO_SUPERUSER_PASSWORD}
       - DJANGO_SUPERUSER_USERNAME=${DJANGO_SUPERUSER_USERNAME}

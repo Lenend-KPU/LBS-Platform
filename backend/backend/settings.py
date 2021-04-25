@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = secret_key.SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -45,16 +45,17 @@ THIRD_PARTY_APPS = [
 ]
 
 PROJECT_APPS = [
-    'userapp',
-    'profileapp',
-    'placeapp',
-    'friendapp',
-    'documentapp',
-    'likeapp',
-    'commentapp',
-    'saveapp',
-    'pathapp',
-    'userInfoapp'
+    "userapp",
+    "profileapp",
+    "placeapp",
+    "friendapp",
+    "documentapp",
+    "likeapp",
+    "commentapp",
+    "saveapp",
+    "pathapp",
+    "userInfoapp",
+    "indexapp",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
@@ -103,9 +104,9 @@ WSGI_APPLICATION = "backend.wsgi.application"
 
 if DEBUG:
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
         }
     }
 else:
@@ -119,7 +120,6 @@ else:
             "PORT": 5432,
         }
     }
-
 
 
 # Password validation
@@ -160,4 +160,4 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, "static")

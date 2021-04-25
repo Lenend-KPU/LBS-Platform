@@ -10,7 +10,6 @@ class PlaceAdmin(admin.ModelAdmin):
         "place_rate",
         "place_photo",
         "place_date",
-        "place_map",
         "place_latitude",
         "place_longitude",
         "place_private",

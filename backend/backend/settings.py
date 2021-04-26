@@ -55,7 +55,7 @@ PROJECT_APPS = [
     "saveapp",
     "pathapp",
     "userInfoapp",
-    "indexapp",
+    "viewapp",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS

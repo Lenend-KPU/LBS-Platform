@@ -7,7 +7,7 @@ from utils.utils import send_json
 from utils.responses import *
 
 # Create your views here.
-class ChildView(View):
+class IndexView(View):
     def get(self, request):
         return send_json(APIOnly)
 

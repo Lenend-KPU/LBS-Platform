@@ -25,7 +25,7 @@ import os
 
 
 sys.path.append("..")
-from indexapp.views import ChildView as IndexView
+from viewapp.views.index import IndexView
 
 
 schema_view = get_schema_view(
@@ -42,7 +42,7 @@ schema_view = get_schema_view(
     permission_classes=(permissions.AllowAny,),
 )
 
-apps = list(filter(lambda x: x.endswith("app") and x != "indexapp", os.listdir(".")))
+# apps = list(filter(lambda x: x.endswith("app") and x != "indexapp", os.listdir(".")))
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -62,9 +62,9 @@ urlpatterns = [
 
 # url/comment/
 
-urlpatterns += list(
-    map(
-        lambda x: path(fr"^{x}/?$", include(f"{x}app.urls")),
-        map(lambda x: x.replace("app", ""), apps),
-    )
-)
+# urlpatterns += list(
+#     map(
+#         lambda x: path(fr"^{x}/?$", include(f"{x}app.urls")),
+#         map(lambda x: x.replace("app", ""), apps),
+#     )
+# )

@@ -42,6 +42,8 @@ schema_view = get_schema_view(
     permission_classes=(permissions.AllowAny,),
 )
 
+# apps = list(filter(lambda x: x.endswith("app") and x != "indexapp", os.listdir(".")))
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     url(
@@ -57,3 +59,12 @@ urlpatterns = [
     url("docs/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
     path("", IndexView.as_view()),
 ]
+
+# url/comment/
+
+# urlpatterns += list(
+#     map(
+#         lambda x: path(fr"^{x}/?$", include(f"{x}app.urls")),
+#         map(lambda x: x.replace("app", ""), apps),
+#     )
+# )

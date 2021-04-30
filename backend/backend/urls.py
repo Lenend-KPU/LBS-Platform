@@ -20,13 +20,6 @@ from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from django.urls import path, include
-import sys
-import os
-
-
-sys.path.append("..")
-from viewapp.views.index import IndexView
-
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -42,29 +35,19 @@ schema_view = get_schema_view(
     permission_classes=(permissions.AllowAny,),
 )
 
-# apps = list(filter(lambda x: x.endswith("app") and x != "indexapp", os.listdir(".")))
-
 urlpatterns = [
     path("admin/", admin.site.urls),
-    url(
+    path("commentapp/", include('commentapp.urls')),
+    path(
         "swagger<str:format>",
         schema_view.without_ui(cache_timeout=0),
         name="schema-json",
     ),
-    url(
+    path(
         "swagger/",
         schema_view.with_ui("swagger", cache_timeout=0),
         name="schema-swagger-ui",
     ),
-    url("docs/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
-    path("", IndexView.as_view()),
+    path("docs/", schema_view.with_ui("redoc",
+                                      cache_timeout=0), name="schema-redoc"),
 ]
-
-# url/comment/
-
-# urlpatterns += list(
-#     map(
-#         lambda x: path(fr"^{x}/?$", include(f"{x}app.urls")),
-#         map(lambda x: x.replace("app", ""), apps),
-#     )
-# )

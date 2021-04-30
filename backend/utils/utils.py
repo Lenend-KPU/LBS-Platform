@@ -1,29 +1,35 @@
 from django.http import HttpResponse
 import json
-import jwt
 
 import sys
 
 sys.path.append("..")
-# from backend.settings import SECRET_KEY, JWT_ALGORITHM
 from urllib import parse
 from .responses import *
-# from .models import User, Default_User
 from django.core.serializers import serialize
 
 
-# 딕셔너리를 JSON으로 전송하는 헬퍼 함수
+"""딕셔너리를 JSON으로 전송하는 헬퍼 함수"""
 def send_json(data):
     res = json.dumps(data)
     return HttpResponse(res, content_type="application/json", status=data["status"])
 
+"""QuerySet 객체를 dict 객체로 변환하는 헬퍼 함수"""
+def to_dict(queryset):
+    return json.loads(
+            serialize(
+                "json",
+                queryset
+            )
+        )
 
-# 가변 인자로 추출된 딕셔너리를 받아오는 헬퍼 함수
+
+"""가변 인자로 추출된 딕셔너리를 받아오는 헬퍼 함수"""
 def pop_args(dic, *args):
     return {arg: dic[arg] if arg in dic else None for arg in args}
 
 
-# request.body로 받아왔을때 binary를 dict로 변환하는 함수
+"""가변 인자로 추출된 딕셔너리를 받아오는 헬퍼 함수"""
 def byte_to_dict(data):
     body_unicode = data.decode("utf-8")
     body = body_unicode.replace("&", "=")
@@ -39,6 +45,7 @@ def byte_to_dict(data):
     return dict_body
 
 
+"""사옹자를 리턴하는 헬퍼 함수"""
 def get_user(users):
     if users.count() != 1:
         return userDoesNotMatch

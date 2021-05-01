@@ -54,9 +54,8 @@ services:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_HOST_AUTH_METHOD=trust
     networks:
       - db-tier
-    ports:
-      - "5432:5432"
     volumes:
       - ./data/db:/var/lib/postgresql/data/django/

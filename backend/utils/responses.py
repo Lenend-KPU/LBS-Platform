@@ -2,7 +2,7 @@
 
 APIOnly = {"success": True, "status": 200, "comment": "API Only"}
 postOnly = {"success": False, "status": 400, "comment": "only POST allowed"}
-noUser = {"success": False, "status": 401, "comment": "there's no matched user"}
+noUser = {"success": False, "status": 200, "comment": "there's no matched user"}
 deleteUserSucceed = {"success": True, "status": 200, "comment": "delete user succeed"}
 deleteReplySucceed = {"success": True, "status": 200, "comment": "delete reply succeed"}
 deletePostSucceed = {"success": True, "status": 200, "comment": "delete post succeed"}
@@ -64,6 +64,11 @@ illegalModifyArgument = {
     "comment": "Illegal modify argument",
 }
 postRequired = {"success": False, "status": 400, "comment": "Post argument required"}
+commentDoesNotExists = {
+    "success": False,
+    "status": 200,
+    "comment": "Comment does not exists",
+}
 postDoesNotExists = {"success": False, "status": 400, "comment": "Post does not exists"}
 replySucceed = {"success": True, "status": 200, "comment": "reply request succeed"}
 ok = {"success": True, "status": 200, "comment": "OK"}

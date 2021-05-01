@@ -25,6 +25,9 @@ SECRET_KEY = secret_key.SECRET_KEY
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# DEFAULT_AUTO_KEY
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+
 ALLOWED_HOSTS = ["*"]
 
 
@@ -42,6 +45,8 @@ THIRD_PARTY_APPS = [
     "rest_framework",
     "drf_yasg",
     "django_createsuperuserwithpassword",
+    "rest_framework.authtoken",
+    "corsheaders",
 ]
 
 PROJECT_APPS = [
@@ -64,7 +69,8 @@ REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
+        "rest_framework_jwt.authentication.JSONWebTokenAuthentication",
+        # "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
     ]
 }
 
@@ -72,10 +78,11 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
+    # "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
 ROOT_URLCONF = "backend.urls"
@@ -97,6 +104,25 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "backend.wsgi.application"
+
+CORS_REPLACE_HTTPS_REFERER = True
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_METHODS = ["GET", "POST", "PUT", "DELETE"]
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+]
+
+CSRF_COOKIE_HTTPONLY = False
+CSRF_COOKIE_SECURE = False
 
 
 # Database

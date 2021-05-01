@@ -37,6 +37,7 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("", include('indexapp.urls')),
     path("commentapp/", include('commentapp.urls')),
     path(
         "swagger<str:format>",

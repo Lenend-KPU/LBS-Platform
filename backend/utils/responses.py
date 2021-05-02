@@ -19,7 +19,7 @@ userAlreadyRegistered = {
     "status": 403,
     "comment": "User has already registered",
 }
-registerSucceed = {"success": True, "status": 200, "comment": "register succeed"}
+createUserSucceed = {"success": True, "status": 200, "comment": "create user succeed"}
 modifyUserSucceed = {"success": True, "status": 200, "comment": "modify user succeed"}
 deleteUserSucceed = {"success": True, "status": 200, "comment": "delete user succeed"}
 
@@ -39,6 +39,24 @@ deleteProfileSucceed = {
     "success": True,
     "status": 200,
     "comment": "delete profile succeed",
+}
+
+# Friend(follower)
+noFriend = {"success": False, "status": 200, "comment": "there's no matched friend"}
+friendExists = {
+    "success": False,
+    "status": 403,
+    "comment": "Friend has already Exsited",
+}
+createFriendSucceed = {
+    "success": True,
+    "status": 200,
+    "comment": "create friend succeed",
+}
+deleteFriendSucceed = {
+    "success": True,
+    "status": 200,
+    "comment": "delete friend succeed",
 }
 
 # Login

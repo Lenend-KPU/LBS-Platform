@@ -11,4 +11,4 @@ class Profile(models.Model):
     profile_private = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.nickname
+        return self.profile_name

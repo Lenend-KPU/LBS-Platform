@@ -40,6 +40,7 @@ urlpatterns = [
     path("", include("viewapp.urls")),
     path("comment/", include("commentapp.urls")),
     path("user/", include("userapp.urls")),
+    path("profile/", include("profileapp.urls")),
     path(
         "swagger<str:format>",
         schema_view.without_ui(cache_timeout=0),

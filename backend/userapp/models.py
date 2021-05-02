@@ -11,11 +11,4 @@ class User(models.Model):
     user_address = models.CharField(max_length=max_length)
 
     def __str__(self):
-        return str(
-            {
-                "name": self.user_name,
-                "password": self.user_password,
-                "email": self.user_email,
-                "address": self.user_address,
-            }
-        )
+        return str(super().pk)

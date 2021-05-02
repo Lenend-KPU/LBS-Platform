@@ -44,11 +44,12 @@ def byte_to_dict(data):
     body_list = body.split("=")
     body_key = []
     body_value = []
+    conv = lambda i: i or None
     for i in range(len(body_list)):
         if i % 2 == 0:
             body_key.append(body_list[i])
         else:
-            body_value.append(parse.unquote(body_list[i]))
+            body_value.append(conv(parse.unquote(body_list[i])))
     dict_body = dict(zip(body_key, body_value))
     return dict_body
 

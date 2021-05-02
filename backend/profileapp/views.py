@@ -6,8 +6,6 @@ from utils import utils, responses
 from django.http import HttpResponse, HttpRequest
 from django.views import View
 from .models import Profile
-from django.contrib.auth.hashers import check_password
-from django.contrib.auth.hashers import make_password
 
 
 # Create your views here.

@@ -1,5 +1,8 @@
 from django.urls import path
-from .views import ChildView
+from .views import ElementView, GetView
 
 
-urlpatterns = [path("", ChildView.as_view(), name="/")]
+urlpatterns = [
+    path("<int:pk>/", GetView.as_view()),
+    path("<int:pk>/<int:following_pk>/", ElementView.as_view()),
+]

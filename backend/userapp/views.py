@@ -37,7 +37,7 @@ class RootView(View):
             user_address=dic["address"],
             user_password=make_password(dic["password"]),
         )
-        result = responses.ok
+        result = responses.createUserSucceed
         return utils.send_json(result)
 
 

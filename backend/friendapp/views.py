@@ -21,17 +21,20 @@ class GetView(View):
         followers = utils.to_dict(followers)
         followings = utils.to_dict(followings)
 
-        for lst in [followers, followings]:
-            for elem in lst:
-                elem["fields"]["profile"] = utils.pk_to_dict(
-                    Profile.objects, elem["fields"]["profile"]
-                )[0]
-                elem["fields"]["friend_profile"] = utils.pk_to_dict(
-                    Profile.objects, elem["fields"]["friend_profile"]
-                )[0]
+        for elem in followers:
+            del elem["fields"]["friend_profile"]
+            elem["fields"]["profile"] = utils.pk_to_dict(
+                Profile.objects, elem["fields"]["profile"]
+            )[0]
+        for elem in followings:
+            del elem["fields"]["profile"]
+            elem["fields"]["friend_profile"] = utils.pk_to_dict(
+                Profile.objects, elem["fields"]["friend_profile"]
+            )[0]
 
         result = responses.ok
         result["result"] = {}
+        result["result"]["user"] = utils.to_dict(Profile.objects.filter(pk=pk))[0]
         result["result"]["followers"] = followers
         result["result"]["followings"] = followings
         return utils.send_json(result)
@@ -49,6 +52,13 @@ class ElementView(View):
         if filtered.count():
             return utils.send_json(responses.friendExists)
 
+        Profile.objects.filter(pk=me.pk).update(
+            profile_following=me.profile_following + 1
+        )
+        Profile.objects.filter(pk=friend.pk).update(
+            profile_follower=friend.profile_follower + 1
+        )
+
         Friend.objects.create(profile=me, friend_profile=friend)
 
         result = responses.createFriendSucceed
@@ -64,6 +74,13 @@ class ElementView(View):
         filtered = Friend.objects.filter(profile=me, friend_profile=friend)
         if not filtered.count():
             return utils.send_json(responses.noFriend)
+
+        Profile.objects.filter(pk=me.pk).update(
+            profile_following=me.profile_following - 1
+        )
+        Profile.objects.filter(pk=friend.pk).update(
+            profile_follower=friend.profile_follower - 1
+        )
 
         filtered.delete()
 

@@ -99,5 +99,5 @@ class ElementView(View):
         if len(user) != 1:
             return utils.send_json(responses.noUser)
         user.delete()
-        result = responses.ok
+        result = responses.deleteUserSucceed
         return utils.send_json(result)

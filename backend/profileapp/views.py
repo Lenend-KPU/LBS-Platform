@@ -24,22 +24,7 @@ class RootView(View):
         request_dict = utils.byte_to_dict(request.body)
         dic = utils.pop_args(request_dict, *keys)
 
-        invalid_flag = False
-
-        invalid_flag = invalid_flag and (
-            dic["userid"] is None or type(dic["userid"]) != int
-        )
-        invalid_flag = invalid_flag and (
-            dic["name"] is None or type(dic["name"]) != str
-        )
-        invalid_flag = invalid_flag and (
-            dic["photo"] is None or type(dic["photo"]) != str
-        )
-        invalid_flag = invalid_flag and (
-            dic["private"] is None or dic["private"] in ["true", "false"]
-        )
-
-        if invalid_flag:
+        if None in dic.values():
             return utils.send_json(responses.illegalArgument)
 
         if dic["private"]:
@@ -86,24 +71,6 @@ class ElementView(View):
         if [None] * len(keys) == list(dic.values()):
             return utils.send_json(responses.illegalArgument)
 
-        invalid_flag = False
-
-        invalid_flag = invalid_flag and (
-            dic["userid"] is not None and type(dic["userid"]) != int
-        )
-        invalid_flag = invalid_flag and (
-            dic["name"] is not None and type(dic["name"]) != str
-        )
-        invalid_flag = invalid_flag and (
-            dic["photo"] is not None and type(dic["photo"]) != str
-        )
-        invalid_flag = invalid_flag and (
-            dic["private"] is not None and dic["private"] in ["true", "false"]
-        )
-
-        if invalid_flag:
-            return utils.send_json(responses.illegalArgument)
-
         filtered = Profile.objects.filter(pk=pk)
         if not filtered.count():
             return utils.send_json(responses.noProfile)
@@ -135,7 +102,6 @@ class ElementView(View):
             profile_photo=dic["photo"],
             profile_private=dic["private"],
         )
-        # modifyProfileSucceed TODO
         return utils.send_json(responses.modifyProfileSucceed)
 
     def delete(self, request: HttpRequest, pk: int) -> HttpResponse:

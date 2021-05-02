@@ -13,4 +13,4 @@ class Place(models.Model):
     place_private = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.name
+        return self.place_name

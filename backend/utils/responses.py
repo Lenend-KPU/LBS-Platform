@@ -59,6 +59,24 @@ deleteFriendSucceed = {
     "comment": "delete friend succeed",
 }
 
+# Place
+noPlace = {"success": False, "status": 200, "comment": "Place does not exists"}
+createPlaceSucceed = {
+    "success": True,
+    "status": 200,
+    "comment": "create place succeed",
+}
+modifyPlaceSucceed = {
+    "success": True,
+    "status": 200,
+    "comment": "modify place succeed",
+}
+deletePlaceSucceed = {
+    "success": True,
+    "status": 200,
+    "comment": "delete place succeed",
+}
+
 # Login
 userAlreadyLogin = {
     "success": True,

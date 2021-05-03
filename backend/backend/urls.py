@@ -38,9 +38,9 @@ schema_view = get_schema_view(
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("viewapp.urls")),
-    path("comment/", include("commentapp.urls")),
-    path("user/", include("userapp.urls")),
-    path("profile/", include("profileapp.urls")),
+    path("comments/", include("commentapp.urls")),
+    path("users/", include("userapp.urls")),
+    path("profiles/", include("profileapp.urls")),
     path(
         "swagger<str:format>",
         schema_view.without_ui(cache_timeout=0),

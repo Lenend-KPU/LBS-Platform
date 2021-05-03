@@ -17,4 +17,4 @@ class Document(models.Model):
     document_private = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.name
+        return self.document_name

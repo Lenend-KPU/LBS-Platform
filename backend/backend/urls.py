@@ -23,11 +23,11 @@ from django.urls import path, include
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="Snippets API",
+        title="코스 공유 SNS",
         default_version="v1",
-        description="Test description",
+        description="한국산업기술대학교 종합설계 - 컴퓨터공학과, IT경영학과",
         terms_of_service="https://www.google.com/policies/terms/",
-        contact=openapi.Contact(email="contact@snippets.local"),
+        contact=openapi.Contact(email="hswook.dev@gmail.com"),
         license=openapi.License(name="BSD License"),
     ),
     validators=["flex"],

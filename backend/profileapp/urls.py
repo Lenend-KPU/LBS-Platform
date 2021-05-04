@@ -6,6 +6,6 @@ from .views import ElementView, RootView
 urlpatterns = [
     path("", RootView.as_view(), name="root"),
     path("<int:pk>/", ElementView.as_view(), name="child"),
-    path("friend/", include("friendapp.urls")),
-    path("<int:pk>/place/", include("placeapp.urls")),
+    path("<int:pk>/friends/", include("friendapp.urls")),
+    path("<int:pk>/places/", include("placeapp.urls")),
 ]

@@ -4,13 +4,31 @@ sys.path.append("..")
 from utils import utils, responses
 from django.http import HttpResponse, HttpRequest
 from django.views import View
+from rest_framework.views import APIView  # For swagger
 from .models import User
-from django.contrib.auth.hashers import check_password
+from .serializers import UserBodySerializer
 from django.contrib.auth.hashers import make_password
-
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 
 # Create your views here.
-class RootView(View):
+response_schema_dict = {
+    "200": openapi.Response(
+        description="custom 200 description",
+        examples={"application/json": responses.createUserSucceed},
+    ),
+    "400": openapi.Response(
+        description="custom 400 description",
+        examples={"application/json": responses.illegalArgument},
+    ),
+    "403": openapi.Response(
+        description="custom 400 description",
+        examples={"application/json": responses.userAlreadyRegistered},
+    ),
+}
+
+
+class RootView(APIView):
     def get(self, request: HttpRequest) -> HttpResponse:
         # 리미트 TODO
         users = User.objects.all()
@@ -20,6 +38,9 @@ class RootView(View):
 
         return utils.send_json(result)
 
+    @swagger_auto_schema(
+        request_body=UserBodySerializer, responses=response_schema_dict
+    )
     def post(self, request: HttpRequest) -> HttpResponse:
         keys = ["username", "address", "email", "password"]
         request_dict = utils.byte_to_dict(request.body)
@@ -41,7 +62,7 @@ class RootView(View):
         return utils.send_json(result)
 
 
-class ElementView(View):
+class ElementView(APIView):
     def get(self, request: HttpRequest, pk: int) -> HttpResponse:
         user = User.objects.filter(pk=pk)
         if len(user) != 1:

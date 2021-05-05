@@ -6,23 +6,18 @@ import kr.ac.kpu.lbs_platform.databinding.ActivityLoginBinding
 import kr.ac.kpu.lbs_platform.databinding.ActivityMainBinding
 import splitties.activities.start
 
-class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
-
+class LoginActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+
         val view = binding.root
         setContentView(view)
 
-        binding.loginButton.setOnClickListener {
-            start<LoginActivity>()
-        }
-        binding.registerButton.setOnClickListener {
-            start<RegisterActivity>()
-        }
+        // 로그인 로직 TODO
 
-
+        start<FeedActivity>()
     }
 }

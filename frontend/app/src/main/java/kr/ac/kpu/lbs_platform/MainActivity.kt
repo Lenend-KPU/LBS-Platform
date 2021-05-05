@@ -18,8 +18,6 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        window.statusBarColor = Color.TRANSPARENT
-
         binding.loginButton.setOnClickListener {
             start<LoginActivity>()
         }

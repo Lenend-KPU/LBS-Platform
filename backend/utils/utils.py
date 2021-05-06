@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 import json
+from decimal import Decimal
 
 import sys
 
@@ -7,13 +8,19 @@ sys.path.append("..")
 from urllib import parse
 from .responses import *
 from django.core.serializers import serialize
+from django.forms.models import model_to_dict
 
+class DecimalEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, Decimal):
+            return float(obj)
+        return json.JSONEncoder.default(self, obj)
 
 """딕셔너리를 JSON으로 전송하는 헬퍼 함수"""
 
 
 def send_json(data):
-    res = json.dumps(data)
+    res = json.dumps(data, cls=DecimalEncoder)
     return HttpResponse(res, content_type="application/json", status=data["status"])
 
 

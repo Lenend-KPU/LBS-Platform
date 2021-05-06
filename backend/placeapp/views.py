@@ -4,12 +4,14 @@ sys.path.append("..")
 from utils import utils, responses
 from django.http import HttpResponse, HttpRequest
 from django.views import View
+from rest_framework.views import APIView  # For swagger
 from profileapp.models import Profile
+from maximumapp.models import Maximum
 from .models import Place
 
 # Create your views here.
 # /profile/3/place/
-class Rootview(View):
+class Rootview(APIView):
     def get(self, request: HttpRequest, pk: int) -> HttpResponse:
         # 리미트: TODO
         profile = Profile.objects.filter(pk=pk).first()
@@ -29,6 +31,10 @@ class Rootview(View):
         return utils.send_json(result)
 
     def post(self, request: HttpRequest, pk: int) -> HttpResponse:
+        profile = Profile.objects.filter(pk=pk).first()
+        if profile is None:
+            return utils.send_json(responses.noProfile)
+
         keys = ["name", "rate", "photo", "latitude", "longitude", "private"]
         request_dict = utils.byte_to_dict(request.body)
         dic = utils.pop_args(request_dict, *keys)
@@ -38,10 +44,6 @@ class Rootview(View):
 
         if dic["private"]:
             dic["private"] = ["true", "false"].index(dic["private"]) == 0
-
-        profile = Profile.objects.filter(pk=pk).first()
-        if profile is None:
-            return utils.send_json(responses.noProfile)
 
         Place.objects.create(
             profile=profile,
@@ -56,7 +58,7 @@ class Rootview(View):
         return utils.send_json(result)
 
 
-class ElementView(View):
+class ElementView(APIView):
     def get(self, request: HttpRequest, pk: int, place_pk: int) -> HttpResponse:
         profile = Profile.objects.filter(pk=pk).first()
 
@@ -75,17 +77,16 @@ class ElementView(View):
         return utils.send_json(result)
 
     def put(self, request: HttpRequest, pk: int, place_pk: int) -> HttpResponse:
-        keys = ["name", "rate", "photo", "latitude", "longitude", "private"]
-        request_dict = utils.byte_to_dict(request.body)
-        dic = utils.pop_args(request_dict, *keys)
-        print(dic)
-
-        if [None] * len(keys) == list(dic.values()):
-            return utils.send_json(responses.illegalArgument)
-
         profile = Profile.objects.filter(pk=pk).first()
         if profile is None:
             return utils.send_json(responses.noProfile)
+
+        keys = ["name", "rate", "photo", "latitude", "longitude", "private"]
+        request_dict = utils.byte_to_dict(request.body)
+        dic = utils.pop_args(request_dict, *keys)
+
+        if [None] * len(keys) == list(dic.values()):
+            return utils.send_json(responses.illegalArgument)
 
         place = Place.objects.filter(profile=profile, pk=place_pk)
         if not place.count():

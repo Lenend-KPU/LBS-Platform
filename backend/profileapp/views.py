@@ -5,11 +5,12 @@ from userapp.models import User
 from utils import utils, responses
 from django.http import HttpResponse, HttpRequest
 from django.views import View
+from rest_framework.views import APIView  # For swagger
 from .models import Profile
 
 
 # Create your views here.
-class RootView(View):
+class RootView(APIView):
     def get(self, request: HttpRequest) -> HttpResponse:
         # 리미트 TODO
         profiles = Profile.objects.all()
@@ -51,7 +52,7 @@ class RootView(View):
         return utils.send_json(result)
 
 
-class ElementView(View):
+class ElementView(APIView):
     def get(self, request: HttpRequest, pk: int) -> HttpResponse:
         profile = Profile.objects.filter(pk=pk)
         if len(profile) != 1:

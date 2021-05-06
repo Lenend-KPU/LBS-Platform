@@ -6,6 +6,7 @@ class DocumentAdmin(admin.ModelAdmin):
     list_display = [
         "id",
         "profile",
+        "profile_friend",
         "document_name",
         "document_color",
         "document_map",

@@ -14,38 +14,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <FrameLayout
-            android:id="@+id/frameLayout"
+        <ImageView
+            android:id="@+id/profileImageView"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginStart="8dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/profileImageView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:srcCompat="@android:mipmap/sym_def_app_icon" />
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:srcCompat="@drawable/circle_crop" />
-
-        </FrameLayout>
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:mipmap/sym_def_app_icon" />
 
         <TextView
-            android:id="@+id/profileAuthorTextView"
+            android:id="@+id/profileTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="12dp"
             android:layout_marginTop="11dp"
             android:fontFamily="sans-serif-light"
             android:text="jacob_w"
             android:textColor="#000000"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/frameLayout"
+            app:layout_constraintStart_toEndOf="@+id/profileImageView"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

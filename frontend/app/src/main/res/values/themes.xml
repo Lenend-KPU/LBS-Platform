@@ -12,4 +12,11 @@
         <item name="android:statusBarColor" tools:targetApi="l">#B38CEE</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="SpinnerTheme" parent="android:Widget.Spinner">
+        <item name="android:background">@drawable/ic_baseline_more_vert_24</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginRight">5dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+    </style>
 </resources>

@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
 import kr.ac.kpu.lbs_platform.databinding.ActivityFeedBinding
-import kr.ac.kpu.lbs_platform.databinding.ActivityRegisterBinding
 
 class FeedActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFeedBinding
@@ -18,5 +17,6 @@ class FeedActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+        window.statusBarColor = Color.BLACK
     }
 }

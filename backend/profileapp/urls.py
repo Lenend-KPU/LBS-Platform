@@ -8,4 +8,5 @@ urlpatterns = [
     path("<int:pk>/", ElementView.as_view(), name="child"),
     path("<int:pk>/friends/", include("friendapp.urls")),
     path("<int:pk>/places/", include("placeapp.urls")),
+    path("<int:pk>/documents/", include("documentapp.urls")),
 ]

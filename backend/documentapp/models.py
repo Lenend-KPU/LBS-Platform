@@ -7,7 +7,10 @@ class Document(models.Model):
         Profile, on_delete=models.CASCADE, related_name="document_profile"
     )
     profile_friend = models.ForeignKey(
-        Profile, on_delete=models.CASCADE, related_name="document_profile_friend"
+        Profile,
+        on_delete=models.CASCADE,
+        related_name="document_profile_friend",
+        null=True,
     )
     document_name = models.CharField(max_length=20)
     document_color = models.CharField(max_length=20)
@@ -17,4 +20,4 @@ class Document(models.Model):
     document_private = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.document_name
+        return str(self.pk)

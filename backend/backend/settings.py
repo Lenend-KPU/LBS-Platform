@@ -61,6 +61,7 @@ PROJECT_APPS = [
     "pathapp",
     "userInfoapp",
     "viewapp",
+    "maximumapp",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS

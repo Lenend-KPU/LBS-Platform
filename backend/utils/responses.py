@@ -61,6 +61,11 @@ deleteFriendSucceed = {
 
 # Place
 noPlace = {"success": False, "status": 200, "comment": "Place does not exists"}
+noPlaceNum = {
+    "success": False,
+    "status": 200,
+    "comment": "Place Field 'id' expected a number",
+}
 createPlaceSucceed = {
     "success": True,
     "status": 200,
@@ -75,6 +80,24 @@ deletePlaceSucceed = {
     "success": True,
     "status": 200,
     "comment": "delete place succeed",
+}
+
+# Document
+noDocument = {"success": False, "status": 200, "comment": "Document does not exists"}
+createDocumentSucceed = {
+    "success": True,
+    "status": 200,
+    "comment": "create Document succeed",
+}
+modifyDocumentSucceed = {
+    "success": True,
+    "status": 200,
+    "comment": "modify Document succeed",
+}
+deleteDocumentSucceed = {
+    "success": True,
+    "status": 200,
+    "comment": "delete Document succeed",
 }
 
 # Login

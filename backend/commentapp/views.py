@@ -4,10 +4,11 @@ sys.path.append("..")
 from utils import utils, responses
 from django.http import HttpResponse, HttpRequest
 from django.views import View
+from rest_framework.views import APIView  # For swagger
 from .models import Comment
 
 # Create your views here.
-class RootView(View):
+class RootView(APIView):
     def get(self, request: HttpRequest) -> HttpResponse:
         # 리미트 TODO
         comments = Comment.objects.all()
@@ -22,7 +23,7 @@ class RootView(View):
         return self.get()
 
 
-class ElementView(View):
+class ElementView(APIView):
     def get(self, request: HttpRequest, pk: int) -> HttpResponse:
         comment = Comment.objects.filter(pk=pk)
         if len(comment) != 1:

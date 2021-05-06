@@ -4,11 +4,12 @@ sys.path.append("..")
 from utils import utils, responses
 from django.http import HttpResponse, HttpRequest
 from django.views import View
+from rest_framework.views import APIView  # For swagger
 from .models import Friend
 from profileapp.models import Profile
 
 # Create your views here.
-class GetView(View):
+class GetView(APIView):
     def get(self, request: HttpRequest, pk: int) -> HttpResponse:
         me = Profile.objects.filter(pk=pk).first()
 
@@ -40,7 +41,7 @@ class GetView(View):
         return utils.send_json(result)
 
 
-class ElementView(View):
+class ElementView(APIView):
     def post(self, request: HttpRequest, pk: int, following_pk: int) -> HttpResponse:
         me = Profile.objects.filter(pk=pk).first()
         friend = Profile.objects.filter(pk=following_pk).first()

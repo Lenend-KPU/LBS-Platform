@@ -26,9 +26,9 @@ TODO
 |------|---|
 |개발환경|Aws lightsail Ubuntu 20.04, Docker|
 |DB|Redis, Postgresql(container)|
-|Front-end|HTML5, CSS3, JavaScript, React Native, Expo|
+|Front-end|Android Native(kotlin)|
 |Back-end|Nginx, Django, Jenkins|
-|api|Google maps, Mapbox, 상권 정보, 도로명주소|
+|api|Google maps|
 |UI|Figma|
 
 ## Demo

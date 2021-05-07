@@ -15,14 +15,18 @@
             android:id="@+id/generateDocumentButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginRight="3dp"
             android:layout_weight="1"
+            android:backgroundTint="#9575CD"
             android:text="경로 생성" />
 
         <Button
             android:id="@+id/generatePlaceButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="3dp"
             android:layout_weight="1"
+            android:backgroundTint="#7986CB"
             android:text="장소 생성" />
     </LinearLayout>
 

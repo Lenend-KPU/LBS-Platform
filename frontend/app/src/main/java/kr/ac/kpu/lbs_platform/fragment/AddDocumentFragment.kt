@@ -1,22 +1,20 @@
-package kr.ac.kpu.lbs_platform
+package kr.ac.kpu.lbs_platform.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import kr.ac.kpu.lbs_platform.R
 
-class FeedFragment : Fragment() {
+class AddDocumentFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val inflated = inflater.inflate(R.layout.fragment_feed, container, false)
-        MainActivity.instance?.binding?.bottomNavigationView?.visibility = View.VISIBLE
-        MainActivity.instance?.binding?.bottomNavigationView?.selectedItemId = R.id.page_feed
         // Inflate the layout for this fragment
-        return inflated
+        return inflater.inflate(R.layout.fragment_add_document, container, false)
     }
 }

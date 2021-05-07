@@ -1,15 +1,17 @@
-package kr.ac.kpu.lbs_platform
+package kr.ac.kpu.lbs_platform.activity
 
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kr.ac.kpu.lbs_platform.R
 import kr.ac.kpu.lbs_platform.databinding.ActivityMainBinding
-import splitties.fragments.fragmentTransaction
-import splitties.views.inflate
+import kr.ac.kpu.lbs_platform.fragment.AddFragment
+import kr.ac.kpu.lbs_platform.fragment.FeedFragment
+import kr.ac.kpu.lbs_platform.fragment.ProfileFragment
+import kr.ac.kpu.lbs_platform.fragment.SearchFragment
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
     companion object {

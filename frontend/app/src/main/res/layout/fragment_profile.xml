@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".ProfileFragment">
+    tools:context=".fragment.ProfileFragment">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -206,7 +206,7 @@
 
     <fragment
         android:id="@+id/profileFragment"
-        android:name="kr.ac.kpu.lbs_platform.DocumentFragment"
+        android:name="kr.ac.kpu.lbs_platform.fragment.DocumentFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"

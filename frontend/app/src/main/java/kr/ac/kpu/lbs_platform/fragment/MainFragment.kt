@@ -1,17 +1,15 @@
-package kr.ac.kpu.lbs_platform
+package kr.ac.kpu.lbs_platform.fragment
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.FrameLayout
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import splitties.fragments.fragmentTransaction
+import kr.ac.kpu.lbs_platform.activity.MainActivity
+import kr.ac.kpu.lbs_platform.R
 
 class MainFragment : Fragment() {
 

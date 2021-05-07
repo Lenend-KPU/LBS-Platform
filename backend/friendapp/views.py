@@ -10,8 +10,8 @@ from profileapp.models import Profile
 
 # Create your views here.
 class GetView(APIView):
-    def get(self, request: HttpRequest, pk: int) -> HttpResponse:
-        me = Profile.objects.filter(pk=pk).first()
+    def get(self, request: HttpRequest, profile_pk: int) -> HttpResponse:
+        me = Profile.objects.filter(pk=profile_pk).first()
 
         if me is None:
             return utils.send_json(responses.noProfile)
@@ -42,8 +42,8 @@ class GetView(APIView):
 
 
 class ElementView(APIView):
-    def post(self, request: HttpRequest, pk: int, following_pk: int) -> HttpResponse:
-        me = Profile.objects.filter(pk=pk).first()
+    def post(self, request: HttpRequest, profile_pk: int, following_pk: int) -> HttpResponse:
+        me = Profile.objects.filter(pk=profile_pk).first()
         friend = Profile.objects.filter(pk=following_pk).first()
 
         if None in [me, friend]:
@@ -65,8 +65,8 @@ class ElementView(APIView):
         result = responses.createFriendSucceed
         return utils.send_json(result)
 
-    def delete(self, request: HttpRequest, pk: int, following_pk: int) -> HttpResponse:
-        me = Profile.objects.filter(pk=pk).first()
+    def delete(self, request: HttpRequest, profile_pk: int, following_pk: int) -> HttpResponse:
+        me = Profile.objects.filter(pk=profile_pk).first()
         friend = Profile.objects.filter(pk=following_pk).first()
 
         if None in [me, friend]:

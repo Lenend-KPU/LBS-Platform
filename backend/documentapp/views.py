@@ -22,9 +22,9 @@ def createPath(document_pk, place_pk, order):
 
 # Create your views here.
 class Rootview(APIView):
-    def get(self, request: HttpRequest, pk: int) -> HttpResponse:
+    def get(self, request: HttpRequest, profile_pk: int) -> HttpResponse:
         # 리미트: TODO
-        profile = Profile.objects.filter(pk=pk).first()
+        profile = Profile.objects.filter(pk=profile_pk).first()
 
         if profile is None:
             return utils.send_json(responses.noProfile)
@@ -63,8 +63,8 @@ class Rootview(APIView):
 
         return utils.send_json(result)
 
-    def post(self, request: HttpRequest, pk: int) -> HttpResponse:
-        profile = Profile.objects.filter(pk=pk).first()
+    def post(self, request: HttpRequest, profile_pk: int) -> HttpResponse:
+        profile = Profile.objects.filter(pk=profile_pk).first()
         if profile is None:
             return utils.send_json(responses.noProfile)
 
@@ -131,7 +131,9 @@ class Rootview(APIView):
         )
 
         for key, value in places_dic.items():
-            createPath(document_created, value, key[5:])  # key[5:]는 1 ~ 10
+            createPath(
+                document_created, value, key[5:]
+            )  # key[5:]는 place1 ~ 10의 숫자만 슬라이싱
 
         del document_created
 
@@ -139,9 +141,11 @@ class Rootview(APIView):
 
 
 class ElementView(APIView):
-    def get(self, request: HttpRequest, pk: int, document_pk: int) -> HttpResponse:
+    def get(
+        self, request: HttpRequest, profile_pk: int, document_pk: int
+    ) -> HttpResponse:
         # 리미트: TODO
-        profile = Profile.objects.filter(pk=pk).first()
+        profile = Profile.objects.filter(pk=profile_pk).first()
 
         if profile is None:
             return utils.send_json(responses.noProfile)
@@ -176,9 +180,11 @@ class ElementView(APIView):
         del place_dict
         return utils.send_json(result)
 
-    def put(self, request: HttpRequest, pk: int, document_pk: int) -> HttpResponse:
+    def put(
+        self, request: HttpRequest, profile_pk: int, document_pk: int
+    ) -> HttpResponse:
         pass
-        # profile = Profile.objects.filter(pk=pk).first()
+        # profile = Profile.objects.filter(pk=profile_pk).first()
         # if profile is None:
         #     return utils.send_json(responses.noProfile)
 
@@ -223,9 +229,11 @@ class ElementView(APIView):
         # # modifyProfileSucceed TODO
         return utils.send_json(responses.modifyDocumentSucceed)
 
-    def delete(self, request: HttpRequest, pk: int, document_pk: int) -> HttpResponse:
+    def delete(
+        self, request: HttpRequest, profile_pk: int, document_pk: int
+    ) -> HttpResponse:
         # 삭제, 수정은 해당 유저나 관리자가 할 수 있어야 하는데 해당 부분은 TODO
-        profile = Profile.objects.filter(pk=pk).first()
+        profile = Profile.objects.filter(pk=profile_pk).first()
 
         if profile is None:
             return utils.send_json(responses.noProfile)

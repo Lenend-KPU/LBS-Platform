@@ -53,8 +53,8 @@ class RootView(APIView):
 
 
 class ElementView(APIView):
-    def get(self, request: HttpRequest, pk: int) -> HttpResponse:
-        profile = Profile.objects.filter(pk=pk)
+    def get(self, request: HttpRequest, profile_pk: int) -> HttpResponse:
+        profile = Profile.objects.filter(pk=profile_pk)
         if len(profile) != 1:
             return utils.send_json(responses.noProfile)
         profile = utils.to_dict(profile)
@@ -63,7 +63,7 @@ class ElementView(APIView):
         result["result"] = profile
         return utils.send_json(result)
 
-    def put(self, request: HttpRequest, pk: int) -> HttpResponse:
+    def put(self, request: HttpRequest, profile_pk: int) -> HttpResponse:
         keys = ["userid", "name", "photo", "private"]
         request_dict = utils.byte_to_dict(request.body)
         dic = utils.pop_args(request_dict, *keys)
@@ -72,7 +72,7 @@ class ElementView(APIView):
         if [None] * len(keys) == list(dic.values()):
             return utils.send_json(responses.illegalArgument)
 
-        filtered = Profile.objects.filter(pk=pk)
+        filtered = Profile.objects.filter(pk=profile_pk)
         if not filtered.count():
             return utils.send_json(responses.noProfile)
 
@@ -105,9 +105,9 @@ class ElementView(APIView):
         )
         return utils.send_json(responses.modifyProfileSucceed)
 
-    def delete(self, request: HttpRequest, pk: int) -> HttpResponse:
+    def delete(self, request: HttpRequest, profile_pk: int) -> HttpResponse:
         # 삭제, 수정은 해당 유저나 관리자가 할 수 있어야 하는데 해당 부분은 TODO
-        profile = Profile.objects.filter(pk=pk)
+        profile = Profile.objects.filter(pk=profile_pk)
         if len(profile) != 1:
             return utils.send_json(responses.noProfile)
         profile.delete()

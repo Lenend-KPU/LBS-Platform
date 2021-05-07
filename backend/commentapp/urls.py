@@ -6,5 +6,5 @@ from .views import ElementView, RootView
 
 urlpatterns = [
     path("", RootView.as_view(), name="root"),
-    path("<int:pk>/", ElementView.as_view(), name="child"),
+    path("<int:comment_pk>/", ElementView.as_view(), name="child"),
 ]

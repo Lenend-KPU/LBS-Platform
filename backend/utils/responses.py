@@ -25,6 +25,7 @@ deleteUserSucceed = {"success": True, "status": 200, "comment": "delete user suc
 
 # Profile
 noProfile = {"success": False, "status": 200, "comment": "there's no matched profile"}
+noMyProfile = {"success": False, "status": 200, "comment": "My Profile is not exists"}
 profileAlreadyRegistered = {
     "success": False,
     "status": 403,
@@ -140,4 +141,19 @@ commentDoesNotExists = {
     "success": False,
     "status": 200,
     "comment": "Comment does not exists",
+}
+createCommentSucceed = {
+    "success": True,
+    "status": 200,
+    "comment": "create comment succeed",
+}
+modifyCommentSucceed = {
+    "success": True,
+    "status": 200,
+    "comment": "modify comment succeed",
+}
+deleteCommentSucceed = {
+    "success": True,
+    "status": 200,
+    "comment": "delete comment succeed",
 }

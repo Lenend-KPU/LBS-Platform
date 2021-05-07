@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.LBSPlatform">
-        <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".AddDocumentActivity"></activity>
+        <activity android:name=".ProfileFragment" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".FeedActivity" />

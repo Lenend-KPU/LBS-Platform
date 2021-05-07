@@ -1,12 +1,9 @@
 package kr.ac.kpu.lbs_platform
 
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import kr.ac.kpu.lbs_platform.databinding.ActivityLoginBinding
 import kr.ac.kpu.lbs_platform.databinding.ActivityMainBinding
-import splitties.activities.start
+import splitties.fragments.fragmentTransaction
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -18,13 +15,9 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        binding.loginButton.setOnClickListener {
-            start<LoginActivity>()
+        fragmentTransaction {
+            this.add(R.id.mainActivityfragment, MainFragment())
         }
-        binding.registerButton.setOnClickListener {
-            start<RegisterActivity>()
-        }
-
 
     }
 }

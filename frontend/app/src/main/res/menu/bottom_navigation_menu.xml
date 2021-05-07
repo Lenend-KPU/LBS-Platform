@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <item
-        android:id="@+id/page_home"
+        android:id="@+id/page_feed"
         android:enabled="true"
-        android:icon="@drawable/ic_baseline_home_24"
-        android:title="홈"/>
+        android:icon="@drawable/ic_baseline_dynamic_feed_24"
+        android:title="피드"/>
 
     <item
         android:id="@+id/page_search"
@@ -13,16 +13,11 @@
         android:title="검색"/>
 
     <item
-        android:id="@+id/page_feed"
+        android:id="@+id/page_add"
         android:enabled="true"
-        android:icon="@drawable/ic_baseline_dynamic_feed_24"
-        android:title="피드"/>
+        android:icon="@drawable/ic_baseline_add_24"
+        android:title="생성"/>
 
-    <item
-        android:id="@+id/page_list"
-        android:enabled="true"
-        android:icon="@drawable/ic_baseline_list_alt_24"
-        android:title="리스트"/>
 
     <item
         android:id="@+id/page_profile"

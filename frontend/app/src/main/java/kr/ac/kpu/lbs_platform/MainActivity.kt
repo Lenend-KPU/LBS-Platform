@@ -40,11 +40,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         Log.i("MainActivity", item.itemId.toString())
         previousItemId = item.itemId
         when(item.itemId) {
-            R.id.page_home -> {
-                Log.i("MainActivity", "page_home")
-                supportFragmentManager.beginTransaction().replace(R.id.mainActivityfragment, HomeFragment()).commit()
-                return true
-            }
             R.id.page_search -> {
                 Log.i("MainActivity", "page_search")
                 supportFragmentManager.beginTransaction().replace(R.id.mainActivityfragment, SearchFragment()).commit()
@@ -55,9 +50,9 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 supportFragmentManager.beginTransaction().replace(R.id.mainActivityfragment, FeedFragment()).commit()
                 return true
             }
-            R.id.page_list -> {
+            R.id.page_add -> {
                 Log.i("MainActivity", "page_list")
-                supportFragmentManager.beginTransaction().replace(R.id.mainActivityfragment, ListFragment()).commit()
+                supportFragmentManager.beginTransaction().replace(R.id.mainActivityfragment, AddFragment()).commit()
                 return true
             }
             R.id.page_profile -> {

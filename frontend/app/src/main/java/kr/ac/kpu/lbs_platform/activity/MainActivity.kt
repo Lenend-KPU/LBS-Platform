@@ -16,12 +16,10 @@ import kr.ac.kpu.lbs_platform.fragment.SearchFragment
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
     companion object {
         var instance: MainActivity? = null
+        var previousItemId: Int = 0
     }
 
     lateinit var binding: ActivityMainBinding
-    
-    var previousItemId: Int = 0
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +34,9 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        if(previousItemId == item.itemId) {
+        if(
+            previousItemId == item.itemId
+        ) {
             return true
         }
         Log.i("MainActivity", item.itemId.toString())

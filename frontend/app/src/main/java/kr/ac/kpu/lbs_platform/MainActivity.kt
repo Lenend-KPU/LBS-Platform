@@ -1,30 +1,74 @@
 package kr.ac.kpu.lbs_platform
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.MenuItem
+import android.view.View
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kr.ac.kpu.lbs_platform.databinding.ActivityMainBinding
 import splitties.fragments.fragmentTransaction
+import splitties.views.inflate
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
     companion object {
         var instance: MainActivity? = null
     }
 
     lateinit var binding: ActivityMainBinding
+    
+    var previousItemId: Int = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        val view = binding.root
         instance = this
+        val view = binding.root
+        binding.bottomNavigationView.visibility = View.GONE
+        binding.bottomNavigationView.selectedItemId = R.id.page_feed
+        binding.bottomNavigationView.setOnNavigationItemSelectedListener(this)
+        window.statusBarColor = getColor(R.color.black)
         setContentView(view)
-
-        fragmentTransaction {
-            replace(R.id.mainActivityfragment, MainFragment())
-        }
-
     }
 
-
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        if(previousItemId == item.itemId) {
+            return true
+        }
+        Log.i("MainActivity", item.itemId.toString())
+        previousItemId = item.itemId
+        when(item.itemId) {
+            R.id.page_home -> {
+                Log.i("MainActivity", "page_home")
+                supportFragmentManager.beginTransaction().replace(R.id.mainActivityfragment, HomeFragment()).commit()
+                return true
+            }
+            R.id.page_search -> {
+                Log.i("MainActivity", "page_search")
+                supportFragmentManager.beginTransaction().replace(R.id.mainActivityfragment, SearchFragment()).commit()
+                return true
+            }
+            R.id.page_feed -> {
+                Log.i("MainActivity", "page_feed")
+                supportFragmentManager.beginTransaction().replace(R.id.mainActivityfragment, FeedFragment()).commit()
+                return true
+            }
+            R.id.page_list -> {
+                Log.i("MainActivity", "page_list")
+                supportFragmentManager.beginTransaction().replace(R.id.mainActivityfragment, ListFragment()).commit()
+                return true
+            }
+            R.id.page_profile -> {
+                Log.i("MainActivity", "page_profile")
+                supportFragmentManager.beginTransaction().replace(R.id.mainActivityfragment, ProfileFragment()).commit()
+                return true
+            }
+            else -> {
+                Log.i("MainActivity", "else")
+                return true
+            }
+        }
+    }
 }

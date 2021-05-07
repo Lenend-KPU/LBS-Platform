@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ProfileFragment">
 
 
@@ -11,7 +12,7 @@
         android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="@color/status_bar_color"
+        android:background="#5C45C6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -30,27 +31,43 @@
                 style="@style/SpinnerTheme"
                 android:layout_width="wrap_content"
                 android:layout_height="24dp"
-                tools:layout_editor_absoluteX="371dp"
-                tools:layout_editor_absoluteY="16dp" />
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/profileTextView"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/profileActivityImageView"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                app:srcCompat="@android:mipmap/sym_def_app_icon"
-                tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="5dp" />
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="14dp"
+                android:layout_marginBottom="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/profileTextView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@android:mipmap/sym_def_app_icon" />
 
             <TextView
                 android:id="@+id/profileTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="21dp"
+                android:layout_marginEnd="250dp"
+                android:layout_marginBottom="10dp"
                 android:fontFamily="sans-serif-light"
                 android:text="jacob_w"
                 android:textColor="#000000"
                 android:textStyle="bold"
-                tools:layout_editor_absoluteX="70dp"
-                tools:layout_editor_absoluteY="21dp" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/spinner"
+                app:layout_constraintStart_toEndOf="@+id/profileActivityImageView"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

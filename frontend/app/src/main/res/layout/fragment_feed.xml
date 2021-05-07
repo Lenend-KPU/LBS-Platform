@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FeedActivity">
+    android:background="@color/white"
+    tools:context=".FeedFragment">
 
     <TextView
         android:id="@+id/feedTitle"
@@ -25,6 +26,7 @@
         android:background="?android:attr/listDivider"
         app:layout_constraintTop_toBottomOf="@+id/feedTitle"
         tools:layout_editor_absoluteX="0dp" />
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"

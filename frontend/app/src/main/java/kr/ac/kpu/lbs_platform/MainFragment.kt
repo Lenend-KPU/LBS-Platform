@@ -1,20 +1,24 @@
 package kr.ac.kpu.lbs_platform
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.FrameLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import splitties.fragments.fragmentTransaction
 
 class MainFragment : Fragment() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,20 +39,24 @@ class MainFragment : Fragment() {
         loginButton.setOnClickListener {
             GlobalScope.launch {
                 while (MainActivity.instance == null) ;
-                MainActivity.instance?.fragmentTransaction {
-                    replace(R.id.mainActivityfragment, FeedFragment())
-                }
+                MainActivity.instance?.supportFragmentManager
+                    ?.beginTransaction()
+                    ?.replace(R.id.mainActivityfragment, FeedFragment())
+                    ?.commit()
             }
         }
         registerButton.setOnClickListener {
             GlobalScope.launch {
                 while (MainActivity.instance == null) ;
-                MainActivity.instance?.fragmentTransaction {
-                    replace(R.id.mainActivityfragment, FeedFragment())
-                }
+                MainActivity.instance?.supportFragmentManager
+                    ?.beginTransaction()
+                    ?.replace(R.id.mainActivityfragment, FeedFragment())
+                    ?.commit()
             }
         }
 
         return inflated
     }
+
+
 }

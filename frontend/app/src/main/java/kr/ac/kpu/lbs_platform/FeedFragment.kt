@@ -13,7 +13,10 @@ class FeedFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+        val inflated = inflater.inflate(R.layout.fragment_feed, container, false)
+        MainActivity.instance?.binding?.bottomNavigationView?.visibility = View.VISIBLE
+        MainActivity.instance?.binding?.bottomNavigationView?.selectedItemId = R.id.page_feed
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_feed, container, false)
+        return inflated
     }
 }

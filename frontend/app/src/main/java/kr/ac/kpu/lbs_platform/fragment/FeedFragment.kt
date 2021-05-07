@@ -2,6 +2,7 @@ package kr.ac.kpu.lbs_platform.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -20,5 +21,31 @@ class FeedFragment : Fragment() {
         MainActivity.instance?.binding?.bottomNavigationView?.selectedItemId = R.id.page_feed
         // Inflate the layout for this fragment
         return inflated
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.generate_place -> {
+                MainActivity.instance?.let {
+                    it.supportFragmentManager.beginTransaction().replace(R.id.mainActivityfragment, AddPlaceFragment()).commit()
+                }
+            }
+            R.id.generate_route -> {
+                MainActivity.instance?.let {
+                    it.supportFragmentManager.beginTransaction().replace(R.id.mainActivityfragment, AddDocumentFragment()).commit()
+                }
+            }
+            R.id.saved -> {
+                MainActivity.instance?.let {
+                    it.supportFragmentManager.beginTransaction().replace(R.id.mainActivityfragment, SavedLocationFragment()).commit()
+                }
+            }
+            R.id.profile_edit -> {
+                MainActivity.instance?.let {
+                    it.supportFragmentManager.beginTransaction().replace(R.id.mainActivityfragment, ProfileEditFragment()).commit()
+                }
+            }
+        }
+        return true
     }
 }

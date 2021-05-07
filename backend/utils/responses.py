@@ -169,13 +169,25 @@ createLikeSucceed = {
     "status": 200,
     "comment": "create like succeed",
 }
-modifyLikeSucceed = {
-    "success": True,
-    "status": 200,
-    "comment": "modify like succeed",
-}
 deleteLikeSucceed = {
     "success": True,
     "status": 200,
     "comment": "delete like succeed",
+}
+
+# Save
+saveDoesNotExists = {
+    "success": False,
+    "status": 200,
+    "comment": "save does not exists",
+}
+createSaveSucceed = {
+    "success": True,
+    "status": 200,
+    "comment": "create save succeed",
+}
+deleteSaveSucceed = {
+    "success": True,
+    "status": 200,
+    "comment": "delete save succeed",
 }

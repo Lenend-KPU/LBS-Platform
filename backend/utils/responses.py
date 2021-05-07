@@ -157,3 +157,25 @@ deleteCommentSucceed = {
     "status": 200,
     "comment": "delete comment succeed",
 }
+
+# Like
+likeDoesNotExists = {
+    "success": False,
+    "status": 200,
+    "comment": "like does not exists",
+}
+createLikeSucceed = {
+    "success": True,
+    "status": 200,
+    "comment": "create like succeed",
+}
+modifyLikeSucceed = {
+    "success": True,
+    "status": 200,
+    "comment": "modify like succeed",
+}
+deleteLikeSucceed = {
+    "success": True,
+    "status": 200,
+    "comment": "delete like succeed",
+}

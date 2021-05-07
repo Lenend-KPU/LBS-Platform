@@ -5,6 +5,14 @@
 #### (Location Based Experience Sharing Service)
 설명(TODO)
 
+## Design
+<img width="1082" alt="1" src="https://user-images.githubusercontent.com/22572874/117487409-051ab380-afa6-11eb-8e2e-70ff0e83a6e9.png">
+<img width="1085" alt="2" src="https://user-images.githubusercontent.com/22572874/117487428-09df6780-afa6-11eb-9dd7-554d20aa468b.png">
+<img width="1085" alt="3" src="https://user-images.githubusercontent.com/22572874/117487431-0b109480-afa6-11eb-88da-844ccbf05c01.png">
+<img width="1086" alt="4" src="https://user-images.githubusercontent.com/22572874/117487433-0ba92b00-afa6-11eb-915d-728baff63daa.png">
+<img width="1098" alt="5" src="https://user-images.githubusercontent.com/22572874/117487435-0c41c180-afa6-11eb-9480-5991076b47f2.png">
+[링크 - Zeplin](https://scene.zeplin.io/project/608f9bd65948df337111c229)
+
 ## Installation
 ```
 TODO

@@ -6,18 +6,25 @@ import kr.ac.kpu.lbs_platform.databinding.ActivityMainBinding
 import splitties.fragments.fragmentTransaction
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+    companion object {
+        var instance: MainActivity? = null
+    }
+
+    lateinit var binding: ActivityMainBinding
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
+        instance = this
         setContentView(view)
 
         fragmentTransaction {
-            this.add(R.id.mainActivityfragment, MainFragment())
+            replace(R.id.mainActivityfragment, MainFragment())
         }
 
     }
+
+
 }

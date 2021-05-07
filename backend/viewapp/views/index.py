@@ -4,13 +4,12 @@ import sys
 
 sys.path.append("..")
 
-from utils.utils import send_json
-from utils.responses import *
+from utils import utils, responses
 
 # Create your views here.
 class IndexView(APIView):
     def get(self, request):
-        return send_json(APIOnly)
+        return utils.send_json(responses.APIOnly)
 
     def post(self, request):
         return self.get(request)

@@ -8,7 +8,7 @@ class Like(models.Model):
     document = models.ForeignKey(
         Document, on_delete=models.CASCADE, related_name="like"
     )
-    like_data = models.DateTimeField()
+    like_data = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        unique_together = ("profile" , "document")
+        unique_together = ("profile", "document")

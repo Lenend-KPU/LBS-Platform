@@ -6,11 +6,35 @@
     android:background="@color/white"
     tools:context=".fragment.AddPlaceFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+        app:layout_constraintVertical_bias="0.0"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="150dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/placeSearchEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+            android:text="장소 추가" />
+
+        <EditText
+            android:id="@+id/placeContentEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="문구 입력" />
+
+    </LinearLayout>
 
 </FrameLayout>

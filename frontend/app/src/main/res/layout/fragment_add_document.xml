@@ -5,4 +5,76 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".fragment.AddDocumentFragment" />
+    tools:context=".fragment.AddDocumentFragment">
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="330dp"
+        android:layout_height="150dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+        app:layout_constraintVertical_bias="0.0">
+
+        <EditText
+            android:id="@+id/placeEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="장소 추가" />
+
+        <EditText
+            android:id="@+id/documentNameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="경로 이름 입력" />
+
+        <EditText
+            android:id="@+id/contentEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="문구 입력" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/addDocumentButton"
+        android:layout_width="351dp"
+        android:layout_height="45dp"
+        android:text="경로 추가"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+
+    <Button
+        android:id="@+id/submitDocumentButton"
+        android:layout_width="351dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="52dp"
+        android:text="게시"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

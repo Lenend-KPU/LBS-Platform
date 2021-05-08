@@ -28,7 +28,7 @@ node {
     dir('backend') {
        withEnv(["PATH=$PATH:/usr/local/bin"]){
         sh """
-            sudo docker-compose -p LBS_Platform up --build
+            docker-compose -p LBS_Platform up --build
         """
        }
     }

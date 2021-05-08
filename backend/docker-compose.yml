@@ -21,8 +21,7 @@ services:
     networks:
       - app-tier
       - db-tier
-    ports:
-      - "8000:8000"
+    expose: 8000
     depends_on:
       - database
     privileged: true

@@ -21,7 +21,6 @@ ENV PORT 8000
 RUN echo "Starting $NAME as $(whoami)"
 
 WORKDIR /code
-COPY . .
 
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y netcat

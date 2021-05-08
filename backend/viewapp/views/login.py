@@ -38,7 +38,9 @@ class LoginView(APIView):
         if not check_password(dic["password"], user.user_password):
             return utils.send_json(responses.userDoesNotMatch)
 
-        return utils.send_json(responses.userLogin)
+        result = responses.userLogin
+        result["userid"] = user.pk
+        return utils.send_json(result)
 
     def get(self, request):
         pass

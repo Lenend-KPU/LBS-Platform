@@ -128,9 +128,7 @@ CSRF_COOKIE_SECURE = False
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 if DEBUG:
-    import pathlib
     path = "/var/jenkins_home/workspace"
-    pathlib.Path(path).mkdir(parents=True, exist_ok=True)
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",

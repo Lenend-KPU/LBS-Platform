@@ -73,17 +73,15 @@ class LoginFragment : Fragment() {
             poko = ProfilesRequest::class.java) {
             val response = it as ProfilesRequest
             val result = response.result
-            if(result.isEmpty()) {
-                goAddProfileFragment()
-            } else {
-                getUserProfile(result)
+            result?.let {
+                getUserProfile(it)
                 goFeedFragment()
-            }
+            } ?: goAddProfileFragment()
         }
     }
 
-    fun getUserProfile(profiles: Array<Profile>) {
-        kr.ac.kpu.lbs_platform.global.Profile.profile = profiles.first()
+    fun getUserProfile(profile: Profile) {
+        kr.ac.kpu.lbs_platform.global.Profile.profile = profile
     }
 
     fun goFeedFragment() {

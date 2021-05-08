@@ -17,8 +17,7 @@ services:
       - DJANGO_SUPERUSER_USERNAME=${DJANGO_SUPERUSER_USERNAME}
       - DJANGO_SUPERUSER_EMAIL=${DJANGO_SUPERUSER_EMAIL}
     volumes:
-      - ./static/:/code/static/
-      - ./db.sqlite3:/code/db.sqlite3:rw
+      - ./:/code
     networks:
       - app-tier
       - db-tier

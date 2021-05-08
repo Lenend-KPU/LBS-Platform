@@ -10,10 +10,9 @@ node {
   }
 
   stage('Chown to user Jenkins'){
-    steps {
-    echo 'Chown to user Jenkins'
-    sh "sudo chown -R jenkins:jenkins ${WORKSPACE}"
-    }
+    sh """
+        chown -R jenkins:jenkins /var/jenkins_home/workspace
+    """
   }
 
   stage('Stop previous containers') {

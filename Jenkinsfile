@@ -28,7 +28,7 @@ node {
     dir('backend') {
        withEnv(["PATH=$PATH:/usr/local/bin"]){
         sh '''
-            touch /var/jenkins_home/workspace/db.sqlite3 ; ln -s /var/jenkins_home/workspace/db.sqlite3 $(pwd)/db.sqlite3 ; docker-compose -p LBS_Platform up --build
+            touch /var/jenkins_home/workspace/db.sqlite3 ; ln -sfn /var/jenkins_home/workspace/db.sqlite3 $(pwd)/db.sqlite3 ; docker-compose -p LBS_Platform up --build
         '''
        }
     }

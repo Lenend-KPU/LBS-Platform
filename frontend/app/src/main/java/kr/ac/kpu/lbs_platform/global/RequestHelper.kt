@@ -15,7 +15,7 @@ import splitties.toast.toast
 import java.nio.charset.Charset
 
 object RequestHelper {
-    private val defaultBodyContentType = "application/x-www-form-urlencoded; charset=UTF-8"
+    private const val defaultBodyContentType = "application/x-www-form-urlencoded; charset=UTF-8"
     fun request (
         currentFragment: Fragment,
         destFragment: Fragment? = null,

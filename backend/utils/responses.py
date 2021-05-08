@@ -19,7 +19,11 @@ userAlreadyRegistered = {
     "status": 403,
     "comment": "User(Email) has already registered.",
 }
-noEmail = {"success": False, "status": 400, "comment": "not a correct email (example@example.com)"}
+noEmail = {
+    "success": False,
+    "status": 400,
+    "comment": "not a correct email (example@example.com)",
+}
 createUserSucceed = {"success": True, "status": 200, "comment": "create user succeed"}
 modifyUserSucceed = {"success": True, "status": 200, "comment": "modify user succeed"}
 deleteUserSucceed = {"success": True, "status": 200, "comment": "delete user succeed"}

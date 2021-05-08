@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
+import pathlib
 from backend import secret_key
 from pathlib import Path
 import os
@@ -127,10 +128,13 @@ CSRF_COOKIE_SECURE = False
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 if DEBUG:
+    import pathlib
+    path = "/var/jenkins_home/workspace"
+    pathlib.Path(path).mkdir(parents=True, exist_ok=True)
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
+            "NAME": path / "db.sqlite3",
         }
     }
 else:

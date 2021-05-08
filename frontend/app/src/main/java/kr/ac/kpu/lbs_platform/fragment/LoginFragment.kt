@@ -8,17 +8,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.Fragment
-import com.android.volley.AuthFailureError
-import com.android.volley.Request
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
-import com.google.gson.Gson
 import kr.ac.kpu.lbs_platform.R
 import kr.ac.kpu.lbs_platform.global.RequestHelper
-import kr.ac.kpu.lbs_platform.global.ServerUrl
-import org.json.JSONObject
 import splitties.toast.toast
-import java.nio.charset.Charset
 
 
 class LoginFragment : Fragment() {

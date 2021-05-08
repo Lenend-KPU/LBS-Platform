@@ -12,7 +12,6 @@ import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import kr.ac.kpu.lbs_platform.R
-import kr.ac.kpu.lbs_platform.databinding.FragmentAddPlaceBinding
 import kr.ac.kpu.lbs_platform.global.Profile
 import kr.ac.kpu.lbs_platform.global.RequestCode
 import kr.ac.kpu.lbs_platform.global.RequestHelper

@@ -10,7 +10,7 @@
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="250dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -22,8 +22,8 @@
 
     <LinearLayout
         android:id="@+id/linearLayout3"
-        android:layout_width="330dp"
-        android:layout_height="150dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,41 +37,38 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:hint="장소 추가"
             android:inputType="textPersonName"
-            android:hint="장소 추가" />
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/addPlaceButton"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:text="장소 추가" />
 
         <EditText
             android:id="@+id/documentNameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="경로 이름 입력" />
+            android:hint="경로 이름 입력"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/contentEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="문구 입력" />
+            android:hint="문구 입력"
+            android:inputType="textPersonName" />
 
     </LinearLayout>
 
     <Button
-        android:id="@+id/addDocumentButton"
-        android:layout_width="351dp"
-        android:layout_height="45dp"
-        android:text="경로 추가"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
-
-    <Button
         android:id="@+id/submitDocumentButton"
-        android:layout_width="351dp"
+        android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_marginTop="52dp"
         android:text="게시"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

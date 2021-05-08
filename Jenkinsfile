@@ -9,6 +9,13 @@ node {
     checkout scm
   }
 
+  stage('Chown to user Jenkins'){
+    steps {
+    echo 'Chown to user Jenkins'
+    sh "sudo chown -R jenkins:jenkins ${WORKSPACE}"
+    }
+  }
+
   stage('Stop previous containers') {
     dir('backend') {
        withEnv(["PATH=$PATH:/usr/local/bin"]){

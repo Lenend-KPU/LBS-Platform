@@ -58,40 +58,47 @@ class LoginFragment : Fragment() {
             val response = it as LoginRequest
             val userid = response.userid
             User.userid = userid
-            checkUserProfileExists()
+            checkUserProfileExists(this)
         }
     }
 
-    fun checkUserProfileExists() {
-        val userid = User.userid
-        RequestHelper.request(this,
-            FeedFragment(),
-            "profiles?userid=${userid}",
-            method = com.android.volley.Request.Method.GET,
-            poko = ProfilesRequest::class.java, onFailureCallback = {
-                toast(it.toString())
-                if(it.status == 401) {
-                    goAddProfileFragment()
-                }
-            }) {
-            val response = it as ProfilesRequest
-            val result = response.result
-            result?.let {
-                getUserProfile(it)
-                goFeedFragment()
-            } ?: goAddProfileFragment()
+    companion object {
+        fun checkUserProfileExists(fragment: Fragment) {
+            val userid = User.userid
+            RequestHelper.request(fragment,
+                FeedFragment(),
+                "profiles?userid=${userid}",
+                method = com.android.volley.Request.Method.GET,
+                poko = ProfilesRequest::class.java, onFailureCallback = {
+                    toast(it.toString())
+                    if(it.status == 401) {
+                        goAddProfileFragment(fragment)
+                    }
+                }) {
+                val response = it as ProfilesRequest
+                val result = response.result
+                result?.let {
+                    if(it.isEmpty()) {
+                        goAddProfileFragment(fragment)
+                        return@let
+                    }
+                    getUserProfile(it.first())
+                    goFeedFragment(fragment)
+                } ?: goAddProfileFragment(fragment)
+            }
+        }
+
+        fun getUserProfile(profile: Profile) {
+            kr.ac.kpu.lbs_platform.global.Profile.profile = profile
+        }
+
+        fun goFeedFragment(fragment: Fragment) {
+            FragmentChanger.change(fragment, FeedFragment())
+        }
+
+        fun goAddProfileFragment(fragment: Fragment) {
+            FragmentChanger.change(fragment, AddProfileFragment())
         }
     }
 
-    fun getUserProfile(profile: Profile) {
-        kr.ac.kpu.lbs_platform.global.Profile.profile = profile
-    }
-
-    fun goFeedFragment() {
-        FragmentChanger.change(this, FeedFragment())
-    }
-
-    fun goAddProfileFragment() {
-        FragmentChanger.change(this, AddProfileFragment())
-    }
 }

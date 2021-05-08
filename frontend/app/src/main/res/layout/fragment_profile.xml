@@ -34,9 +34,9 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="10dp"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/profileTextView"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
@@ -57,17 +57,18 @@
                 android:id="@+id/profileTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
                 android:layout_marginTop="21dp"
-                android:layout_marginEnd="250dp"
                 android:layout_marginBottom="10dp"
                 android:fontFamily="sans-serif-light"
                 android:text="jacob_w"
-                android:textColor="#000000"
+                android:textColor="@color/white"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/spinner"
                 app:layout_constraintStart_toEndOf="@+id/profileActivityImageView"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -84,7 +85,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/postedCountTextView"

@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="장소 추가" />
+            android:hint="장소 추가" />
 
         <EditText
             android:id="@+id/documentNameEditText"
@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="경로 이름 입력" />
+            android:hint="경로 이름 입력" />
 
         <EditText
             android:id="@+id/contentEditText"
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="문구 입력" />
+            android:hint="문구 입력" />
 
     </LinearLayout>
 

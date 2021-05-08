@@ -1,17 +1,20 @@
 package kr.ac.kpu.lbs_platform.activity
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kr.ac.kpu.lbs_platform.R
 import kr.ac.kpu.lbs_platform.databinding.ActivityMainBinding
-import kr.ac.kpu.lbs_platform.fragment.AddFragment
-import kr.ac.kpu.lbs_platform.fragment.FeedFragment
-import kr.ac.kpu.lbs_platform.fragment.ProfileFragment
-import kr.ac.kpu.lbs_platform.fragment.SearchFragment
+import kr.ac.kpu.lbs_platform.fragment.*
+import kr.ac.kpu.lbs_platform.global.RequestCode
+import java.util.*
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
     companion object {
@@ -24,6 +27,9 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        if (!Places.isInitialized()) {
+            Places.initialize(applicationContext, getString(R.string.place_api_key), Locale.KOREA)
+        }
         instance = this
         val view = binding.root
         binding.bottomNavigationView.visibility = View.GONE
@@ -65,6 +71,28 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             else -> {
                 Log.i("MainActivity", "else")
                 return true
+            }
+        }
+    }
+
+    @SuppressLint("LongLogTag")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Log.i("ActivityResult: requestCode", requestCode.toString())
+        Log.i("ActivityResult: resultCode", resultCode.toString())
+        Log.i("ActivityResult: data", data.toString())
+        if(resultCode != RESULT_OK) {
+            return
+        }
+        when(requestCode) {
+            RequestCode.AUTOCOMPLETE_REQUEST_CODE -> {
+                data?.let {
+                    val place = Autocomplete.getPlaceFromIntent(it)
+                    AddPlaceFragment.instance.setPlaceCallback(place)
+                }
+            }
+            else -> {
+                return
             }
         }
     }

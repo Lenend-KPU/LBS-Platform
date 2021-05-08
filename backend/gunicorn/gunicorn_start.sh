@@ -16,6 +16,7 @@ PARENT_PATH=$(cd $SCRIPT_PATH ; cd .. ; pwd)
 SOCKFILE=$PARENT_PATH/run/gunicorn.sock
 
 if [ -d $DJANGODIR/db.sqlite3 ] ; then 
+umount $DJANGODIR/db.sqlite3
 rm -rf $DJANGODIR/db.sqlite3
 fi
 

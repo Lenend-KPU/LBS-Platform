@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.google.android.libraries.places.api.model.Place
@@ -12,8 +13,11 @@ import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import kr.ac.kpu.lbs_platform.R
 import kr.ac.kpu.lbs_platform.databinding.FragmentAddPlaceBinding
+import kr.ac.kpu.lbs_platform.global.Profile
 import kr.ac.kpu.lbs_platform.global.RequestCode
+import kr.ac.kpu.lbs_platform.global.RequestHelper
 import kr.ac.kpu.lbs_platform.poko.local.LBS_Place
+import splitties.toast.toast
 
 
 class AddPlaceFragment : Fragment() {
@@ -22,7 +26,7 @@ class AddPlaceFragment : Fragment() {
         lateinit var instance: AddPlaceFragment
     }
 
-    lateinit var currentPlace: Place
+    var currentPlace: Place? = null
     var _inflated: View? = null
     val inflated get() = _inflated!!
 
@@ -35,11 +39,23 @@ class AddPlaceFragment : Fragment() {
 
         val placeSearchButton = inflated.findViewById<Button>(R.id.placeSearchButton)
         placeSearchButton.setOnClickListener {
-            val fields = listOf(Place.Field.ID, Place.Field.NAME)
+            val fields = listOf(Place.Field.LAT_LNG, Place.Field.ID, Place.Field.NAME)
             activity?.let {
                 val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
                     .build(it)
                 activity?.startActivityForResult(intent, RequestCode.AUTOCOMPLETE_REQUEST_CODE)
+            }
+        }
+        val placeSubmitButton = inflated.findViewById<Button>(R.id.submitPlaceButton)
+        val rateEditText = inflated.findViewById<EditText>(R.id.placeContentEditText)
+        placeSubmitButton.setOnClickListener {
+            val rate = rateEditText.text.toString()
+            if(currentPlace == null || rate == "") {
+                toast("비어있는 필드가 있습니다.")
+                return@setOnClickListener
+            }
+            currentPlace?.let {
+                postPlaceToserver(it, rate)
             }
         }
         return inflated
@@ -50,20 +66,21 @@ class AddPlaceFragment : Fragment() {
         _inflated = null
     }
 
-    fun addPlace(place: Place, content: String) {
-        val generatedPlace = LBS_Place(place, content)
-        postPlaceToserver(generatedPlace)
-        activity?.supportFragmentManager?.let {
-            it.beginTransaction()
-                .replace(R.id.mainActivityfragment, PlaceFragment())
-                .commit()
-        }
+    fun postPlaceToserver(place: Place, content: String) {
+        val params = mutableMapOf<String, String>()
+        params["name"] = place.name.toString()
+        params["rate"] = content
+        params["photo"] = "0"
+        params["private"] = "true"
+        params["latitude"] = place.latLng?.let {
+            return@let it.latitude.toString()
+        } ?: "0"
+        params["longitude"] = place.latLng?.let {
+            return@let it.longitude.toString()
+        } ?: "0"
+        val profileNumber = Profile.profile?.pk.toString()
+        RequestHelper.request(this, PlaceFragment(), "profiles/$profileNumber/places/", params)
     }
-
-    fun postPlaceToserver(place: LBS_Place) {
-
-    }
-
 
 
     fun setPlaceCallback(place: Place) {
@@ -74,6 +91,6 @@ class AddPlaceFragment : Fragment() {
 
     fun renderPlace() {
         val placeTextView = inflated.findViewById<TextView>(R.id.placeTextView)
-        placeTextView.text = currentPlace.name
+        placeTextView.text = currentPlace?.name
     }
 }

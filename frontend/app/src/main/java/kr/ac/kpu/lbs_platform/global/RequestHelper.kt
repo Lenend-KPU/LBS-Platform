@@ -44,11 +44,13 @@ object RequestHelper {
                 }
             }, { error ->
                 Log.i(fragmentName, error.toString())
-                val responseBody = String(error.networkResponse.data, Charset.defaultCharset())
-                val gson = Gson()
-                val request = gson.fromJson(responseBody, poko)
-                Log.i(fragmentName, request.toString())
-                onFailureCallback(request)
+                error?.networkResponse?.data?.let {
+                    val responseBody = String(it, Charset.defaultCharset())
+                    val gson = Gson()
+                    val request = gson.fromJson(responseBody, poko)
+                    Log.i(fragmentName, request.toString())
+                    onFailureCallback(request)
+                }
             }
         ) {
             override fun getBodyContentType(): String {

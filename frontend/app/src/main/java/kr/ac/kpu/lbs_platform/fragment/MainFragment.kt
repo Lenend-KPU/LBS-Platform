@@ -10,6 +10,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kr.ac.kpu.lbs_platform.activity.MainActivity
 import kr.ac.kpu.lbs_platform.R
+import kr.ac.kpu.lbs_platform.global.FragmentChanger
 
 class MainFragment : Fragment() {
 
@@ -35,22 +36,10 @@ class MainFragment : Fragment() {
         val registerButton = inflated.findViewById<Button>(R.id.registerButton)
 
         loginButton.setOnClickListener {
-            GlobalScope.launch {
-                while (MainActivity.instance == null) ;
-                MainActivity.instance?.supportFragmentManager
-                    ?.beginTransaction()
-                    ?.replace(R.id.mainActivityfragment, LoginFragment())
-                    ?.commit()
-            }
+            FragmentChanger.change(this, LoginFragment())
         }
         registerButton.setOnClickListener {
-            GlobalScope.launch {
-                while (MainActivity.instance == null) ;
-                MainActivity.instance?.supportFragmentManager
-                    ?.beginTransaction()
-                    ?.replace(R.id.mainActivityfragment, RegisterFragment())
-                    ?.commit()
-            }
+            FragmentChanger.change(this, RegisterFragment())
         }
 
         return inflated

@@ -8,14 +8,16 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.Fragment
-import com.android.volley.AuthFailureError
-import com.android.volley.Request
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
-import com.google.gson.Gson
 import kr.ac.kpu.lbs_platform.R
-import kr.ac.kpu.lbs_platform.global.ServerUrl
+import kr.ac.kpu.lbs_platform.global.FragmentChanger
+import kr.ac.kpu.lbs_platform.global.RequestHelper
+import kr.ac.kpu.lbs_platform.global.User
+import kr.ac.kpu.lbs_platform.poko.remote.LoginRequest
+import kr.ac.kpu.lbs_platform.poko.remote.Profile
+import kr.ac.kpu.lbs_platform.poko.remote.ProfilesRequest
+import kr.ac.kpu.lbs_platform.poko.remote.Request
 import splitties.toast.toast
+
 
 class LoginFragment : Fragment() {
 
@@ -48,36 +50,55 @@ class LoginFragment : Fragment() {
     }
 
     fun loginUserToServer(email: String, password: String) {
-        val queue = Volley.newRequestQueue(activity)
         val params = mutableMapOf<String, String>()
-
         params["email"] = email
         params["password"] = password
-        val req: StringRequest = object : StringRequest(
-            Request.Method.POST, "${ServerUrl.url}/users/login/",
-            { response ->
-                Log.i("LoginFragment", response.toString())
-                val gson = Gson()
-                val request = gson.fromJson(response, kr.ac.kpu.lbs_platform.poko.remote.Request::class.java)
-                if(!request.success) {
-                    toast(request.toString())
-                } else {
-                    activity?.supportFragmentManager
-                        ?.beginTransaction()
-                        ?.replace(R.id.mainActivityfragment, FeedFragment())
-                        ?.commit()
-                }
-            }, {error -> Log.i("LoginFragment", error.toString()) }
-        ) {
-            override fun getBodyContentType(): String {
-                return "application/x-www-form-urlencoded; charset=UTF-8"
-            }
+        RequestHelper.request(this, FeedFragment(),"login/", params,
+            poko=LoginRequest::class.java) {
+            val response = it as LoginRequest
+            val userid = response.userid
+            User.userid = userid
+            checkUserProfileExists(this)
+        }
+    }
 
-            @Throws(AuthFailureError::class)
-            override fun getParams(): Map<String, String> {
-                return params
+    companion object {
+        fun checkUserProfileExists(fragment: Fragment) {
+            val userid = User.userid
+            RequestHelper.request(fragment,
+                FeedFragment(),
+                "profiles?userid=${userid}",
+                method = com.android.volley.Request.Method.GET,
+                poko = ProfilesRequest::class.java, onFailureCallback = {
+                    toast(it.toString())
+                    if(it.status == 401) {
+                        goAddProfileFragment(fragment)
+                    }
+                }) {
+                val response = it as ProfilesRequest
+                val result = response.result
+                result?.let {
+                    if(it.isEmpty()) {
+                        goAddProfileFragment(fragment)
+                        return@let
+                    }
+                    getUserProfile(it.first())
+                    goFeedFragment(fragment)
+                } ?: goAddProfileFragment(fragment)
             }
         }
-        queue.add(req)
+
+        fun getUserProfile(profile: Profile) {
+            kr.ac.kpu.lbs_platform.global.Profile.profile = profile
+        }
+
+        fun goFeedFragment(fragment: Fragment) {
+            FragmentChanger.change(fragment, FeedFragment())
+        }
+
+        fun goAddProfileFragment(fragment: Fragment) {
+            FragmentChanger.change(fragment, AddProfileFragment())
+        }
     }
+
 }

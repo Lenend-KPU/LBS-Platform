@@ -1,23 +1,14 @@
 package kr.ac.kpu.lbs_platform.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.Fragment
-import com.android.volley.AuthFailureError
-import com.android.volley.Request
-import com.android.volley.Response
-import com.android.volley.VolleyLog
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
-import com.google.gson.Gson
 import kr.ac.kpu.lbs_platform.R
-import kr.ac.kpu.lbs_platform.activity.MainActivity
-import kr.ac.kpu.lbs_platform.global.ServerUrl
+import kr.ac.kpu.lbs_platform.global.RequestHelper
 import splitties.toast.toast
 
 
@@ -52,39 +43,13 @@ class RegisterFragment : Fragment() {
     }
 
     fun postUserToServer(nickname: String, email: String, address: String, password: String) {
-        val queue = Volley.newRequestQueue(activity)
         val params = mutableMapOf<String, String>()
 
         params["username"] = nickname
         params["email"] = email
         params["address"] = address
         params["password"] = password
-        val req: StringRequest = object : StringRequest(
-            Request.Method.POST, "${ServerUrl.url}/users/",
-            { response ->
-                Log.i("RegisterFragment", response.toString())
-                val gson = Gson()
-                val request = gson.fromJson(response, kr.ac.kpu.lbs_platform.poko.remote.Request::class.java)
-                if(!request.success) {
-                    toast(request.toString())
-                } else {
-                    activity?.supportFragmentManager
-                        ?.beginTransaction()
-                        ?.replace(R.id.mainActivityfragment, LoginFragment())
-                        ?.commit()
-                }
-            }, {error -> Log.i("RegisterFragment", error.toString()) }
-        ) {
-            override fun getBodyContentType(): String {
-                return "application/x-www-form-urlencoded; charset=UTF-8"
-            }
-
-            @Throws(AuthFailureError::class)
-            override fun getParams(): Map<String, String> {
-                return params
-            }
-        }
-        queue.add(req)
+        RequestHelper.request(this, LoginFragment(), "users/", params)
     }
 
 }

@@ -11,7 +11,7 @@ from placeapp.models import Place
 from pathapp.models import Path
 from commentapp.models import Comment
 from likeapp.models import Like
-from maximumapp.models import Maximum
+# from maximumapp.models import Maximum
 
 # Create your views here.
 class Rootview(APIView):

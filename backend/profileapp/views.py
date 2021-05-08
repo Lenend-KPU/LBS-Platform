@@ -12,12 +12,24 @@ from .models import Profile
 # Create your views here.
 class RootView(APIView):
     def get(self, request: HttpRequest) -> HttpResponse:
-        # 리미트 TODO
-        profiles = Profile.objects.all()
-        profiles = utils.to_dict(profiles)
-        result = responses.ok
-        result["result"] = profiles
+        if "userid" not in request.GET:
+            return utils.send_json(responses.useridRequired)
 
+        userid = request.GET["userid"]
+        if not userid.isdigit():
+            return utils.send_json(responses.noUseridNum)
+
+        user = User.objects.filter(pk=userid).first()
+        if user is None:
+            return utils.send_json(responses.noUser)
+
+        profile = Profile.objects.filter(user=user)
+        if len(profile) == 0:
+            return utils.send_json(responses.noProfile)
+
+        profile = utils.to_dict(profile)
+        result = responses.ok
+        result["result"] = profile
         return utils.send_json(result)
 
     def post(self, request: HttpRequest) -> HttpResponse:

@@ -29,6 +29,16 @@ modifyUserSucceed = {"success": True, "status": 200, "comment": "modify user suc
 deleteUserSucceed = {"success": True, "status": 200, "comment": "delete user succeed"}
 
 # Profile
+useridRequired = {
+    "success": False,
+    "status": 400,
+    "comment": "userid argument required",
+}
+noUseridNum = {
+    "success": False,
+    "status": 401,
+    "comment": "'userid' params expected a number",
+}
 noProfile = {"success": False, "status": 401, "comment": "there's no matched profile"}
 noMyProfile = {"success": False, "status": 401, "comment": "My Profile is not exists"}
 profileAlreadyRegistered = {

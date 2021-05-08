@@ -10,11 +10,25 @@ from .responses import *
 from django.core.serializers import serialize
 from django.forms.models import model_to_dict
 
+
+def validateEmail(email):
+    from django.core.validators import validate_email
+    from django.core.exceptions import ValidationError
+
+    try:
+        validate_email(email)
+        return True
+    except ValidationError as e:
+        print("bad email, details:", e)
+        return False
+
+
 class DecimalEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, Decimal):
             return float(obj)
         return json.JSONEncoder.default(self, obj)
+
 
 """딕셔너리를 JSON으로 전송하는 헬퍼 함수"""
 

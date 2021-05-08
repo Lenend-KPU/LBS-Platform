@@ -60,7 +60,7 @@ class RegisterFragment : Fragment() {
             Request.Method.POST, "${ServerUrl.url}/user/", jsonobj,
             { response ->
                 Log.i("RegisterFragment", response.toString())
-            }, { println("That didn't work!") })
+            }, {error -> Log.i("RegisterFragment", error.toString()) })
         queue.add(req)
     }
 

@@ -18,7 +18,7 @@ services:
       - DJANGO_SUPERUSER_EMAIL=${DJANGO_SUPERUSER_EMAIL}
     volumes:
       - ./:/code
-      - "/var/jenkins_home:/var/jenkins_home"
+      - "/home/ubuntu/LBS-Platform/jenkins/jenkins_home/workspace:/var/jenkins_home/workspace"
     networks:
       - app-tier
       - db-tier

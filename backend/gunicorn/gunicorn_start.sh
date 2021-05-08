@@ -15,6 +15,11 @@ PARENT_PATH=$(cd $SCRIPT_PATH ; cd .. ; pwd)
 # we will communicte using this unix socket
 SOCKFILE=$PARENT_PATH/run/gunicorn.sock
 
+if [ -d $DJANGODIR/db.sqlite3 ] ; then 
+rm -rf $DJANGODIR/db.sqlite3
+fi
+
+
 echo $PARENT_PATH
 
 # Activate the virtual environment

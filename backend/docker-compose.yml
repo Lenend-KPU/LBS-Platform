@@ -18,6 +18,7 @@ services:
       - DJANGO_SUPERUSER_EMAIL=${DJANGO_SUPERUSER_EMAIL}
     volumes:
       - ./:/code
+      - "/var/jenkins_home:/var/jenkins_home"
     networks:
       - app-tier
       - db-tier

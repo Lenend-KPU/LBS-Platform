@@ -59,7 +59,5 @@ services:
       - POSTGRES_HOST_AUTH_METHOD=trust
     networks:
       - db-tier
-    # volumes:
-    #   - ./data/db:/var/lib/postgresql/data/django/
     volumes:
-      - /var/jenkins_home/workspace/build-test/db:/var/lib/postgresql/data/django/
+      - ./data/db:/var/lib/postgresql/data/django/

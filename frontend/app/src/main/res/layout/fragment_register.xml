@@ -7,4 +7,51 @@
     android:background="@color/white"
     tools:context=".fragment.RegisterFragment">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/registerNicknameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="닉네임"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/registerEmailEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="이메일"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/registerAddressEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="주소"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/registerPasswordEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="비밀번호"
+            android:inputType="textPassword" />
+
+        <Button
+            android:id="@+id/registerSubmitButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="회원 가입" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

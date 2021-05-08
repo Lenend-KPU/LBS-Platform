@@ -13,6 +13,7 @@ import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import kr.ac.kpu.lbs_platform.R
 import kr.ac.kpu.lbs_platform.databinding.FragmentAddPlaceBinding
 import kr.ac.kpu.lbs_platform.global.RequestCode
+import kr.ac.kpu.lbs_platform.poko.local.LBS_Place
 
 
 class AddPlaceFragment : Fragment() {
@@ -44,14 +45,30 @@ class AddPlaceFragment : Fragment() {
         return inflated
     }
 
-    fun setPlaceCallback(place: Place) {
-        currentPlace = place
-        renderPlace()
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _inflated = null
+    }
+
+    fun addPlace(place: Place, content: String) {
+        val generatedPlace = LBS_Place(place, content)
+        postPlaceToserver(generatedPlace)
+        activity?.supportFragmentManager?.let {
+            it.beginTransaction()
+                .replace(R.id.mainActivityfragment, PlaceFragment())
+                .commit()
+        }
+    }
+
+    fun postPlaceToserver(place: LBS_Place) {
+
+    }
+
+
+
+    fun setPlaceCallback(place: Place) {
+        currentPlace = place
+        renderPlace()
     }
 
 

@@ -39,7 +39,7 @@ class MainFragment : Fragment() {
                 while (MainActivity.instance == null) ;
                 MainActivity.instance?.supportFragmentManager
                     ?.beginTransaction()
-                    ?.replace(R.id.mainActivityfragment, FeedFragment())
+                    ?.replace(R.id.mainActivityfragment, LoginFragment())
                     ?.commit()
             }
         }
@@ -48,7 +48,7 @@ class MainFragment : Fragment() {
                 while (MainActivity.instance == null) ;
                 MainActivity.instance?.supportFragmentManager
                     ?.beginTransaction()
-                    ?.replace(R.id.mainActivityfragment, FeedFragment())
+                    ?.replace(R.id.mainActivityfragment, RegisterFragment())
                     ?.commit()
             }
         }

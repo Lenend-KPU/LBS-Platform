@@ -13,19 +13,20 @@ illegalModifyArgument = {
     "comment": "Illegal modify argument",
 }
 # User
-noUser = {"success": False, "status": 200, "comment": "there's no matched user"}
+noUser = {"success": False, "status": 401, "comment": "there's no matched user"}
 userAlreadyRegistered = {
     "success": False,
     "status": 403,
-    "comment": "User has already registered",
+    "comment": "User(Email) has already registered.",
 }
+noEmail = {"success": False, "status": 400, "comment": "not a correct email (example@example.com)"}
 createUserSucceed = {"success": True, "status": 200, "comment": "create user succeed"}
 modifyUserSucceed = {"success": True, "status": 200, "comment": "modify user succeed"}
 deleteUserSucceed = {"success": True, "status": 200, "comment": "delete user succeed"}
 
 # Profile
-noProfile = {"success": False, "status": 200, "comment": "there's no matched profile"}
-noMyProfile = {"success": False, "status": 200, "comment": "My Profile is not exists"}
+noProfile = {"success": False, "status": 401, "comment": "there's no matched profile"}
+noMyProfile = {"success": False, "status": 401, "comment": "My Profile is not exists"}
 profileAlreadyRegistered = {
     "success": False,
     "status": 403,
@@ -43,7 +44,7 @@ deleteProfileSucceed = {
 }
 
 # Friend(follower)
-noFriend = {"success": False, "status": 200, "comment": "there's no matched friend"}
+noFriend = {"success": False, "status": 401, "comment": "there's no matched friend"}
 friendExists = {
     "success": False,
     "status": 403,
@@ -61,10 +62,10 @@ deleteFriendSucceed = {
 }
 
 # Place
-noPlace = {"success": False, "status": 200, "comment": "Place does not exists"}
+noPlace = {"success": False, "status": 401, "comment": "Place does not exists"}
 noPlaceNum = {
     "success": False,
-    "status": 200,
+    "status": 401,
     "comment": "Place Field 'id' expected a number",
 }
 createPlaceSucceed = {
@@ -84,7 +85,7 @@ deletePlaceSucceed = {
 }
 
 # Document
-noDocument = {"success": False, "status": 200, "comment": "Document does not exists"}
+noDocument = {"success": False, "status": 401, "comment": "Document does not exists"}
 createDocumentSucceed = {
     "success": True,
     "status": 200,
@@ -139,7 +140,7 @@ def getSucceedFunc(field):
 # comment
 commentDoesNotExists = {
     "success": False,
-    "status": 200,
+    "status": 401,
     "comment": "Comment does not exists",
 }
 createCommentSucceed = {
@@ -161,7 +162,7 @@ deleteCommentSucceed = {
 # Like
 likeDoesNotExists = {
     "success": False,
-    "status": 200,
+    "status": 401,
     "comment": "like does not exists",
 }
 createLikeSucceed = {
@@ -178,7 +179,7 @@ deleteLikeSucceed = {
 # Save
 saveDoesNotExists = {
     "success": False,
-    "status": 200,
+    "status": 401,
     "comment": "save does not exists",
 }
 createSaveSucceed = {

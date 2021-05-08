@@ -48,6 +48,11 @@ class RootView(APIView):
 
         if None in list(dic.values()):
             return utils.send_json(responses.illegalArgument)
+
+        ### 이메일 유효성 검사
+        if not utils.validateEmail(dic["email"]):
+            return utils.send_json(responses.noEmail)
+
         filtered = User.objects.filter(user_email=dic["email"])
         if filtered.count():
             return utils.send_json(responses.userAlreadyRegistered)

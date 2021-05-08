@@ -21,21 +21,21 @@ object RequestHelper {
         method: Int = Request.Method.POST,
         poko: Class<out kr.ac.kpu.lbs_platform.poko.remote.Request> = kr.ac.kpu.lbs_platform.poko.remote.Request::class.java,
         fragmentName: String = poko.name,
-        queue: RequestQueue = Volley.newRequestQueue(currentFragment.activity)
+        queue: RequestQueue = Volley.newRequestQueue(currentFragment.activity),
+        onSuccessCallback: (responseObject: kr.ac.kpu.lbs_platform.poko.remote.Request) -> Unit = {
+            FragmentChanger.change(currentFragment, destFragment)
+        }
     ) {
         val req: StringRequest = object : StringRequest(
             method, "${ServerUrl.url}/$urlParameter",
             { response ->
                 Log.i("LoginFragment", response.toString())
                 val gson = Gson()
-                val request = gson.fromJson(response, poko)
-                if(!request.success) {
-                    currentFragment.toast(request.toString())
+                val responseObject = gson.fromJson(response, poko)
+                if(!responseObject.success) {
+                    currentFragment.toast(responseObject.toString())
                 } else {
-                    currentFragment.activity?.supportFragmentManager
-                        ?.beginTransaction()
-                        ?.replace(R.id.mainActivityfragment, destFragment)
-                        ?.commit()
+                    onSuccessCallback(responseObject)
                 }
             }, { error ->
                 Log.i(fragmentName, error.toString())

@@ -9,6 +9,7 @@ import android.widget.Toolbar
 import androidx.fragment.app.Fragment
 import kr.ac.kpu.lbs_platform.activity.MainActivity
 import kr.ac.kpu.lbs_platform.R
+import kr.ac.kpu.lbs_platform.global.FragmentChanger
 
 class FeedFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,24 +33,16 @@ class FeedFragment : Fragment() {
         MainActivity.previousItemId = item.itemId
         when(item.itemId) {
             R.id.generate_place -> {
-                MainActivity.instance?.let {
-                    it.supportFragmentManager.beginTransaction().replace(R.id.mainActivityfragment, AddPlaceFragment()).commit()
-                }
+                FragmentChanger.change(this, AddPlaceFragment())
             }
             R.id.generate_route -> {
-                MainActivity.instance?.let {
-                    it.supportFragmentManager.beginTransaction().replace(R.id.mainActivityfragment, AddDocumentFragment()).commit()
-                }
+                FragmentChanger.change(this, AddDocumentFragment())
             }
             R.id.saved -> {
-                MainActivity.instance?.let {
-                    it.supportFragmentManager.beginTransaction().replace(R.id.mainActivityfragment, SavedLocationFragment()).commit()
-                }
+                FragmentChanger.change(this, SavedLocationFragment())
             }
             R.id.profile_edit -> {
-                MainActivity.instance?.let {
-                    it.supportFragmentManager.beginTransaction().replace(R.id.mainActivityfragment, ProfileEditFragment()).commit()
-                }
+                FragmentChanger.change(this, ProfileEditFragment())
             }
         }
         return true

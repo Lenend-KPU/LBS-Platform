@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import kr.ac.kpu.lbs_platform.R
 import kr.ac.kpu.lbs_platform.activity.MainActivity
+import kr.ac.kpu.lbs_platform.global.FragmentChanger
 
 class AddFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,10 +28,7 @@ class AddFragment : Fragment() {
 
         for((button, fragment) in buttons.zip(fragments)) {
             button.setOnClickListener {
-                MainActivity.instance?.supportFragmentManager
-                    ?.beginTransaction()
-                    ?.replace(R.id.mainActivityfragment, fragment)
-                    ?.commit()
+                FragmentChanger.change(this, fragment)
             }
         }
         return inflated

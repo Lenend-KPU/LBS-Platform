@@ -19,6 +19,7 @@ flex = "*"
 djangorestframework = "*"
 django-createsuperuserwithpassword = "*"
 djangorestframework-jwt = "*"
+pillow = "*"
 
 [dev-packages]
 

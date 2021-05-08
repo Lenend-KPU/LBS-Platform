@@ -29,7 +29,12 @@ class Rootview(APIView):
 
         for key, document in enumerate(documents):
             place_dict = []
+            profile_pk = document["fields"]["profile"]
             document_pk = document["pk"]
+
+            profile = Profile.objects.filter(pk=profile_pk)
+            profile = utils.to_dict(profile)[0]
+            result["result"][key]["profile"] = profile
 
             comments = Comment.objects.filter(document=document_pk)
             comments = utils.to_dict(comments)

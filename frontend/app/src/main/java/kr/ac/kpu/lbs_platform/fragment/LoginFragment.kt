@@ -63,14 +63,17 @@ class LoginFragment : Fragment() {
     }
 
     fun checkUserProfileExists() {
-        val params = mutableMapOf<String, String>()
-        params["userid"] = User.userid!!.toString()
+        val userid = User.userid
         RequestHelper.request(this,
             FeedFragment(),
-            "profiles/",
-            params = params,
+            "profiles?userid=${userid}",
             method = com.android.volley.Request.Method.GET,
-            poko = ProfilesRequest::class.java) {
+            poko = ProfilesRequest::class.java, onFailureCallback = {
+                toast(it.toString())
+                if(it.status == 401) {
+                    goAddProfileFragment()
+                }
+            }) {
             val response = it as ProfilesRequest
             val result = response.result
             result?.let {

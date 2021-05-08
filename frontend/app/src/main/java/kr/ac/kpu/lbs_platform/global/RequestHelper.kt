@@ -13,6 +13,7 @@ import splitties.toast.toast
 import java.nio.charset.Charset
 
 object RequestHelper {
+    private val defaultBodyContentType = "application/x-www-form-urlencoded; charset=UTF-8"
     fun request (
         currentFragment: Fragment,
         destFragment: Fragment,
@@ -22,6 +23,10 @@ object RequestHelper {
         poko: Class<out kr.ac.kpu.lbs_platform.poko.remote.Request> = kr.ac.kpu.lbs_platform.poko.remote.Request::class.java,
         fragmentName: String = poko.name,
         queue: RequestQueue = Volley.newRequestQueue(currentFragment.activity),
+        bodyContentType: String = defaultBodyContentType,
+        onFailureCallback: (responseObject: kr.ac.kpu.lbs_platform.poko.remote.Request) -> Unit = {
+            toast(it.comment)
+        },
         onSuccessCallback: (responseObject: kr.ac.kpu.lbs_platform.poko.remote.Request) -> Unit = {
             FragmentChanger.change(currentFragment, destFragment)
         }
@@ -43,10 +48,14 @@ object RequestHelper {
                 val gson = Gson()
                 val request = gson.fromJson(responseBody, poko)
                 Log.i(fragmentName, request.toString())
+                onFailureCallback(request)
             }
         ) {
             override fun getBodyContentType(): String {
-                return "application/x-www-form-urlencoded; charset=UTF-8"
+                if(bodyContentType != defaultBodyContentType || method == Request.Method.POST) {
+                    return bodyContentType
+                }
+                return ""
             }
 
             @Throws(AuthFailureError::class)

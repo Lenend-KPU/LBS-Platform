@@ -10,76 +10,97 @@ import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kr.ac.kpu.lbs_platform.R
 import splitties.toast.toast
 import java.nio.charset.Charset
+import kotlin.reflect.KClass
 
-object RequestHelper {
-    private const val defaultBodyContentType = "application/x-www-form-urlencoded; charset=UTF-8"
-    fun request (
-        currentFragment: Fragment,
-        destFragment: Fragment? = null,
-        urlParameter: String = "",
-        params: Map<String, String> = mapOf(),
-        method: Int = Request.Method.POST,
-        poko: Class<out kr.ac.kpu.lbs_platform.poko.remote.Request> = kr.ac.kpu.lbs_platform.poko.remote.Request::class.java,
-        fragmentName: String = poko.name,
-        queue: RequestQueue = Volley.newRequestQueue(currentFragment.activity),
-        bodyContentType: String = defaultBodyContentType,
-        isAsync: Boolean = true,
-        onFailureCallback: (responseObject: kr.ac.kpu.lbs_platform.poko.remote.Request) -> Unit = {
-            toast(it.comment)
-        },
-        onSuccessCallback: (responseObject: kr.ac.kpu.lbs_platform.poko.remote.Request) -> Unit = {
-            destFragment?.let {
-                FragmentChanger.change(currentFragment, it)
+class RequestHelper constructor(
+    private val fn: () -> Unit
+) {
+    fun request() {
+        fn()
+    }
+    companion object {
+        val defaultBodyContentType = "application/x-www-form-urlencoded; charset=UTF-8"
+    }
+    class Builder<T : kr.ac.kpu.lbs_platform.poko.remote.Request>(var poko: KClass<T>) {
+        var currentFragment: Fragment? = null
+        var destFragment: Fragment? = null
+        var urlParameter: String = ""
+        var params: Map<String, String> = mapOf()
+        var method: Int = Request.Method.POST
+        var queue: RequestQueue? = null
+            get() {
+                if(queue == null) {
+                    queue = Volley.newRequestQueue(currentFragment?.activity)
+                }
+                return queue
+            }
+        var bodyContentType: String = defaultBodyContentType
+        var isAsync: Boolean = true
+        var onFailureCallback: (responseObject: T) -> Unit = {
+            val response = it
+            currentFragment?.let {
+                toast(response.comment)
             }
         }
-    ) {
-        val fn = {
+        var onSuccessCallback: (responseObject: T) -> Unit = {
+            destFragment?.let {
+                val destFragment = it
+                currentFragment?.let {
+                    FragmentChanger.change(it, destFragment)
+                }
+            }
+        }
+        fun fn() {
+            val fragmentName = currentFragment!!::class.java.name
             val req: StringRequest = object : StringRequest(
                 method, "${ServerUrl.url}/$urlParameter",
                 { response ->
                     Log.i("LoginFragment", response.toString())
                     val gson = Gson()
-                    val responseObject = gson.fromJson(response, poko)
-                    if(!responseObject.success) {
-                        currentFragment.toast(responseObject.toString())
+                    val responseObject = gson.fromJson(response, poko.java)
+                    if (!responseObject.success) {
+                        currentFragment?.toast(responseObject.toString())
                     } else {
-                        onSuccessCallback(responseObject)
+                        onSuccessCallback(responseObject as T)
                     }
                 }, { error ->
                     Log.i(fragmentName, error.toString())
                     error?.networkResponse?.data?.let {
                         val responseBody = String(it, Charset.defaultCharset())
                         val gson = Gson()
-                        val request = gson.fromJson(responseBody, poko)
+                        val request = gson.fromJson(responseBody, poko.java)
                         Log.i(fragmentName, request.toString())
-                        onFailureCallback(request)
+                        onFailureCallback(request as T)
                     }
                 }
             ) {
                 override fun getBodyContentType(): String {
-                    if(bodyContentType != defaultBodyContentType || method == Request.Method.POST) {
+                    if (bodyContentType != defaultBodyContentType || method == Request.Method.POST) {
                         return bodyContentType
                     }
                     return ""
                 }
 
                 @Throws(AuthFailureError::class)
-                override fun getParams(): Map<String, String> {
+                public override fun getParams(): Map<String, String> {
                     return params
                 }
             }
-            queue.add(req)
+            queue?.add(req)
         }
-
-        if(isAsync) {
-            GlobalScope.launch {
+        fun outer() {
+            if (isAsync) {
+                GlobalScope.launch {
+                    fn()
+                }
+            } else {
                 fn()
             }
-        } else {
-            fn()
+        }
+        fun build() : RequestHelper {
+            return RequestHelper { outer() }
         }
     }
 }

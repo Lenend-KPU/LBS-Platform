@@ -17,15 +17,16 @@ services:
       - DJANGO_SUPERUSER_USERNAME=${DJANGO_SUPERUSER_USERNAME}
       - DJANGO_SUPERUSER_EMAIL=${DJANGO_SUPERUSER_EMAIL}
     volumes:
-      - ./static/:/code/static/
-      - ./db.sqlite3:/code/db.sqlite3:rw
+      - ./:/code
+      - "/home/ubuntu/LBS-Platform/jenkins/jenkins_home/workspace:/var/jenkins_home/workspace"
     networks:
       - app-tier
       - db-tier
-    ports:
-      - "8000:8000"
+    expose:
+      - 8000
     depends_on:
       - database
+    privileged: true
 
   nginx-backend:
     restart: always

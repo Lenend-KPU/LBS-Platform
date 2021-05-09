@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import kr.ac.kpu.lbs_platform.R
 import kr.ac.kpu.lbs_platform.adapter.PlaceAdapter
 import kr.ac.kpu.lbs_platform.global.RequestHelper
-import kr.ac.kpu.lbs_platform.global.User
+import kr.ac.kpu.lbs_platform.global.Profile
 import kr.ac.kpu.lbs_platform.poko.remote.PlaceRequest
 
 class PlaceFragment : Fragment() {
@@ -40,12 +40,12 @@ class PlaceFragment : Fragment() {
     }
 
     fun getPlacesFromServer() {
-        val userid = User.userid
+        val profile = Profile.profile?.pk
         RequestHelper.Builder(PlaceRequest::class)
             .apply {
                 this.currentFragment = this@PlaceFragment
                 this.destFragment = null
-                this.urlParameter = "profiles/$userid/places/"
+                this.urlParameter = "profiles/$profile/places/"
                 this.method = Request.Method.GET
                 this.params = params
                 this.onSuccessCallback = {

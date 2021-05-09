@@ -14,7 +14,7 @@ import splitties.toast.toast
 import java.nio.charset.Charset
 import kotlin.reflect.KClass
 
-class RequestHelper constructor(
+class RequestHelper private constructor(
     private val fn: () -> Unit
 ) {
     fun request() {

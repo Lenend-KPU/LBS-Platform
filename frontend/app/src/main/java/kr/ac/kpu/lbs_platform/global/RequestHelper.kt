@@ -87,17 +87,16 @@ class RequestHelper private constructor(
             }
             queue?.add(req)
         }
-        fun outer() {
-            if (isAsync) {
-                GlobalScope.launch {
+        fun build() : RequestHelper {
+            return RequestHelper {
+                if (isAsync) {
+                    GlobalScope.launch {
+                        fn()
+                    }
+                } else {
                     fn()
                 }
-            } else {
-                fn()
             }
-        }
-        fun build() : RequestHelper {
-            return RequestHelper { outer() }
         }
     }
 }

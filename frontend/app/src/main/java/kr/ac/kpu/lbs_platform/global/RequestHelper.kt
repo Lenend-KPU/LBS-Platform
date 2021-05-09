@@ -30,12 +30,6 @@ class RequestHelper private constructor(
         var params: Map<String, String> = mapOf()
         var method: Int = Request.Method.POST
         var queue: RequestQueue? = null
-            get() {
-                if(queue == null) {
-                    queue = Volley.newRequestQueue(currentFragment?.activity)
-                }
-                return queue
-            }
         var bodyContentType: String = defaultBodyContentType
         var isAsync: Boolean = true
         var onFailureCallback: (responseObject: T) -> Unit = {
@@ -54,6 +48,9 @@ class RequestHelper private constructor(
         }
         fun fn() {
             val fragmentName = currentFragment!!::class.java.name
+            if(queue == null) {
+               queue = Volley.newRequestQueue(currentFragment?.activity)
+            }
             val req: StringRequest = object : StringRequest(
                 method, "${ServerUrl.url}/$urlParameter",
                 { response ->
@@ -77,15 +74,15 @@ class RequestHelper private constructor(
                 }
             ) {
                 override fun getBodyContentType(): String {
-                    if (bodyContentType != defaultBodyContentType || method == Request.Method.POST) {
-                        return bodyContentType
+                    if (this@Builder.bodyContentType != defaultBodyContentType || method == Request.Method.POST) {
+                        return this@Builder.bodyContentType
                     }
                     return ""
                 }
 
                 @Throws(AuthFailureError::class)
                 public override fun getParams(): Map<String, String> {
-                    return params
+                    return this@Builder.params
                 }
             }
             queue?.add(req)

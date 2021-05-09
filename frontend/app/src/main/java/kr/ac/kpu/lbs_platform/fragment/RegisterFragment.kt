@@ -9,6 +9,7 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import kr.ac.kpu.lbs_platform.R
 import kr.ac.kpu.lbs_platform.global.RequestHelper
+import kr.ac.kpu.lbs_platform.poko.remote.Request
 import splitties.toast.toast
 
 
@@ -49,7 +50,15 @@ class RegisterFragment : Fragment() {
         params["email"] = email
         params["address"] = address
         params["password"] = password
-        RequestHelper.request(this, LoginFragment(), "users/", params)
+        RequestHelper.Builder(Request::class)
+            .apply {
+                this.currentFragment = this@RegisterFragment
+                this.destFragment = LoginFragment()
+                this.urlParameter = "users/"
+                this.params = params
+            }
+            .build()
+            .request()
     }
 
 }

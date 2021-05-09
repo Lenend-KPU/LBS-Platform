@@ -15,7 +15,7 @@ import kr.ac.kpu.lbs_platform.R
 import kr.ac.kpu.lbs_platform.global.Profile
 import kr.ac.kpu.lbs_platform.global.RequestCode
 import kr.ac.kpu.lbs_platform.global.RequestHelper
-import kr.ac.kpu.lbs_platform.poko.local.LBS_Place
+import kr.ac.kpu.lbs_platform.poko.remote.Request
 import splitties.toast.toast
 
 
@@ -78,7 +78,15 @@ class AddPlaceFragment : Fragment() {
             return@let it.longitude.toString()
         } ?: "0"
         val profileNumber = Profile.profile?.pk.toString()
-        RequestHelper.request(this, PlaceFragment(), "profiles/$profileNumber/places/", params)
+        RequestHelper.Builder(Request::class)
+            .apply {
+                this.currentFragment = this@AddPlaceFragment
+                this.destFragment = PlaceFragment()
+                this.urlParameter = "profiles/$profileNumber/places/"
+                this.params = params
+            }
+            .build()
+            .request()
     }
 
 

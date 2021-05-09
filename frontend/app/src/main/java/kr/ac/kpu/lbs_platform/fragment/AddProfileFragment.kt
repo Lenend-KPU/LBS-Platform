@@ -11,6 +11,7 @@ import android.widget.RadioButton
 import kr.ac.kpu.lbs_platform.R
 import kr.ac.kpu.lbs_platform.global.RequestHelper
 import kr.ac.kpu.lbs_platform.global.User
+import kr.ac.kpu.lbs_platform.poko.remote.Request
 import splitties.toast.toast
 
 class AddProfileFragment : Fragment() {
@@ -47,9 +48,18 @@ class AddProfileFragment : Fragment() {
             params["name"] = name
             params["photo"] = photo.toString()
             params["private"] = private.toString()
-            RequestHelper.request(this, FeedFragment(), "profiles/", params = params) {
-                LoginFragment.checkUserProfileExists(this)
-            }
+            RequestHelper.Builder(Request::class)
+                .apply {
+                    this.currentFragment = this@AddProfileFragment
+                    this.destFragment = FeedFragment()
+                    this.urlParameter = "profiles/"
+                    this.params = params
+                    this.onSuccessCallback = {
+                        LoginFragment.checkUserProfileExists(this@AddProfileFragment )
+                    }
+                }
+                .build()
+                .request()
         }
         return inflated
     }

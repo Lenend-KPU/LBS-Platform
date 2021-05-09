@@ -41,10 +41,20 @@ class PlaceFragment : Fragment() {
 
     fun getPlacesFromServer() {
         val userid = User.userid
-        RequestHelper.request(this, null, "profiles/$userid/places/", method = Request.Method.GET, poko = PlaceRequest::class.java) {
-            val placeRequest = it as PlaceRequest
-            placeRecyclerView.adapter = PlaceAdapter(placeRequest)
-        }
+        RequestHelper.Builder(PlaceRequest::class)
+            .apply {
+                this.currentFragment = this@PlaceFragment
+                this.destFragment = null
+                this.urlParameter = "profiles/$userid/places/"
+                this.method = Request.Method.GET
+                this.params = params
+                this.onSuccessCallback = {
+                    val placeRequest = it
+                    placeRecyclerView.adapter = PlaceAdapter(placeRequest)
+                }
+            }
+            .build()
+            .request()
     }
 
 }

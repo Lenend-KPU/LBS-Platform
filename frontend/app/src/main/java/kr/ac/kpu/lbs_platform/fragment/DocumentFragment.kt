@@ -41,7 +41,7 @@ class DocumentFragment : Fragment() {
                 this.urlParameter = "profiles/$profileNumber/documents/"
                 this.method = com.android.volley.Request.Method.GET
                 this.onSuccessCallback = {
-                    recyclerView.adapter = DocumentAdapter(this@DocumentFragment.activity!!, it)
+                    recyclerView.adapter = DocumentAdapter(it)
                 }
             }
             .build()

@@ -14,8 +14,11 @@ import kr.ac.kpu.lbs_platform.R
 import kr.ac.kpu.lbs_platform.poko.remote.DocumentRequest
 import java.math.MathContext
 
-class DocumentAdapter(private val context: FragmentActivity, private val dataSet: DocumentRequest):
+class DocumentAdapter(private val dataSet: DocumentRequest):
     RecyclerView.Adapter<DocumentAdapter.ViewHolder>() {
+    companion object {
+        lateinit var context: Context
+    }
 
     init {
         Log.i("PlaceAdapter", dataSet.toString())
@@ -27,6 +30,9 @@ class DocumentAdapter(private val context: FragmentActivity, private val dataSet
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val documentItemName: TextView = view.findViewById(R.id.documentItemName)
         val documentPlaceRecyclerView: RecyclerView = view.findViewById(R.id.documentPlaceRecyclerView)
+        init {
+            context = view.context
+        }
     }
 
     // Create new views (invoked by the layout manager)

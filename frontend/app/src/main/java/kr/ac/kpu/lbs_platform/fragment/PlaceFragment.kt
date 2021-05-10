@@ -35,7 +35,7 @@ class PlaceFragment : Fragment() {
 
         GlobalScope.launch {
             getPlacesFromServer(this@PlaceFragment) {
-                placeRecyclerView.adapter = PlaceAdapter(it)
+                placeRecyclerView.adapter = PlaceAdapter(it.result!!)
             }
         }
         // Inflate the layout for this fragment

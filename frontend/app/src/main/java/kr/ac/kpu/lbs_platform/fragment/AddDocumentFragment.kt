@@ -10,10 +10,9 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.libraries.places.api.model.Place
 import kr.ac.kpu.lbs_platform.R
 import kr.ac.kpu.lbs_platform.activity.SelectPlaceActivity
-import kr.ac.kpu.lbs_platform.adapter.DocumentAdapter
+import kr.ac.kpu.lbs_platform.adapter.AddDocumentAdapter
 import kr.ac.kpu.lbs_platform.global.Profile
 import kr.ac.kpu.lbs_platform.global.RequestCode
 import kr.ac.kpu.lbs_platform.global.RequestHelper
@@ -60,7 +59,7 @@ class AddDocumentFragment : Fragment() {
         }
         val addDocumentRecyclerView = inflated.findViewById<RecyclerView>(R.id.addDocumentRecyclerView)
         addDocumentRecyclerView.layoutManager = LinearLayoutManager(this.activity)
-        addDocumentRecyclerView.adapter = DocumentAdapter(places)
+        addDocumentRecyclerView.adapter = AddDocumentAdapter(places)
         // Inflate the layout for this fragment
         return inflated
     }
@@ -89,6 +88,6 @@ class AddDocumentFragment : Fragment() {
 
     fun notifyDataHasChanged() {
         val addDocumentRecyclerView = inflated.findViewById<RecyclerView>(R.id.addDocumentRecyclerView)
-        addDocumentRecyclerView.adapter = DocumentAdapter(places)
+        addDocumentRecyclerView.adapter = AddDocumentAdapter(places)
     }
 }

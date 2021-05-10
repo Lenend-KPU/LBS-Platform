@@ -7,9 +7,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kr.ac.kpu.lbs_platform.R
+import kr.ac.kpu.lbs_platform.poko.remote.Place
 import kr.ac.kpu.lbs_platform.poko.remote.PlaceRequest
 
-open class PlaceAdapter(private val dataSet: PlaceRequest):
+open class PlaceAdapter(private val dataSet: Array<Place>):
     RecyclerView.Adapter<PlaceAdapter.ViewHolder>() {
 
     init {
@@ -39,20 +40,11 @@ open class PlaceAdapter(private val dataSet: PlaceRequest):
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        viewHolder.photoTextView.text = dataSet.result?.let {
-            return@let it[position].fields.place_photo
-        } ?: ""
-        viewHolder.nameTextView.text = dataSet.result?.let {
-            return@let it[position].fields.place_name
-        } ?: ""
-        viewHolder.rateTextView.text = dataSet.result?.let {
-            return@let it[position].fields.place_rate
-        } ?: ""
+        viewHolder.photoTextView.text = dataSet[position].fields.place_photo
+        viewHolder.nameTextView.text = dataSet[position].fields.place_name
+        viewHolder.rateTextView.text = dataSet[position].fields.place_rate
     }
 
     // Return the size of your dataset (invoked by the layout manager)
-    override fun getItemCount() = dataSet.result?.let {
-        return@let it.size
-    } ?: 0
-
+    override fun getItemCount() = dataSet.size
 }

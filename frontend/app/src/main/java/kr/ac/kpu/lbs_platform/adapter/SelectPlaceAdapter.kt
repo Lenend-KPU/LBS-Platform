@@ -10,7 +10,7 @@ import kr.ac.kpu.lbs_platform.poko.remote.Place
 import kr.ac.kpu.lbs_platform.poko.remote.PlaceRequest
 
 
-class SelectPlaceAdapter(val _dataSet: PlaceRequest, private val onClick: (View) -> Unit):
+class SelectPlaceAdapter(val _dataSet: Array<Place>, private val onClick: (View) -> Unit):
     PlaceAdapter(_dataSet) {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {

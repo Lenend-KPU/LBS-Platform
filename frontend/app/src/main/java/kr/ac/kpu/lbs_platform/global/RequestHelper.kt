@@ -66,6 +66,7 @@ class RequestHelper private constructor(
                     Log.i(fragmentName, error.toString())
                     error?.networkResponse?.data?.let {
                         val responseBody = String(it, Charset.defaultCharset())
+                        Log.i(fragmentName, responseBody)
                         val gson = Gson()
                         val request = gson.fromJson(responseBody, poko.java)
                         Log.i(fragmentName, request.toString())
@@ -74,10 +75,10 @@ class RequestHelper private constructor(
                 }
             ) {
                 override fun getBodyContentType(): String {
-                    if (this@Builder.bodyContentType != defaultBodyContentType || method == Request.Method.POST) {
-                        return this@Builder.bodyContentType
+                    if (this@Builder.bodyContentType == defaultBodyContentType && method == Request.Method.GET) {
+                        return ""
                     }
-                    return ""
+                    return this@Builder.bodyContentType
                 }
 
                 @Throws(AuthFailureError::class)

@@ -1,10 +1,11 @@
 package kr.ac.kpu.lbs_platform.fragment
 
+import android.app.Activity
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
@@ -33,28 +34,34 @@ class PlaceFragment : Fragment() {
         placeRecyclerView.layoutManager = layoutManager
 
         GlobalScope.launch {
-            getPlacesFromServer()
+            getPlacesFromServer(this@PlaceFragment) {
+                placeRecyclerView.adapter = PlaceAdapter(it.result!!)
+            }
         }
         // Inflate the layout for this fragment
         return inflated
     }
 
-    fun getPlacesFromServer() {
-        val profile = Profile.profile?.pk
-        RequestHelper.Builder(PlaceRequest::class)
-            .apply {
-                this.currentFragment = this@PlaceFragment
-                this.destFragment = null
-                this.urlParameter = "profiles/$profile/places/"
-                this.method = Request.Method.GET
-                this.params = params
-                this.onSuccessCallback = {
-                    val placeRequest = it
-                    placeRecyclerView.adapter = PlaceAdapter(placeRequest)
+    companion object {
+        fun getPlacesFromServer(currentFragment: Fragment? = null,
+                                currentActivity: Activity? = null,
+                                callback: (PlaceRequest) -> Unit = {})
+        {
+            val userid = User.userid
+            RequestHelper.Builder(PlaceRequest::class)
+                .apply {
+                    this.currentFragment = currentFragment
+                    this.destFragment = null
+                    this.activity = currentActivity
+                    this.urlParameter = "profiles/$userid/places/"
+                    this.method = Request.Method.GET
+                    this.onSuccessCallback = callback
                 }
-            }
-            .build()
-            .request()
+                .build()
+                .request()
+        }
     }
+
+
 
 }

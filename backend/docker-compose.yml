@@ -5,6 +5,8 @@ networks:
     driver: bridge
   db-tier:
     driver: bridge
+  grafana-tier:
+    driver: bridge
 
 services:
   gunicorn-backend:
@@ -16,9 +18,10 @@ services:
       - DJANGO_SUPERUSER_PASSWORD=${DJANGO_SUPERUSER_PASSWORD}
       - DJANGO_SUPERUSER_USERNAME=${DJANGO_SUPERUSER_USERNAME}
       - DJANGO_SUPERUSER_EMAIL=${DJANGO_SUPERUSER_EMAIL}
+      - IS_LOCAL=${IS_LOCAL}
     volumes:
       - ./:/code
-      - "/home/ubuntu/LBS-Platform/jenkins/jenkins_home/workspace:/var/jenkins_home/workspace"
+      # - "/home/ubuntu/LBS-Platform/jenkins/jenkins_home/workspace:/var/jenkins_home/workspace"
     networks:
       - app-tier
       - db-tier
@@ -61,3 +64,94 @@ services:
       - db-tier
     volumes:
       - ./data/db:/var/lib/postgresql/data/django/
+
+  prometheus:
+    restart: always
+    container_name: prometheus
+    image: prom/prometheus:latest
+    # labels:
+    #   - "com.centurylinklabs.watchtower.enable=true"
+    volumes:
+      - ./prometheus/:/etc/prometheus/
+      - ./data/prometheus:/prometheus
+    networks:
+      - app-tier
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.console.libraries=/usr/share/prometheus/console_libraries"
+      - "--web.console.templates=/usr/share/prometheus/consoles"
+    ports:
+      - "9090:9090"
+    links:
+      - cadvisor:cadvisor
+      - alertmanager:alertmanager
+    depends_on:
+      - cadvisor
+
+  grafana:
+    restart: always
+    container_name: grafana
+    image: grafana/grafana
+    # labels:
+    #   - "com.centurylinklabs.watchtower.enable=true"
+    volumes:
+      - ./data/grafana/grafana:/var/lib/grafana
+      - ./data/grafana/provisioning:/etc/grafana/provisioning
+    networks:
+      - app-tier
+      - grafana-tier
+    ports:
+      - 5000:3000
+    environment:
+      GF_INSTALL_PLUGINS: grafana-clock-panel,grafana-simple-json-datasource
+
+  cadvisor:
+    restart: always
+    image: google/cadvisor:latest
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    ports:
+      - 8081:8080
+    networks:
+      - app-tier
+    deploy:
+      mode: global
+      restart_policy:
+        condition: on-failure
+
+  node-exporter:
+    restart: always
+    image: prom/node-exporter
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - "--path.procfs=/host/proc"
+      - "--path.sysfs=/host/sys"
+      - --collector.filesystem.ignored-mount-points
+      - "^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)"
+    ports:
+      - 9100:9100
+    networks:
+      - app-tier
+    deploy:
+      mode: global
+
+  # alertmanager:
+  #   image: prom/alertmanager
+  #   ports:
+  #     - 9093:9093
+  #   volumes:
+  #     - ./alertmanager/:/etc/alertmanager/
+  #   networks:
+  #     - app-tier
+  #   restart: always
+  #   command:
+  #     - "--config.file=/etc/alertmanager/config.yml"
+  #     - "--storage.path=/alertmanager"

@@ -1,5 +1,6 @@
 package kr.ac.kpu.lbs_platform.global
 
+import android.app.Activity
 import android.util.Log
 import androidx.fragment.app.Fragment
 import com.android.volley.AuthFailureError
@@ -20,11 +21,14 @@ class RequestHelper private constructor(
     fun request() {
         fn()
     }
+
     companion object {
         val defaultBodyContentType = "application/x-www-form-urlencoded; charset=UTF-8"
     }
+
     class Builder<T : kr.ac.kpu.lbs_platform.poko.remote.Request>(var poko: KClass<T>) {
         var currentFragment: Fragment? = null
+        var activity: Activity? = null
         var destFragment: Fragment? = null
         var urlParameter: String = ""
         var params: Map<String, String> = mapOf()
@@ -46,10 +50,16 @@ class RequestHelper private constructor(
                 }
             }
         }
+
         fun fn() {
-            val fragmentName = currentFragment!!::class.java.name
-            if(queue == null) {
-               queue = Volley.newRequestQueue(currentFragment?.activity)
+            val fragmentName = currentFragment?.let {
+                it::class.java.name
+            } ?: "RequestHelper"
+            if(activity == null && currentFragment != null) {
+                activity = currentFragment?.activity
+            }
+            if (queue == null) {
+                queue = Volley.newRequestQueue(activity)
             }
             val req: StringRequest = object : StringRequest(
                 method, "${ServerUrl.url}/$urlParameter",
@@ -88,7 +98,8 @@ class RequestHelper private constructor(
             }
             queue?.add(req)
         }
-        fun build() : RequestHelper {
+
+        fun build(): RequestHelper {
             return RequestHelper {
                 if (isAsync) {
                     GlobalScope.launch {

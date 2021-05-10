@@ -118,6 +118,14 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                     AddPlaceFragment.instance.setPlaceCallback(place)
                 }
             }
+            RequestCode.SELECT_PLACE_REQUEST_CODE -> {
+                data?.let {
+                    val pk = it.getIntExtra("pk", 0)
+                    Log.i(this::class.java.name, pk.toString())
+                    AddDocumentFragment.places.add(pk)
+                    AddDocumentFragment.instance.notifyDataHasChanged()
+                }
+            }
             else -> {
                 return
             }

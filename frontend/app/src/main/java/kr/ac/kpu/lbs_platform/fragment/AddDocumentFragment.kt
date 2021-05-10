@@ -10,10 +10,14 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.libraries.places.api.model.Place
 import kr.ac.kpu.lbs_platform.R
 import kr.ac.kpu.lbs_platform.activity.SelectPlaceActivity
 import kr.ac.kpu.lbs_platform.adapter.DocumentAdapter
+import kr.ac.kpu.lbs_platform.global.Profile
 import kr.ac.kpu.lbs_platform.global.RequestCode
+import kr.ac.kpu.lbs_platform.global.RequestHelper
+import kr.ac.kpu.lbs_platform.poko.remote.Request
 import splitties.toast.toast
 
 class AddDocumentFragment : Fragment() {
@@ -37,26 +41,50 @@ class AddDocumentFragment : Fragment() {
         val addPlaceButton = inflated.findViewById<Button>(R.id.addPlaceButton)
 
         addPlaceButton.setOnClickListener {
+            if(places.size >= 10) {
+                toast("places 10개 초과")
+            }
             val intent = Intent(this.activity, SelectPlaceActivity::class.java)
             this.activity?.startActivityForResult(intent, RequestCode.SELECT_PLACE_REQUEST_CODE)
         }
 
         val submitDocumentButton = inflated.findViewById<Button>(R.id.submitDocumentButton)
         val documentNameEditText = inflated.findViewById<EditText>(R.id.documentNameEditText)
-        val contentEditText = inflated.findViewById<EditText>(R.id.contentEditText)
         submitDocumentButton.setOnClickListener {
             val title = documentNameEditText.text.toString()
-            val content = contentEditText.text.toString()
-            if(title == "" || content == "") {
+            if(title == "" || places.isEmpty()) {
                 toast("비어있는 필드가 있습니다.")
                 return@setOnClickListener
             }
+            postDocumentToServer(title)
         }
         val addDocumentRecyclerView = inflated.findViewById<RecyclerView>(R.id.addDocumentRecyclerView)
         addDocumentRecyclerView.layoutManager = LinearLayoutManager(this.activity)
         addDocumentRecyclerView.adapter = DocumentAdapter(places)
         // Inflate the layout for this fragment
         return inflated
+    }
+
+    fun postDocumentToServer(title: String) {
+        val params = mutableMapOf<String, String>()
+        params["name"] = title
+        params["color"] = "blue"
+        params["private"] = "true"
+        var cnt = 0
+        for(place in places) {
+            cnt += 1
+            params["place$cnt"] = place.toString()
+        }
+        val profileNumber = Profile.profile?.pk.toString()
+        RequestHelper.Builder(Request::class)
+            .apply {
+                this.currentFragment = this@AddDocumentFragment
+                this.destFragment = FeedFragment()
+                this.urlParameter = "profiles/$profileNumber/documents/"
+                this.params = params
+            }
+            .build()
+            .request()
     }
 
     fun notifyDataHasChanged() {

@@ -62,7 +62,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="문구 입력"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:visibility="gone" />
 
     </LinearLayout>
 

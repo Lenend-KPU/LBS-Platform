@@ -13,6 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.LBSPlatform">
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyCqVfamtU7i2KcRHZxAdk5gHL-tJ7t1YfM"/>
         <activity android:name=".activity.SelectPlaceActivity"></activity>
         <activity android:name=".activity.MainActivity">
             <intent-filter>

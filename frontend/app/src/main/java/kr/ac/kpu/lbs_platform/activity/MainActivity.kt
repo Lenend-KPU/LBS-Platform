@@ -75,11 +75,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         Log.i("MainActivity", item.itemId.toString())
         previousItemId = item.itemId
         when(item.itemId) {
-            R.id.page_search -> {
-                Log.i("MainActivity", "page_search")
-                supportFragmentManager.beginTransaction().replace(R.id.mainActivityfragment, SearchFragment()).commit()
-                return true
-            }
             R.id.page_feed -> {
                 Log.i("MainActivity", "page_feed")
                 supportFragmentManager.beginTransaction().replace(R.id.mainActivityfragment, FeedFragment()).commit()

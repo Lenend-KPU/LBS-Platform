@@ -44,7 +44,12 @@ noMyProfile = {"success": False, "status": 401, "comment": "My Profile is not ex
 profileAlreadyRegistered = {
     "success": False,
     "status": 403,
-    "comment": "Profile has already registered",
+    "comment": "Users's Profile has already registered",
+}
+profileNameAlreadyRegistered = {
+    "success": False,
+    "status": 403,
+    "comment": "Profile Name has already registered by other User",
 }
 modifyProfileSucceed = {
     "success": True,

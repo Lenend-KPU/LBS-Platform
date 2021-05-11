@@ -67,9 +67,9 @@ class DocumentAdapter(private val dataSet: DocumentRequest, private val state: B
                 }
             }
             bounds?.let {
-                googleMap?.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 20))
+                googleMap?.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100))
             } ?: run {
-                googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(latLngs[0], 15f))
+                googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(latLngs[0], 10f))
             }
         }
     }

@@ -1,6 +1,5 @@
 package kr.ac.kpu.lbs_platform.adapter
 
-import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -8,30 +7,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.MapView
-import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
 import kr.ac.kpu.lbs_platform.R
-import kr.ac.kpu.lbs_platform.activity.MainActivity
 import kr.ac.kpu.lbs_platform.poko.remote.Document
 import kr.ac.kpu.lbs_platform.poko.remote.DocumentRequest
-import java.math.MathContext
-import kotlin.properties.Delegates
 
-class DocumentAdapter(private val dataSet: DocumentRequest, private val state: Bundle?):
+class DocumentAdapter(private val dataSet: DocumentRequest, private val state: Bundle?, private val context: Context):
     RecyclerView.Adapter<DocumentAdapter.ViewHolder>() {
     companion object {
         lateinit var context: Context
     }
 
     init {
+//        MapsInitializer.initialize(context)
         Log.i("PlaceAdapter", dataSet.toString())
     }
     /**
@@ -51,9 +44,11 @@ class DocumentAdapter(private val dataSet: DocumentRequest, private val state: B
             var idx = 0
             var latSum = 0.0
             var longSum = 0.0
+            val latLngs = mutableListOf<LatLng>()
             for(place in document.places) {
                 idx++
                 val latLng = LatLng(place.fields.place_latitude.toDouble(), place.fields.place_longitude.toDouble())
+                latLngs.add(latLng)
                 val marker = googleMap?.addMarker(
                     MarkerOptions()
                         .position(latLng)
@@ -62,10 +57,19 @@ class DocumentAdapter(private val dataSet: DocumentRequest, private val state: B
                 latSum += latLng.latitude
                 longSum += latLng.longitude
             }
-            if(idx != 0) {
-                val latAvg = latSum / idx
-                val longAvg = latSum / idx
-                googleMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(latAvg, longAvg), 10f))
+            var bounds: LatLngBounds? = null
+            for(index in 0 until latLngs.size - 1) {
+                val newBounds = LatLngBounds(latLngs[index], latLngs[index+1])
+                if(bounds == null) {
+                    bounds = newBounds
+                } else {
+                    bounds.including(latLngs[index])
+                }
+            }
+            bounds?.let {
+                googleMap?.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 20))
+            } ?: run {
+                googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(latLngs[0], 15f))
             }
         }
     }

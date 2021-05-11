@@ -48,7 +48,7 @@ class FeedFragment : Fragment() {
                 this.urlParameter = "feed/"
                 this.method = com.android.volley.Request.Method.GET
                 this.onSuccessCallback = {
-                    recyclerView.adapter = DocumentAdapter(it, savedInstanceState)
+                    recyclerView.adapter = DocumentAdapter(it, savedInstanceState, MainActivity.instance?.applicationContext!!)
                 }
             }
             .build()

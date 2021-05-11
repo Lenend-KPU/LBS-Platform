@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kr.ac.kpu.lbs_platform.R
+import kr.ac.kpu.lbs_platform.activity.MainActivity
 import kr.ac.kpu.lbs_platform.adapter.DocumentAdapter
 import kr.ac.kpu.lbs_platform.global.Profile
 import kr.ac.kpu.lbs_platform.global.RequestHelper
@@ -41,7 +42,7 @@ class DocumentFragment : Fragment() {
                 this.urlParameter = "profiles/$profileNumber/documents/"
                 this.method = com.android.volley.Request.Method.GET
                 this.onSuccessCallback = {
-                    recyclerView.adapter = DocumentAdapter(it, savedInstanceState)
+                    recyclerView.adapter = DocumentAdapter(it, savedInstanceState, MainActivity.instance?.applicationContext!!)
                 }
             }
             .build()

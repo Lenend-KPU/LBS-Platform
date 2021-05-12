@@ -38,7 +38,7 @@ services:
       context: ./nginx
       dockerfile: ./Dockerfile
     volumes:
-      - ./logs:/var/backend-logs
+      - /var/jenkins_home/workspace/logs:/var/backend-logs
       - ./static/:/static/
     ports:
       - "80:80"
@@ -64,7 +64,7 @@ services:
     networks:
       - db-tier
     volumes:
-      - ../jenkins/jenkins_home/workspace/data/db:/var/lib/postgresql/data/django/
+      - /var/jenkins_home/workspace/data/db:/var/lib/postgresql/data/django/
     expose:
       - 5432
 
@@ -77,7 +77,7 @@ services:
     #   - "com.centurylinklabs.watchtower.enable=true"
     volumes:
       - ./prometheus/:/etc/prometheus/
-      - ../jenkins/jenkins_home/workspace/prometheus/data:/prometheus
+      - /var/jenkins_home/workspace/prometheus/data:/prometheus
     networks:
       - app-tier
     command:
@@ -101,7 +101,7 @@ services:
     # labels:
     #   - "com.centurylinklabs.watchtower.enable=true"
     volumes:
-      - ../jenkins/jenkins_home/workspace/grafana/:/var/lib/grafana
+      - /var/jenkins_home/workspace/grafana/:/var/lib/grafana
     networks:
       - app-tier
       - grafana-tier

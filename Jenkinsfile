@@ -11,7 +11,7 @@ node {
 
   stage('Chown to user Jenkins'){
     sh """
-        chown -hR jenkins:jenkins .
+        chown -hR jenkins:jenkins /var/jenkins_home/workspace/
     """
   }
 

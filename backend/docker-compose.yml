@@ -64,7 +64,7 @@ services:
     networks:
       - db-tier
     volumes:
-      - ./data/db:/var/lib/postgresql/data/django/
+      - ../jenkins/jenkins_home/workspace/data/db:/var/lib/postgresql/data/django/
     expose:
       - 5432
 
@@ -76,8 +76,8 @@ services:
     # labels:
     #   - "com.centurylinklabs.watchtower.enable=true"
     volumes:
-      - ./prometheus/:/etc/prometheus/
-      - ./prometheus/data:/prometheus
+      - ../jenkins/jenkins_home/workspace/prometheus/:/etc/prometheus/
+      - ../jenkins/jenkins_home/workspace/prometheus/data:/prometheus
     networks:
       - app-tier
     command:
@@ -101,8 +101,8 @@ services:
     # labels:
     #   - "com.centurylinklabs.watchtower.enable=true"
     volumes:
-      - ./grafana/data:/var/lib/grafana
-      - ./grafana/provisioning/:/etc/grafana/provisioning/
+      - ../jenkins/jenkins_home/workspace/grafana/data:/var/lib/grafana
+      - ../jenkins/jenkins_home/workspace/grafana/provisioning/:/etc/grafana/provisioning/
     networks:
       - app-tier
       - grafana-tier

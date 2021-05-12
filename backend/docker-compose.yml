@@ -21,7 +21,7 @@ services:
       - IS_LOCAL=${IS_LOCAL}
     volumes:
       - ./:/code
-      - ../jenkins/jenkins_home/workspace:/var/jenkins_home/workspace
+      - /var/jenkins_home/workspace:/var/jenkins_home/workspace
     networks:
       - app-tier
       - db-tier

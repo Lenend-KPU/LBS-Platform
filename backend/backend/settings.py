@@ -23,6 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = secret_key.SECRET_KEY
 JWT_ALGORITHM = "HS256"
+IS_LOCAL = os.environ.get("IS_LOCAL")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -127,7 +128,15 @@ CSRF_COOKIE_SECURE = False
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-if DEBUG:
+if DEBUG and IS_LOCAL:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
+
+else:
     path = "/var/jenkins_home/workspace"
     DATABASES = {
         "default": {
@@ -135,7 +144,7 @@ if DEBUG:
             "NAME": os.path.join(path, "db.sqlite3"),
         }
     }
-else:
+if not DEBUG:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql_psycopg2",

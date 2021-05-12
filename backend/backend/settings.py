@@ -136,15 +136,7 @@ if DEBUG and IS_LOCAL:
         }
     }
 
-else:
-    path = "/var/jenkins_home/workspace"
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": os.path.join(path, "db.sqlite3"),
-        }
-    }
-if not DEBUG:
+elif not DEBUG:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql_psycopg2",
@@ -153,6 +145,15 @@ if not DEBUG:
             "PASSWORD": "postgres",
             "HOST": "database",
             "PORT": 5432,
+        }
+    }
+
+else:
+    path = "/var/jenkins_home/workspace"
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": os.path.join(path, "db.sqlite3"),
         }
     }
 

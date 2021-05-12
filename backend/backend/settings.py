@@ -136,7 +136,17 @@ if DEBUG and IS_LOCAL:
         }
     }
 
-elif not DEBUG:
+
+elif DEBUG:
+    path = "/var/jenkins_home/workspace"
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": os.path.join(path, "db.sqlite3"),
+        }
+    }
+
+else:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql_psycopg2",
@@ -147,16 +157,6 @@ elif not DEBUG:
             "PORT": 5432,
         }
     }
-
-else:
-    path = "/var/jenkins_home/workspace"
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": os.path.join(path, "db.sqlite3"),
-        }
-    }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

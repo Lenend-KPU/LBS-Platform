@@ -49,7 +49,7 @@ class DocumentAdapter(private val dataSet: DocumentRequest, private val state: B
                 idx++
                 val latLng = LatLng(place.fields.place_latitude.toDouble(), place.fields.place_longitude.toDouble())
                 latLngs.add(latLng)
-                val marker = googleMap?.addMarker(
+                googleMap?.addMarker(
                     MarkerOptions()
                         .position(latLng)
                         .title("place $idx")
@@ -59,11 +59,13 @@ class DocumentAdapter(private val dataSet: DocumentRequest, private val state: B
             }
             var bounds: LatLngBounds? = null
             for(index in 0 until latLngs.size - 1) {
-                val newBounds = LatLngBounds(latLngs[index], latLngs[index+1])
+                var first = latLngs[index]
+                var second = latLngs[index+1]
+                val newBounds = if(second.latitude > first.latitude) LatLngBounds(first, second) else LatLngBounds(second, first)
                 if(bounds == null) {
                     bounds = newBounds
                 } else {
-                    bounds.including(latLngs[index])
+                    bounds.including(latLngs[index + 1])
                 }
             }
             bounds?.let {

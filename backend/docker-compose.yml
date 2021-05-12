@@ -76,7 +76,7 @@ services:
     # labels:
     #   - "com.centurylinklabs.watchtower.enable=true"
     volumes:
-      - ../jenkins/jenkins_home/workspace/prometheus/:/etc/prometheus/
+      - ./prometheus/:/etc/prometheus/
       - ../jenkins/jenkins_home/workspace/prometheus/data:/prometheus
     networks:
       - app-tier

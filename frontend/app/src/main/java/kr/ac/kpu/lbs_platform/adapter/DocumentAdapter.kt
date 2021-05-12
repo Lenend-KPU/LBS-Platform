@@ -61,7 +61,7 @@ class DocumentAdapter(private val dataSet: DocumentRequest, private val state: B
             for(index in 0 until latLngs.size - 1) {
                 var first = latLngs[index]
                 var second = latLngs[index+1]
-                val newBounds = if(first.latitude > first.longitude) LatLngBounds(first, second) else LatLngBounds(second, first)
+                val newBounds = if(first.latitude > second.latitude) LatLngBounds(first, second) else LatLngBounds(second, first)
                 if(bounds == null) {
                     bounds = newBounds
                 } else {

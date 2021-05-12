@@ -84,6 +84,11 @@ class ElementView(APIView):
         if [None] * len(keys) == list(dic.values()):
             return utils.send_json(responses.illegalArgument)
 
+        # 변경하려는 profile_name이 기존에 존재하는지 처리 분기문
+        if dic["name"]:
+            if Profile.objects.filter(profile_name=dic["name"]):
+                return utils.send_json(responses.profileNameAlreadyRegistered)
+
         filtered = Profile.objects.filter(pk=profile_pk)
         if not filtered.count():
             return utils.send_json(responses.noProfile)
@@ -91,7 +96,6 @@ class ElementView(APIView):
         original_filtered = filtered
         filtered = filtered.first()
 
-        # 변경하려는 email이 기존에 존재하는지 처리 분기문
         if filtered.user.pk != dic["userid"]:
             matched_user = User.objects.filter(pk=dic["userid"])
 

@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import kr.ac.kpu.lbs_platform.R
 import kr.ac.kpu.lbs_platform.adapter.PlaceAdapter
 import kr.ac.kpu.lbs_platform.global.RequestHelper
-import kr.ac.kpu.lbs_platform.global.User
+import kr.ac.kpu.lbs_platform.global.Profile
 import kr.ac.kpu.lbs_platform.poko.remote.PlaceRequest
 
 class PlaceFragment : Fragment() {

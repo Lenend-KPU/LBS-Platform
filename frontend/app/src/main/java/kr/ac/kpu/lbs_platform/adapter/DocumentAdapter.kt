@@ -65,7 +65,7 @@ class DocumentAdapter(private val dataSet: DocumentRequest, private val state: B
                 if(bounds == null) {
                     bounds = newBounds
                 } else {
-                    bounds.including(latLngs[index])
+                    bounds.including(latLngs[index + 1])
                 }
             }
             bounds?.let {

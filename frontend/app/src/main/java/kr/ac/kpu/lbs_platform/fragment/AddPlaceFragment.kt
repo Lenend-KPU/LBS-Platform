@@ -81,7 +81,7 @@ class AddPlaceFragment : Fragment() {
         RequestHelper.Builder(Request::class)
             .apply {
                 this.currentFragment = this@AddPlaceFragment
-                this.destFragment = PlaceFragment()
+                this.destFragment = ProfileFragment()
                 this.urlParameter = "profiles/$profileNumber/places/"
                 this.params = params
             }

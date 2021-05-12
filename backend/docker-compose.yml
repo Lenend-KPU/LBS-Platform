@@ -54,7 +54,7 @@ services:
 
   database:
     image: "postgres"
-    # user: 1000:1000
+    user: 1000:1000
     environment:
       - PGDATA=/var/lib/postgresql/data/django/
       - POSTGRES_USER=${POSTGRES_USER}
@@ -108,8 +108,6 @@ services:
       - grafana-tier
     ports:
       - 3000:3000
-    environment:
-      GF_INSTALL_PLUGINS: grafana-clock-panel,grafana-simple-json-datasource
 
   cadvisor:
     restart: always

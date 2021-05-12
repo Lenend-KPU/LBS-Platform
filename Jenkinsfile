@@ -20,7 +20,8 @@ node {
   }
   stage('Chown to user Jenkins'){
     sh """ 
-        chown -hR jenkins:jenkins /var/jenkins_home/workspace/
+        sudo chown -hR root:root /var/jenkins_home/workspace/ ;
+        sudo touch /var/jenkins_home/workspace/db.sqlite3
     """
   }
   stage('Run current containers') {

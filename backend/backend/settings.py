@@ -128,16 +128,16 @@ CSRF_COOKIE_SECURE = False
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-if DEBUG and IS_LOCAL:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
-        }
-    }
+# if DEBUG and IS_LOCAL:
+#     DATABASES = {
+#         "default": {
+#             "ENGINE": "django.db.backends.sqlite3",
+#             "NAME": BASE_DIR / "db.sqlite3",
+#         }
+#     }
 
 
-elif DEBUG:
+if DEBUG:
     path = "/var/jenkins_home/workspace"
     DATABASES = {
         "default": {
@@ -145,7 +145,6 @@ elif DEBUG:
             "NAME": os.path.join(path, "db.sqlite3"),
         }
     }
-
 else:
     DATABASES = {
         "default": {

@@ -47,13 +47,13 @@ class PlaceFragment : Fragment() {
                                 currentActivity: Activity? = null,
                                 callback: (PlaceRequest) -> Unit = {})
         {
-            val userid = User.userid
+            val profileId = Profile.profile!!.pk
             RequestHelper.Builder(PlaceRequest::class)
                 .apply {
                     this.currentFragment = currentFragment
                     this.destFragment = null
                     this.activity = currentActivity
-                    this.urlParameter = "profiles/$userid/places/"
+                    this.urlParameter = "profiles/$profileId/places/"
                     this.method = Request.Method.GET
                     this.onSuccessCallback = callback
                 }

@@ -37,7 +37,6 @@ schema_view = get_schema_view(
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("viewapp.urls")),
-    url("", include("django_prometheus.urls")),
     path("users/", include("userapp.urls")),
     path("profiles/", include("profileapp.urls")),
     path(
@@ -51,4 +50,5 @@ urlpatterns = [
         name="schema-swagger-ui",
     ),
     path("docs/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
+    url("", include("django_prometheus.urls")),
 ]

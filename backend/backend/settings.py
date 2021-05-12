@@ -50,6 +50,7 @@ THIRD_PARTY_APPS = [
     "django_createsuperuserwithpassword",
     "rest_framework.authtoken",
     "corsheaders",
+    "django_prometheus",
 ]
 
 PROJECT_APPS = [
@@ -75,6 +76,7 @@ REST_FRAMEWORK = {
 }
 
 MIDDLEWARE = [
+    "django_prometheus.middleware.PrometheusBeforeMiddleware"
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -83,6 +85,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "corsheaders.middleware.CorsMiddleware",
+    "django_prometheus.middleware.PrometheusAfterMiddleware",
 ]
 
 ROOT_URLCONF = "backend.urls"
@@ -128,16 +131,16 @@ CSRF_COOKIE_SECURE = False
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-# if DEBUG and IS_LOCAL:
-#     DATABASES = {
-#         "default": {
-#             "ENGINE": "django.db.backends.sqlite3",
-#             "NAME": BASE_DIR / "db.sqlite3",
-#         }
-#     }
+if DEBUG and IS_LOCAL:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
 
 
-if DEBUG:
+elif DEBUG:
     path = "/var/jenkins_home/workspace"
     DATABASES = {
         "default": {

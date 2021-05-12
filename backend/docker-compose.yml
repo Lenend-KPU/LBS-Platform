@@ -54,7 +54,7 @@ services:
 
   database:
     image: "postgres"
-    user: 1000:1000
+    user: root
     environment:
       - PGDATA=/var/lib/postgresql/data/django/
       - POSTGRES_USER=${POSTGRES_USER}

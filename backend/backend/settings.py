@@ -76,7 +76,7 @@ REST_FRAMEWORK = {
 }
 
 MIDDLEWARE = [
-    "django_prometheus.middleware.PrometheusBeforeMiddleware"
+    "django_prometheus.middleware.PrometheusBeforeMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",

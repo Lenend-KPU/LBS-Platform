@@ -9,6 +9,8 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.maps.MapsInitializer
+import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -42,7 +44,9 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         binding.bottomNavigationView.setOnNavigationItemSelectedListener(this)
         window.statusBarColor = getColor(R.color.black)
         setContentView(view)
-        grantPermissions();
+        grantPermissions()
+
+        MapsInitializer.initialize(this)
     }
 
     fun grantPermissions() {
@@ -75,11 +79,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         Log.i("MainActivity", item.itemId.toString())
         previousItemId = item.itemId
         when(item.itemId) {
-            R.id.page_search -> {
-                Log.i("MainActivity", "page_search")
-                supportFragmentManager.beginTransaction().replace(R.id.mainActivityfragment, SearchFragment()).commit()
-                return true
-            }
             R.id.page_feed -> {
                 Log.i("MainActivity", "page_feed")
                 supportFragmentManager.beginTransaction().replace(R.id.mainActivityfragment, FeedFragment()).commit()

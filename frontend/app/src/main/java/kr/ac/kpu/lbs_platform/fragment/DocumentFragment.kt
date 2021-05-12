@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kr.ac.kpu.lbs_platform.R
+import kr.ac.kpu.lbs_platform.activity.MainActivity
 import kr.ac.kpu.lbs_platform.adapter.DocumentAdapter
 import kr.ac.kpu.lbs_platform.global.Profile
 import kr.ac.kpu.lbs_platform.global.RequestHelper
@@ -26,12 +27,12 @@ class DocumentFragment : Fragment() {
         val inflated = inflater.inflate(R.layout.fragment_document, container, false)
         val documentRecyclerView = inflated.findViewById<RecyclerView>(R.id.documentRecyclerView)
         documentRecyclerView.layoutManager = LinearLayoutManager(this.activity)
-        getDocumentsFromServer(documentRecyclerView)
+        getDocumentsFromServer(documentRecyclerView, savedInstanceState)
         // Inflate the layout for this fragment
         return inflated
     }
 
-    fun getDocumentsFromServer(recyclerView: RecyclerView) {
+    fun getDocumentsFromServer(recyclerView: RecyclerView, savedInstanceState: Bundle?) {
         Log.i(this::class.java.name, "getDocumentsFromServer")
         val profileNumber = Profile.profile!!.pk
         RequestHelper.Builder(DocumentRequest::class)
@@ -41,7 +42,7 @@ class DocumentFragment : Fragment() {
                 this.urlParameter = "profiles/$profileNumber/documents/"
                 this.method = com.android.volley.Request.Method.GET
                 this.onSuccessCallback = {
-                    recyclerView.adapter = DocumentAdapter(it)
+                    recyclerView.adapter = DocumentAdapter(it, savedInstanceState, MainActivity.instance?.applicationContext!!)
                 }
             }
             .build()

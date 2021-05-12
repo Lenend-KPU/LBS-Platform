@@ -35,11 +35,11 @@ class FeedFragment : Fragment() {
         }
         val feedRecyclerView = inflated.findViewById<RecyclerView>(R.id.feedRecyclerView)
         feedRecyclerView.layoutManager = LinearLayoutManager(this.activity)
-        getFeedsFromServer(feedRecyclerView)
+        getFeedsFromServer(feedRecyclerView, savedInstanceState)
         return inflated
     }
 
-    fun getFeedsFromServer(recyclerView: RecyclerView) {
+    fun getFeedsFromServer(recyclerView: RecyclerView, savedInstanceState: Bundle?) {
         Log.i(this::class.java.name, "getFeedsFromServer")
         RequestHelper.Builder(DocumentRequest::class)
             .apply {
@@ -48,7 +48,7 @@ class FeedFragment : Fragment() {
                 this.urlParameter = "feed/"
                 this.method = com.android.volley.Request.Method.GET
                 this.onSuccessCallback = {
-                    recyclerView.adapter = DocumentAdapter(it)
+                    recyclerView.adapter = DocumentAdapter(it, savedInstanceState, MainActivity.instance?.applicationContext!!)
                 }
             }
             .build()
@@ -65,7 +65,7 @@ class FeedFragment : Fragment() {
                 FragmentChanger.change(this, AddDocumentFragment())
             }
             R.id.saved -> {
-                FragmentChanger.change(this, SavedLocationFragment())
+                FragmentChanger.change(this, ProfileFragment())
             }
             R.id.profile_edit -> {
                 FragmentChanger.change(this, ProfileEditFragment())

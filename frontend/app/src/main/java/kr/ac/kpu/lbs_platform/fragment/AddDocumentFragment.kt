@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kr.ac.kpu.lbs_platform.R
+import kr.ac.kpu.lbs_platform.activity.MainActivity
+import kr.ac.kpu.lbs_platform.activity.MainActivity.Companion.instance
 import kr.ac.kpu.lbs_platform.activity.SelectPlaceActivity
 import kr.ac.kpu.lbs_platform.adapter.AddDocumentAdapter
 import kr.ac.kpu.lbs_platform.global.Profile
@@ -78,6 +80,7 @@ class AddDocumentFragment : Fragment() {
         RequestHelper.Builder(Request::class)
             .apply {
                 this.currentFragment = this@AddDocumentFragment
+                this.activity = MainActivity.instance
                 this.destFragment = FeedFragment()
                 this.urlParameter = "profiles/$profileNumber/documents/"
                 this.params = params

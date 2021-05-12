@@ -21,7 +21,6 @@ node {
   stage('Chown to user Jenkins'){
     sh """ 
         chown -hR jenkins:jenkins /var/jenkins_home/workspace/
-        chown -hR 1000:1000 /var/jenkins_home/workspace/data
     """
   }
   stage('Run current containers') {

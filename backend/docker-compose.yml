@@ -54,7 +54,7 @@ services:
 
   database:
     image: "postgres"
-    user: 1000:1000
+    user: root
     environment:
       - PGDATA=/var/lib/postgresql/data/django/
       - POSTGRES_USER=${POSTGRES_USER}
@@ -101,8 +101,7 @@ services:
     # labels:
     #   - "com.centurylinklabs.watchtower.enable=true"
     volumes:
-      - ../jenkins/jenkins_home/workspace/grafana/data:/var/lib/grafana
-      - ../jenkins/jenkins_home/workspace/grafana/provisioning/:/etc/grafana/provisioning/
+      - ../jenkins/jenkins_home/workspace/grafana/:/var/lib/grafana
     networks:
       - app-tier
       - grafana-tier

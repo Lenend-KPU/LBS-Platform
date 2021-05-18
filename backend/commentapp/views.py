@@ -52,7 +52,7 @@ class RootView(APIView):
         return utils.send_json(responses.createCommentSucceed)
 
 
-class ElementView(View):
+class ElementView(APIView):
     def get(
         self, request: HttpRequest, profile_pk: int, document_pk: int, comment_pk: int
     ) -> HttpResponse:

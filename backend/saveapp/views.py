@@ -46,7 +46,12 @@ class RootView(APIView):
         me = Profile.objects.filter(pk=dic["me"]).first()
         if me is None:
             return utils.send_json(responses.noMyProfile)
-
+        
+        # save 기존에 존재한다면 생성 x
+        save = Save.objects.filter(profile=me, document=document)
+        if len(save) != 0:
+            return utils.send_json(responses.saveAlreadyExists)
+        
         Save.objects.create(profile=me, document=document)
 
         return utils.send_json(responses.createSaveSucceed)

@@ -46,12 +46,13 @@ class RootView(APIView):
         me = Profile.objects.filter(pk=dic["me"]).first()
         if me is None:
             return utils.send_json(responses.noMyProfile)
-        
-        # save 기존에 존재한다면 생성 x
+
+        # save 기존에 존재한다면 생성 x -> 삭제
         save = Save.objects.filter(profile=me, document=document)
         if len(save) != 0:
-            return utils.send_json(responses.saveAlreadyExists)
-        
+            # return utils.send_json(responses.saveAlreadyExists)
+            return self.delete(request, profile_pk, document_pk)
+
         Save.objects.create(profile=me, document=document)
 
         return utils.send_json(responses.createSaveSucceed)
@@ -81,4 +82,31 @@ class RootView(APIView):
 
         save.delete()
         result = responses.deleteSaveSucceed
+        return utils.send_json(result)
+
+
+class ListView(APIView):
+    def get(self, request: HttpRequest, profile_pk: int) -> HttpResponse:
+        # 리미트 TODO
+        profile = Profile.objects.filter(pk=profile_pk).first()
+        if profile is None:
+            return utils.send_json(responses.noProfile)
+
+        saves = Save.objects.filter(profile=profile)
+        if len(saves) == 0:
+            return utils.send_json(responses.saveDoesNotExists)
+
+        saves = utils.to_dict(saves)
+
+        result = responses.ok
+        documents = []
+
+        for save in saves:
+            document_pk = save["fields"]["document"]
+            document = Document.objects.filter(pk=document_pk)
+            documents.append(document[0])
+
+        documents = utils.to_dict(documents)
+        result["documents"] = documents
+
         return utils.send_json(result)

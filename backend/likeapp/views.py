@@ -47,6 +47,11 @@ class RootView(APIView):
         if me is None:
             return utils.send_json(responses.noMyProfile)
 
+        # like 기존에 존재한다면 생성 x
+        like = Like.objects.filter(profile=me, document=document)
+        if len(like) != 0:
+            return utils.send_json(responses.likeAlreadyExists)
+
         Like.objects.create(profile=me, document=document)
 
         return utils.send_json(responses.createLikeSucceed)

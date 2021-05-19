@@ -35,12 +35,11 @@
 
         </androidx.recyclerview.widget.RecyclerView>
 
-        <TextView
-            android:id="@+id/commentTextView"
+        <View
+            android:id="@+id/divider4"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="댓글" />
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/commentRecyclerView"
@@ -49,6 +48,12 @@
             android:layout_weight="1" >
 
         </androidx.recyclerview.widget.RecyclerView>
+
+        <View
+            android:id="@+id/divider5"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
 
         <LinearLayout
             android:layout_width="match_parent"

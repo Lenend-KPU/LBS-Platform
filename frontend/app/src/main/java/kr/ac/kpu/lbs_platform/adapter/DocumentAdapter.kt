@@ -35,6 +35,7 @@ class DocumentAdapter(private val dataSet: DocumentRequest, private val state: B
         lateinit var document: Document
         val documentItemName: TextView = view.findViewById(R.id.documentItemName)
         val documentPlaceRecyclerView: RecyclerView = view.findViewById(R.id.documentPlaceRecyclerView)
+        val commentRecyclerView: RecyclerView = view.findViewById(R.id.commentRecyclerView)
         val mapView: MapView = view.findViewById(R.id.mapView)
         init {
             context = view.context
@@ -97,6 +98,8 @@ class DocumentAdapter(private val dataSet: DocumentRequest, private val state: B
         }
         viewHolder.documentPlaceRecyclerView.layoutManager = LinearLayoutManager(context)
         viewHolder.documentPlaceRecyclerView.adapter = PlaceAdapter(dataSet.result[position].places)
+        viewHolder.commentRecyclerView.layoutManager = LinearLayoutManager(context)
+        viewHolder.commentRecyclerView.adapter = CommentAdapter(dataSet.result[position].comments)
     }
 
     // Return the size of your dataset (invoked by the layout manager)

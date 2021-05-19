@@ -1,6 +1,7 @@
 package kr.ac.kpu.lbs_platform.global
 
 import android.app.Activity
+import android.content.Context
 import android.util.Log
 import androidx.fragment.app.Fragment
 import com.android.volley.AuthFailureError
@@ -11,6 +12,7 @@ import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kr.ac.kpu.lbs_platform.activity.MainActivity
 import splitties.toast.toast
 import java.nio.charset.Charset
 import kotlin.reflect.KClass
@@ -28,6 +30,7 @@ class RequestHelper private constructor(
 
     class Builder<T : kr.ac.kpu.lbs_platform.poko.remote.Request>(var poko: KClass<T>) {
         var currentFragment: Fragment? = null
+        var context: Context? = null
         var activity: Activity? = null
         var destFragment: Fragment? = null
         var urlParameter: String = ""
@@ -55,11 +58,11 @@ class RequestHelper private constructor(
             val fragmentName = currentFragment?.let {
                 it::class.java.name
             } ?: "RequestHelper"
-            if(activity == null && currentFragment != null) {
+            if(context == null && activity == null && currentFragment != null) {
                 activity = currentFragment?.activity
             }
             if (queue == null) {
-                queue = Volley.newRequestQueue(activity)
+                queue = Volley.newRequestQueue(MainActivity.instance!!.applicationContext!!)
             }
             val req: StringRequest = object : StringRequest(
                 method, "${ServerUrl.url}/$urlParameter",

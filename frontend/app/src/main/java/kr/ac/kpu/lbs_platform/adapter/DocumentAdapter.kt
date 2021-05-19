@@ -1,5 +1,6 @@
 package kr.ac.kpu.lbs_platform.adapter
 
+import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -14,18 +15,24 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
 import kr.ac.kpu.lbs_platform.R
+import kr.ac.kpu.lbs_platform.activity.MainActivity
+import kr.ac.kpu.lbs_platform.fragment.DocumentFragment
+import kr.ac.kpu.lbs_platform.fragment.invalidatable
+import kr.ac.kpu.lbs_platform.global.Profile
+import kr.ac.kpu.lbs_platform.global.RequestHelper
 import kr.ac.kpu.lbs_platform.poko.remote.Document
 import kr.ac.kpu.lbs_platform.poko.remote.DocumentRequest
+import org.w3c.dom.Text
 
-class DocumentAdapter(private val dataSet: DocumentRequest, private val state: Bundle?, private val context: Context):
+class DocumentAdapter(private val dataSet: DocumentRequest, private val state: Bundle?, private val activity: Activity, private val fragment: invalidatable):
     RecyclerView.Adapter<DocumentAdapter.ViewHolder>() {
     companion object {
-        lateinit var context: Context
+        lateinit var activity: Activity
     }
 
     init {
-//        MapsInitializer.initialize(context)
         Log.i("PlaceAdapter", dataSet.toString())
+        DocumentAdapter.activity = activity
     }
     /**
      * Provide a reference to the type of views that you are using
@@ -36,10 +43,12 @@ class DocumentAdapter(private val dataSet: DocumentRequest, private val state: B
         val documentItemName: TextView = view.findViewById(R.id.documentItemName)
         val documentPlaceRecyclerView: RecyclerView = view.findViewById(R.id.documentPlaceRecyclerView)
         val commentRecyclerView: RecyclerView = view.findViewById(R.id.commentRecyclerView)
+        val documentLikeCountTextView: TextView = view.findViewById(R.id.documentLikeCountTextView)
+        val documentLikeButton: TextView = view.findViewById(R.id.documentLikeButton)
+        val commentSubmitButton: TextView = view.findViewById(R.id.commentSubmitButton)
+        val commentEditText: TextView = view.findViewById(R.id.commentEditText)
+
         val mapView: MapView = view.findViewById(R.id.mapView)
-        init {
-            context = view.context
-        }
 
         override fun onMapReady(googleMap: GoogleMap?) {
             var idx = 0
@@ -96,14 +105,67 @@ class DocumentAdapter(private val dataSet: DocumentRequest, private val state: B
         viewHolder.documentItemName.text = dataSet.result.let {
             return@let it[position].fields.document_name
         }
-        viewHolder.documentPlaceRecyclerView.layoutManager = LinearLayoutManager(context)
+        viewHolder.documentPlaceRecyclerView.layoutManager = LinearLayoutManager(activity)
         viewHolder.documentPlaceRecyclerView.adapter = PlaceAdapter(dataSet.result[position].places)
-        viewHolder.commentRecyclerView.layoutManager = LinearLayoutManager(context)
+        viewHolder.commentRecyclerView.layoutManager = LinearLayoutManager(activity)
         viewHolder.commentRecyclerView.adapter = CommentAdapter(dataSet.result[position].comments)
+        viewHolder.documentLikeCountTextView.text = dataSet.result[position].likes.size.toString()
+        viewHolder.documentLikeButton.setOnClickListener {
+            sendLikeToServer(viewHolder, position)
+        }
+        viewHolder.commentSubmitButton.setOnClickListener {
+            val comment = viewHolder.commentEditText.text
+            sendCommentToServer(viewHolder, position, comment.toString())
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.result.size
 
+    fun sendCommentToServer(viewHolder: ViewHolder, position: Int, comment: String) {
+        Log.i(this::class.java.name, "sendCommentToServer")
+        val profileNumber = dataSet.result[position].fields.profile
+        val myProfileNumber = Profile.profile?.pk ?: 0
+        val documentNumber = dataSet.result[position].pk
+        val params = mutableMapOf<String, String>()
+        params["me"] = myProfileNumber.toString()
+        params["text"] = comment
+        RequestHelper.Builder(DocumentRequest::class)
+            .apply {
+                this.activity = activity
+                this.destFragment = null
+                this.urlParameter = "profiles/$profileNumber/documents/$documentNumber/comments/"
+                this.method = com.android.volley.Request.Method.POST
+                this.onSuccessCallback = {
+                    viewHolder.commentEditText.text = ""
+                    fragment.invalidateRecyclerView()
+                }
+                this.params = params
+            }
+            .build()
+            .request()
+    }
+
+    fun sendLikeToServer(viewHolder: ViewHolder, position: Int) {
+        Log.i(this::class.java.name, "sendLikeToServer")
+        val profileNumber = dataSet.result[position].fields.profile
+        val myProfileNumber = Profile.profile?.pk ?: 0
+        val documentNumber = dataSet.result[position].pk
+        val params = mutableMapOf<String, String>()
+        params["me"] = myProfileNumber.toString()
+        RequestHelper.Builder(DocumentRequest::class)
+            .apply {
+                this.activity = activity
+                this.destFragment = null
+                this.urlParameter = "profiles/$profileNumber/documents/$documentNumber/likes/"
+                this.method = com.android.volley.Request.Method.POST
+                this.onSuccessCallback = {
+                    fragment.invalidateRecyclerView()
+                }
+                this.params = params
+            }
+            .build()
+            .request()
+    }
 
 }

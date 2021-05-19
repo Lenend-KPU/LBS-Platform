@@ -16,7 +16,10 @@ import kr.ac.kpu.lbs_platform.global.RequestHelper
 import kr.ac.kpu.lbs_platform.poko.remote.DocumentRequest
 import kr.ac.kpu.lbs_platform.poko.remote.Request
 
-class DocumentFragment : Fragment() {
+class DocumentFragment : Fragment(), invalidatable {
+
+    lateinit var documentRecyclerView: RecyclerView
+    var bundle: Bundle? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,8 +27,9 @@ class DocumentFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+        bundle = savedInstanceState
         val inflated = inflater.inflate(R.layout.fragment_document, container, false)
-        val documentRecyclerView = inflated.findViewById<RecyclerView>(R.id.documentRecyclerView)
+        documentRecyclerView = inflated.findViewById<RecyclerView>(R.id.documentRecyclerView)
         documentRecyclerView.layoutManager = LinearLayoutManager(this.activity)
         getDocumentsFromServer(documentRecyclerView, savedInstanceState)
         // Inflate the layout for this fragment
@@ -42,10 +46,14 @@ class DocumentFragment : Fragment() {
                 this.urlParameter = "profiles/$profileNumber/documents/"
                 this.method = com.android.volley.Request.Method.GET
                 this.onSuccessCallback = {
-                    recyclerView.adapter = DocumentAdapter(it, savedInstanceState, MainActivity.instance?.applicationContext!!)
+                    recyclerView.adapter = DocumentAdapter(it, savedInstanceState, MainActivity.instance!!, this@DocumentFragment)
                 }
             }
             .build()
             .request()
+    }
+
+    override fun invalidateRecyclerView() {
+        getDocumentsFromServer(documentRecyclerView, bundle)
     }
 }

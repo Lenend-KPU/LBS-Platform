@@ -18,13 +18,17 @@ import kr.ac.kpu.lbs_platform.global.Profile
 import kr.ac.kpu.lbs_platform.global.RequestHelper
 import kr.ac.kpu.lbs_platform.poko.remote.DocumentRequest
 
-class FeedFragment : Fragment() {
+class FeedFragment : Fragment(), invalidatable {
+    lateinit var feedRecyclerView: RecyclerView
+    var bundle: Bundle? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+        bundle = savedInstanceState
         val inflated = inflater.inflate(R.layout.fragment_feed, container, false)
         MainActivity.instance?.binding?.bottomNavigationView?.visibility = View.VISIBLE
         MainActivity.instance?.binding?.bottomNavigationView?.selectedItemId = R.id.page_feed
@@ -33,7 +37,7 @@ class FeedFragment : Fragment() {
         toolbar.setOnMenuItemClickListener {
             return@setOnMenuItemClickListener onOptionsItemSelected(it)
         }
-        val feedRecyclerView = inflated.findViewById<RecyclerView>(R.id.feedRecyclerView)
+        feedRecyclerView = inflated.findViewById<RecyclerView>(R.id.feedRecyclerView)
         feedRecyclerView.layoutManager = LinearLayoutManager(this.activity)
         getFeedsFromServer(feedRecyclerView, savedInstanceState)
         return inflated
@@ -48,7 +52,7 @@ class FeedFragment : Fragment() {
                 this.urlParameter = "feed/"
                 this.method = com.android.volley.Request.Method.GET
                 this.onSuccessCallback = {
-                    recyclerView.adapter = DocumentAdapter(it, savedInstanceState, MainActivity.instance?.applicationContext!!)
+                    recyclerView.adapter = DocumentAdapter(it, savedInstanceState, MainActivity.instance!!, this@FeedFragment)
                 }
             }
             .build()
@@ -72,5 +76,9 @@ class FeedFragment : Fragment() {
             }
         }
         return true
+    }
+
+    override fun invalidateRecyclerView() {
+        getFeedsFromServer(feedRecyclerView, bundle)
     }
 }

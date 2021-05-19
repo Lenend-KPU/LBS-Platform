@@ -201,6 +201,11 @@ deleteLikeSucceed = {
 }
 
 # Save
+saveAlreadyExists = {
+    "success": False,
+    "status": 401,
+    "comment": "save has already existed",
+}
 saveDoesNotExists = {
     "success": False,
     "status": 401,

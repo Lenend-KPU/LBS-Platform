@@ -22,6 +22,7 @@ import kr.ac.kpu.lbs_platform.global.Profile
 import kr.ac.kpu.lbs_platform.global.RequestHelper
 import kr.ac.kpu.lbs_platform.poko.remote.Document
 import kr.ac.kpu.lbs_platform.poko.remote.DocumentRequest
+import kr.ac.kpu.lbs_platform.poko.remote.Request
 import org.w3c.dom.Text
 
 class DocumentAdapter(private val dataSet: DocumentRequest, private val state: Bundle?, private val activity: Activity, private val fragment: invalidatable):
@@ -45,6 +46,8 @@ class DocumentAdapter(private val dataSet: DocumentRequest, private val state: B
         val commentRecyclerView: RecyclerView = view.findViewById(R.id.commentRecyclerView)
         val documentLikeCountTextView: TextView = view.findViewById(R.id.documentLikeCountTextView)
         val documentLikeButton: TextView = view.findViewById(R.id.documentLikeButton)
+        val documentSaveCountTextView: TextView = view.findViewById(R.id.documentSaveCountTextView)
+        val documentSaveButton: TextView = view.findViewById(R.id.documentSaveButton)
         val commentSubmitButton: TextView = view.findViewById(R.id.commentSubmitButton)
         val commentEditText: TextView = view.findViewById(R.id.commentEditText)
 
@@ -111,7 +114,11 @@ class DocumentAdapter(private val dataSet: DocumentRequest, private val state: B
         viewHolder.commentRecyclerView.adapter = CommentAdapter(dataSet.result[position].comments)
         viewHolder.documentLikeCountTextView.text = dataSet.result[position].likes.size.toString()
         viewHolder.documentLikeButton.setOnClickListener {
-            sendLikeToServer(viewHolder, position)
+            sendLikeToServer(position)
+        }
+        viewHolder.documentSaveCountTextView.text = dataSet.result[position].saves.size.toString()
+        viewHolder.documentSaveButton.setOnClickListener {
+            sendSaveToServer(position)
         }
         viewHolder.commentSubmitButton.setOnClickListener {
             val comment = viewHolder.commentEditText.text
@@ -146,18 +153,40 @@ class DocumentAdapter(private val dataSet: DocumentRequest, private val state: B
             .request()
     }
 
-    fun sendLikeToServer(viewHolder: ViewHolder, position: Int) {
+    fun sendLikeToServer(position: Int) {
         Log.i(this::class.java.name, "sendLikeToServer")
         val profileNumber = dataSet.result[position].fields.profile
         val myProfileNumber = Profile.profile?.pk ?: 0
         val documentNumber = dataSet.result[position].pk
         val params = mutableMapOf<String, String>()
         params["me"] = myProfileNumber.toString()
-        RequestHelper.Builder(DocumentRequest::class)
+        RequestHelper.Builder(Request::class)
             .apply {
                 this.activity = activity
                 this.destFragment = null
                 this.urlParameter = "profiles/$profileNumber/documents/$documentNumber/likes/"
+                this.method = com.android.volley.Request.Method.POST
+                this.onSuccessCallback = {
+                    fragment.invalidateRecyclerView()
+                }
+                this.params = params
+            }
+            .build()
+            .request()
+    }
+
+    fun sendSaveToServer(position: Int) {
+        Log.i(this::class.java.name, "sendSaveToServer")
+        val profileNumber = dataSet.result[position].fields.profile
+        val myProfileNumber = Profile.profile?.pk ?: 0
+        val documentNumber = dataSet.result[position].pk
+        val params = mutableMapOf<String, String>()
+        params["me"] = myProfileNumber.toString()
+        RequestHelper.Builder(Request::class)
+            .apply {
+                this.activity = activity
+                this.destFragment = null
+                this.urlParameter = "profiles/$profileNumber/documents/$documentNumber/saves/"
                 this.method = com.android.volley.Request.Method.POST
                 this.onSuccessCallback = {
                     fragment.invalidateRecyclerView()

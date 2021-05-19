@@ -52,6 +52,7 @@ class FeedFragment : Fragment(), invalidatable {
                 this.urlParameter = "feed/"
                 this.method = com.android.volley.Request.Method.GET
                 this.onSuccessCallback = {
+                    Log.i("SAVES", it.result.map { it.saves }.toString())
                     recyclerView.adapter = DocumentAdapter(it, savedInstanceState, MainActivity.instance!!, this@FeedFragment)
                 }
             }

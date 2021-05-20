@@ -31,7 +31,7 @@ spec:
             path: /var/jenkins_home/workspace/data/db
         - name: etc-prometheus
           hostPath:
-            path: ${pwd}/prometheus/
+            path: ${CURDIR}/prometheus/
         - name: prometheus-data
           hostPath:
             path: /var/jenkins_home/workspace/prometheus/data
@@ -64,8 +64,6 @@ spec:
           volumeMounts:
             - name: jenkins-home
               mountPath: /var/jenkins_home/workspace
-            - name: sqlite3
-              mountPath: /code/db.sqlite3
           resources:
             limits:
               memory: 512Mi

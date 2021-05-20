@@ -1,0 +1,211 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lbs-backend
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: lbs-backend
+    spec:
+      volumes:
+        - name: code
+          hostPath:
+            path: ./
+        - name: static
+          hostPath:
+            path: ./static
+        - name: jenkins_home
+          hostPath:
+            path: /var/jenkins_home/workspace
+        - name: backend_logs
+          hostPath:
+            path: /var/jenkins_home/workspace/logs
+        - name: database_volume
+          hostPath:
+            path: /var/jenkins_home/workspace/data/db
+        - name: etc-prometheus
+          hostPath:
+            path: ./prometheus/
+        - name: prometheus-data
+          hostPath:
+            path: /var/jenkins_home/workspace/prometheus/data
+        - name: lib-grafana
+          hostPath:
+            path: /var/jenkins_home/workspace/grafana
+        - name: rootfs
+          hostPath: /
+        - name: var-run
+          hostPath: /var/run
+        - name: sys
+          hostPath: /sys
+        - name: docker-lib
+          hostPath: /var/lib/docker
+        - name: cgroup
+          hostPath: /cgroup
+        - name: proc
+          hostPath: /proc
+      containers:
+        - name: gunicorn-backend
+          image: a891/lbs-gunicorn-backend:latest
+          volumeMounts:
+            - name: code
+              mountPath: /code
+            - name: jenkins_home
+              mountPath: /var/jenkins_home/workspace
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: "1"
+          env:
+            - name: Django_secret_key
+              value: "${Django_secret_key}"
+            - name: DJANGO_SUPERUSER_PASSWORD
+              value: "${DJANGO_SUPERUSER_PASSWORD}"
+            - name: DJANGO_SUPERUSER_USERNAME
+              value: "${DJANGO_SUPERUSER_USERNAME}"
+            - name: DJANGO_SUPERUSER_EMAIL
+              value: "${DJANGO_SUPERUSER_EMAIL}"
+            - name: IS_LOCAL
+              value: "${IS_LOCAL}"
+          ports:
+            - containerPort: 8000
+        - name: nginx-backend
+          image: a891/lbs-nginx-backend:latest
+          ports:
+            - port: 80
+              targetPort: 80
+              protocol: TCP
+            - port: 80
+              targetPort: 5001
+              protocol: TCP
+            - port: 443
+              targetPort: 443
+              protocol: TCP
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: "1"
+          env:
+            - name: NGINX_HOST
+              value: "0.0.0.0"
+            - name: NGINX_PORT
+              value: "80"
+          volumeMounts:
+            - name: backend-logs
+              mountPath: /var/backend-logs
+            - name: static
+              mountPath: /static
+        - name: database
+          image: postgres
+          user: root
+          ports:
+            - containerPort: 5432
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: "1"
+          env:
+            - name: PGDATA
+              value: "/var/lib/postgresql/data/django/"
+            - name: POSTGRES_USER
+              value: "${POSTGRES_USER}"
+            - name: POSTGRES_PASSWORD
+              value: "${POSTGRES_PASSWORD}"
+            - name: POSTGRES_DB
+              value: "${POSTGRES_DB}"
+            - name: POSTGRES_HOST_AUTH_METHOD
+              value: "trust"
+          volumeMounts:
+            - name: database-volume
+              mountPath: /var/lib/postgresql/data/django/
+        - name: prometheus
+          image: prometheus
+          user: root
+          ports:
+            - port: 9090
+              targetPort: 9090
+              protocol: TCP
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: "1"
+          command:
+            [
+              "--config.file=/etc/prometheus/prometheus.yml",
+              "--storage.tsdb.path=/prometheus",
+              "--web.console.libraries=/usr/share/prometheus/console_libraries",
+              "--web.console.templates=/usr/share/prometheus/consoles",
+            ]
+          volumeMounts:
+            - name: etc-prometheus
+              mountPath: /etc/prometheus
+            - name: prometheus-data
+              mountPath: /prometheus
+        - name: grafana
+          image: grafana/grafana
+          user: root
+          ports:
+            - port: 3000
+              protocol: TCP
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: "1"
+          volumeMounts:
+            - name: lib-grafana
+              mountPath: /var/lib/grafana
+        - name: cadvisor
+          image: google/cadvisor:latest
+          user: root
+          ports:
+            - port: 8080
+              protocol: TCP
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: "1"
+          volumeMounts:
+            - name: rootfs
+              mountPath: /rootfs
+              readOnly: true
+            - name: var-run
+              mountPath: /var/run
+            - name: sys
+              mountPath: /sys
+              readOnly: true
+            - name: docker-lib
+              mountPath: /var/lib/docker
+              readOnly: true
+            - name: cgroup
+              mountPath: /cgroup
+              readOnly: true
+        - name: node-exporter
+          image: prom/node-exporter
+          user: root
+          ports:
+            - port: 9100
+              containerPort: 9100
+              protocol: TCP
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: "1"
+          volumeMounts:
+            - name: proc
+              mountPath: /host/proc
+              readOnly: true
+            - name: sys
+              mountPath: /host/sys
+              readOnly: true
+            - name: rootfs
+              mountPath: /rootfs
+              readOnly: true
+          command:
+            [
+              "--path.procfs=/host/proc",
+              "--path.sysfs=/host/sys",
+              "--collector.filesystem.ignored-mount-points",
+              "^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)",
+            ]

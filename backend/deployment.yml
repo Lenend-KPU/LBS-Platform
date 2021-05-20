@@ -4,6 +4,9 @@ metadata:
   name: lbs-backend
 spec:
   replicas: 3
+  selector:
+    matchLabels:
+      app: lbs-backend
   template:
     metadata:
       labels:
@@ -16,13 +19,13 @@ spec:
         - name: static
           hostPath:
             path: ./static
-        - name: jenkins_home
+        - name: jenkins-home
           hostPath:
             path: /var/jenkins_home/workspace
-        - name: backend_logs
+        - name: backend-logs
           hostPath:
             path: /var/jenkins_home/workspace/logs
-        - name: database_volume
+        - name: database-volume
           hostPath:
             path: /var/jenkins_home/workspace/data/db
         - name: etc-prometheus
@@ -35,24 +38,30 @@ spec:
           hostPath:
             path: /var/jenkins_home/workspace/grafana
         - name: rootfs
-          hostPath: /
+          hostPath:
+            path: /
         - name: var-run
-          hostPath: /var/run
+          hostPath:
+            path: /var/run
         - name: sys
-          hostPath: /sys
+          hostPath:
+            path: /sys
         - name: docker-lib
-          hostPath: /var/lib/docker
+          hostPath:
+            path: /var/lib/docker
         - name: cgroup
-          hostPath: /cgroup
+          hostPath:
+            path: /cgroup
         - name: proc
-          hostPath: /proc
+          hostPath:
+            path: /proc
       containers:
         - name: gunicorn-backend
           image: a891/lbs-gunicorn-backend:latest
           volumeMounts:
             - name: code
               mountPath: /code
-            - name: jenkins_home
+            - name: jenkins-home
               mountPath: /var/jenkins_home/workspace
           resources:
             limits:
@@ -74,15 +83,18 @@ spec:
         - name: nginx-backend
           image: a891/lbs-nginx-backend:latest
           ports:
-            - port: 80
-              targetPort: 80
+            - containerPort: 80
+              hostPort: 80
               protocol: TCP
-            - port: 80
-              targetPort: 5001
+            - name: http2
+              containerPort: 80
+              hostPort: 5001
               protocol: TCP
-            - port: 443
-              targetPort: 443
+            - name: https
+              containerPort: 443
+              hostPort: 443
               protocol: TCP
+
           resources:
             limits:
               memory: 512Mi
@@ -99,7 +111,8 @@ spec:
               mountPath: /static
         - name: database
           image: postgres
-          user: root
+          securityContext:
+            runAsUser: 0
           ports:
             - containerPort: 5432
           resources:
@@ -122,10 +135,11 @@ spec:
               mountPath: /var/lib/postgresql/data/django/
         - name: prometheus
           image: prometheus
-          user: root
+          securityContext:
+            runAsUser: 0
           ports:
-            - port: 9090
-              targetPort: 9090
+            - containerPort: 9090
+              hostPort: 9090
               protocol: TCP
           resources:
             limits:
@@ -145,9 +159,11 @@ spec:
               mountPath: /prometheus
         - name: grafana
           image: grafana/grafana
-          user: root
+          securityContext:
+            runAsUser: 0
           ports:
-            - port: 3000
+            - containerPort: 3000
+              hostPort: 3000
               protocol: TCP
           resources:
             limits:
@@ -158,9 +174,11 @@ spec:
               mountPath: /var/lib/grafana
         - name: cadvisor
           image: google/cadvisor:latest
-          user: root
+          securityContext:
+            runAsUser: 0
           ports:
-            - port: 8080
+            - hostPort: 8080
+              containerPort: 8080
               protocol: TCP
           resources:
             limits:
@@ -183,9 +201,10 @@ spec:
               readOnly: true
         - name: node-exporter
           image: prom/node-exporter
-          user: root
+          securityContext:
+            runAsUser: 0
           ports:
-            - port: 9100
+            - hostPort: 9100
               containerPort: 9100
               protocol: TCP
           resources:

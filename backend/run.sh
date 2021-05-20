@@ -19,8 +19,8 @@ sudo mkdir -p /var/jenkins_home/workspace/grafana
 sudo chmod -R 777 /var/jenkins_home/workspace/grafana
 sudo mkdir -p /var/jenkins_home/workspace/logs
 sudo chmod -R 777 /var/jenkins_home/workspace/logs
-sudo mkdir -p ${pwd}/prometheus
-sudo chmod -R 777 ${pwd}/prometheus
+sudo mkdir -p $(pwd)/prometheus
+sudo chmod -R 777 $(pwd)/prometheus
 sudo mkdir -p /var/jenkins_home/workspace
 sudo chmod -R 777 /var/jenkins_home/workspace
 sudo mkdir -p /var/cgroup

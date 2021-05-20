@@ -58,6 +58,8 @@ spec:
       containers:
         - name: gunicorn-backend
           image: a891/lbs-gunicorn-backend:latest
+          securityContext:
+            runAsUser: 0
           volumeMounts:
             - name: code
               mountPath: /code

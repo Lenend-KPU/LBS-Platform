@@ -26,7 +26,7 @@ JWT_ALGORITHM = "HS256"
 IS_LOCAL = os.environ.get("IS_LOCAL")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # DEFAULT_AUTO_KEY
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
@@ -155,7 +155,7 @@ else:
             "NAME": "lbs_platform",
             "USER": "django",
             "PASSWORD": "postgres",
-            "HOST": "database",
+            "HOST": "0.0.0.0",
             "PORT": 5432,
         }
     }

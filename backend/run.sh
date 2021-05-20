@@ -8,4 +8,13 @@ export POSTGRES_USER='django'
 export POSTGRES_PASSWORD='postgres'
 export POSTGRES_DB='lbs_platform'
 export IS_LOCAL='1'
+
+sudo mkdir -p /var/lib/postgresql/data/django/
+sudo chmod -R 777 /var/lib/postgresql/data/django/
+sudo mkdir -p /var/jenkins_home/workspace
+sudo chmod -R 777 /var/jenkins_home/workspace
+sudo mkdir -p /var/cgroup
+sudo chmod -R 777 /var/cgroup
+sudo mkdir -p /var/proc
+sudo chmod -R 777 /var/proc
 export CURDIR=$(pwd);cat deployment.yml | envsubst | kubectl apply -f -

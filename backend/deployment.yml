@@ -1,3 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: lbs-backend
+  labels:
+    app: lbs-backend
+spec:
+  type: LoadBalancer
+  ports:
+  - name: gunicorn
+    port: 8000
+    protocol: TCP
+  - name: http
+    port: 80
+    protocol: TCP
+  - name: https
+    port: 443
+    protocol: TCP
+  - name: db
+    port: 5432
+    protocol: TCP
+  - name: prometheus
+    port: 9090
+    protocol: TCP
+  - name: cadvisor
+    port: 8080
+    protocol: TCP
+  selector:
+    app: lbs-backend
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -16,6 +46,7 @@ spec:
         - name: code
           hostPath:
             path: ${CURDIR}
+            type: Directory
         - name: static
           hostPath:
             path: ${CURDIR}/static
@@ -61,8 +92,6 @@ spec:
           securityContext:
             runAsUser: 0
           volumeMounts:
-            - name: code
-              mountPath: /code
             - name: jenkins-home
               mountPath: /var/jenkins_home/workspace
           resources:

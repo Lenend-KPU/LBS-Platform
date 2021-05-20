@@ -15,10 +15,10 @@ spec:
       volumes:
         - name: code
           hostPath:
-            path: ${pwd}/
+            path: ${CURDIR}
         - name: static
           hostPath:
-            path: ${pwd}/static
+            path: ${CURDIR}/static
         - name: jenkins-home
           hostPath:
             path: /var/jenkins_home/workspace
@@ -175,6 +175,7 @@ spec:
         - name: cadvisor
           image: google/cadvisor:latest
           securityContext:
+            privileged: true
             runAsUser: 0
           ports:
             - hostPort: 8080

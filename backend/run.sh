@@ -11,6 +11,16 @@ export IS_LOCAL='1'
 
 sudo mkdir -p /var/lib/postgresql/data/django/
 sudo chmod -R 777 /var/lib/postgresql/data/django/
+sudo mkdir -p /var/jenkins_home/workspace/prometheus/data
+sudo chmod -R 777 /var/jenkins_home/workspace/prometheus/data
+sudo mkdir -p /var/jenkins_home/workspace/data/db
+sudo chmod -R 777 /var/jenkins_home/workspace/data/db
+sudo mkdir -p /var/jenkins_home/workspace/grafana
+sudo chmod -R 777 /var/jenkins_home/workspace/grafana
+sudo mkdir -p /var/jenkins_home/workspace/logs
+sudo chmod -R 777 /var/jenkins_home/workspace/logs
+sudo mkdir -p ${pwd}/prometheus
+sudo chmod -R 777 ${pwd}/prometheus
 sudo mkdir -p /var/jenkins_home/workspace
 sudo chmod -R 777 /var/jenkins_home/workspace
 sudo mkdir -p /var/cgroup

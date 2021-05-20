@@ -28,7 +28,7 @@ test -d $RUNDIR || mkdir -p $RUNDIR
 cd $PARENT_PATH
 
 # # DB 연결될때까지 블로킹 (마이그레이션은 DB가 연결되어야 가능하다)
-while ! nc -z database 5432; do sleep 1; done;
+while ! nc -z 127.0.0.1 5432; do sleep 1; done;
 
 
 pip install --upgrade pip

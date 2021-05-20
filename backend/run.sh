@@ -7,4 +7,5 @@ export DJANGO_SUPERUSER_EMAIL='hswook5347@gmail.com'
 export POSTGRES_USER='django'
 export POSTGRES_PASSWORD='postgres'
 export POSTGRES_DB='lbs_platform'
+export IS_LOCAL='1'
 export CURDIR=$(pwd);cat deployment.yml | envsubst | kubectl apply -f -

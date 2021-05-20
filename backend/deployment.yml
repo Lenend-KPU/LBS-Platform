@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: lbs-backend
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: lbs-backend
@@ -15,10 +15,10 @@ spec:
       volumes:
         - name: code
           hostPath:
-            path: ./
+            path: ${pwd}/
         - name: static
           hostPath:
-            path: ./static
+            path: ${pwd}/static
         - name: jenkins-home
           hostPath:
             path: /var/jenkins_home/workspace
@@ -30,7 +30,7 @@ spec:
             path: /var/jenkins_home/workspace/data/db
         - name: etc-prometheus
           hostPath:
-            path: ./prometheus/
+            path: ${pwd}/prometheus/
         - name: prometheus-data
           hostPath:
             path: /var/jenkins_home/workspace/prometheus/data
@@ -134,7 +134,7 @@ spec:
             - name: database-volume
               mountPath: /var/lib/postgresql/data/django/
         - name: prometheus
-          image: prometheus
+          image: prom/prometheus
           securityContext:
             runAsUser: 0
           ports:

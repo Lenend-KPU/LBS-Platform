@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,11 +13,10 @@ import kr.ac.kpu.lbs_platform.activity.MainActivity
 import kr.ac.kpu.lbs_platform.R
 import kr.ac.kpu.lbs_platform.adapter.DocumentAdapter
 import kr.ac.kpu.lbs_platform.global.FragmentChanger
-import kr.ac.kpu.lbs_platform.global.Profile
 import kr.ac.kpu.lbs_platform.global.RequestHelper
 import kr.ac.kpu.lbs_platform.poko.remote.DocumentRequest
 
-class FeedFragment : Fragment(), invalidatable {
+class FeedFragment : Fragment(), Invalidatable {
     lateinit var feedRecyclerView: RecyclerView
     var bundle: Bundle? = null
 

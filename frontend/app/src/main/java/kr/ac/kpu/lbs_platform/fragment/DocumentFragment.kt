@@ -14,9 +14,8 @@ import kr.ac.kpu.lbs_platform.adapter.DocumentAdapter
 import kr.ac.kpu.lbs_platform.global.Profile
 import kr.ac.kpu.lbs_platform.global.RequestHelper
 import kr.ac.kpu.lbs_platform.poko.remote.DocumentRequest
-import kr.ac.kpu.lbs_platform.poko.remote.Request
 
-class DocumentFragment : Fragment(), invalidatable {
+class DocumentFragment : Fragment(), Invalidatable {
 
     lateinit var documentRecyclerView: RecyclerView
     var bundle: Bundle? = null

@@ -1,7 +1,6 @@
 package kr.ac.kpu.lbs_platform.adapter
 
 import android.app.Activity
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,17 +14,14 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
 import kr.ac.kpu.lbs_platform.R
-import kr.ac.kpu.lbs_platform.activity.MainActivity
-import kr.ac.kpu.lbs_platform.fragment.DocumentFragment
-import kr.ac.kpu.lbs_platform.fragment.invalidatable
+import kr.ac.kpu.lbs_platform.fragment.Invalidatable
 import kr.ac.kpu.lbs_platform.global.Profile
 import kr.ac.kpu.lbs_platform.global.RequestHelper
 import kr.ac.kpu.lbs_platform.poko.remote.Document
 import kr.ac.kpu.lbs_platform.poko.remote.DocumentRequest
 import kr.ac.kpu.lbs_platform.poko.remote.Request
-import org.w3c.dom.Text
 
-class DocumentAdapter(private val dataSet: DocumentRequest, private val state: Bundle?, private val activity: Activity, private val fragment: invalidatable):
+class DocumentAdapter(private val dataSet: DocumentRequest, private val state: Bundle?, private val activity: Activity, private val fragment: Invalidatable):
     RecyclerView.Adapter<DocumentAdapter.ViewHolder>() {
     companion object {
         lateinit var activity: Activity
@@ -111,7 +107,7 @@ class DocumentAdapter(private val dataSet: DocumentRequest, private val state: B
         viewHolder.documentPlaceRecyclerView.layoutManager = LinearLayoutManager(activity)
         viewHolder.documentPlaceRecyclerView.adapter = PlaceAdapter(dataSet.result[position].places)
         viewHolder.commentRecyclerView.layoutManager = LinearLayoutManager(activity)
-        viewHolder.commentRecyclerView.adapter = CommentAdapter(dataSet.result[position].comments)
+        viewHolder.commentRecyclerView.adapter = CommentAdapter(dataSet.result[position].comments, dataSet.result[position].fields.profile, fragment)
         viewHolder.documentLikeCountTextView.text = dataSet.result[position].likes.size.toString()
         viewHolder.documentLikeButton.setOnClickListener {
             sendLikeToServer(position)

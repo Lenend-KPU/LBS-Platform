@@ -35,7 +35,7 @@ class GetView(APIView):
 
         result = responses.ok
         result["result"] = {}
-        result["result"]["user"] = utils.to_dict(Profile.objects.filter(pk=pk))[0]
+        result["result"]["user"] = utils.to_dict(Profile.objects.filter(pk=profile_pk))[0]
         result["result"]["followers"] = followers
         result["result"]["followings"] = followings
         return utils.send_json(result)

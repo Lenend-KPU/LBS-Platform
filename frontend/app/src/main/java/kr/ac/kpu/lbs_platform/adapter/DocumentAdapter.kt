@@ -111,7 +111,7 @@ class DocumentAdapter(private val dataSet: DocumentRequest, private val state: B
         viewHolder.documentPlaceRecyclerView.layoutManager = LinearLayoutManager(activity)
         viewHolder.documentPlaceRecyclerView.adapter = PlaceAdapter(dataSet.result[position].places)
         viewHolder.commentRecyclerView.layoutManager = LinearLayoutManager(activity)
-        viewHolder.commentRecyclerView.adapter = CommentAdapter(dataSet.result[position].comments)
+        viewHolder.commentRecyclerView.adapter = CommentAdapter(dataSet.result[position].comments, dataSet.result[position].fields.profile, fragment)
         viewHolder.documentLikeCountTextView.text = dataSet.result[position].likes.size.toString()
         viewHolder.documentLikeButton.setOnClickListener {
             sendLikeToServer(position)

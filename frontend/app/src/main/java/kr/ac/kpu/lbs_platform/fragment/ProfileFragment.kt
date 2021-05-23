@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -36,6 +37,18 @@ class ProfileFragment : Fragment() {
         followersCountTextView.text = Profile.profile?.let {
             return@let it.fields.profile_follower.toString()
         } ?: "0"
+
+        val followersLayout = inflated.findViewById<LinearLayout>(R.id.followersLayout)
+        val followingLayout = inflated.findViewById<LinearLayout>(R.id.followingLayout)
+
+        followersLayout.setOnClickListener {
+            FragmentChanger.change(this, FollowerFragment())
+        }
+
+        followingLayout.setOnClickListener {
+            FragmentChanger.change(this, FollowingFragment())
+        }
+
 
         val routesRadioButton = inflated.findViewById<RadioButton>(R.id.routesRadioButton)
         val placesRadioButton = inflated.findViewById<RadioButton>(R.id.placesRadioButton)

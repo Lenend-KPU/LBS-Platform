@@ -10,18 +10,15 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kr.ac.kpu.lbs_platform.R
-import kr.ac.kpu.lbs_platform.fragment.invalidatable
+import kr.ac.kpu.lbs_platform.fragment.Invalidatable
 import kr.ac.kpu.lbs_platform.global.Profile
 import kr.ac.kpu.lbs_platform.global.RequestHelper
 import kr.ac.kpu.lbs_platform.poko.remote.Comment
 import kr.ac.kpu.lbs_platform.poko.remote.ProfileRequest
-import kr.ac.kpu.lbs_platform.poko.remote.ProfilesRequest
 import kr.ac.kpu.lbs_platform.poko.remote.Request
 import splitties.toast.toast
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
-class CommentAdapter(private val comments: Array<Comment>, private val author: Int, private val fragment: invalidatable) : RecyclerView.Adapter<CommentAdapter.ViewHolder>() {
+class CommentAdapter(private val comments: Array<Comment>, private val author: Int, private val fragment: Invalidatable) : RecyclerView.Adapter<CommentAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentAdapter.ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.comment_item, parent, false)

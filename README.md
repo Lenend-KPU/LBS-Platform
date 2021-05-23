@@ -72,6 +72,10 @@ GIF(TODO)
 | Django + Gunicorn | 8000        | 설명 TODO   |
 | Postgresql        | 5432        | 설명 TODO   |
 | Jenkins           | 8083, 50003 | 설명 TODO   |
+| Grafana | 3000 | cAdvisor, Prometheus, NodeExporter를 통해 전달받은 시간별 매트릭 데이터를 시각화하여 대시보드로 제공해줍니다.    |
+| cAdvisor| 8080 | 사용중인 도커 컨테이너의 리소스 사용량을 측정하여 시계열 매트릭 데이터화합니다. |
+| Prometheus | 9090 | cAdvisor, node exporter의 시계열 매트릭 데이터를 수집하여 시스템 모니터링 및 경고합니다. |
+| Node Exporter| 9100 | 서버의 cpu, 메모리, 디스크, 네트워크 사용량등 호스트 관련 매트릭 데이터를 수집하여 api로 노출시킵니다.   |
 
 ## Deploy
 

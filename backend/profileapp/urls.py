@@ -8,6 +8,7 @@ from saveapp.views import ListView
 
 # 댓글 불러오기, 댓글 쓰기, 댓글 수정, 댓글 삭제
 
+app_name = "profileapp"
 urlpatterns = [
     path("", RootView.as_view(), name="root"),
     path("<int:profile_pk>/", ElementView.as_view(), name="child"),

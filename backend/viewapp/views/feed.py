@@ -1,7 +1,7 @@
 import sys
 
 sys.path.append("..")
-from utils import utils, responses
+from utils import utils, responses, decorators
 from django.http import HttpResponse, HttpRequest
 from django.views import View
 from rest_framework.views import APIView  # For swagger
@@ -11,10 +11,12 @@ from placeapp.models import Place
 from pathapp.models import Path
 from commentapp.models import Comment
 from likeapp.models import Like
+
 # from maximumapp.models import Maximum
 
 # Create your views here.
 class Rootview(APIView):
+    @decorators.elastic
     def get(self, request: HttpRequest) -> HttpResponse:
         # 리미트: TODO
         documents = Document.objects.all()

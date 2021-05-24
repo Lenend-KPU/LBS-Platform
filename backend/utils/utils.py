@@ -9,6 +9,8 @@ from urllib import parse
 from .responses import *
 from django.core.serializers import serialize
 from django.forms.models import model_to_dict
+import requests
+from backend.settings import elastic_search_url
 
 
 def validateEmail(email):
@@ -92,4 +94,9 @@ def get_user(users):
     print("user_dict:", user_dict)
     result = getSucceedFunc("user")
     result["data"] = user_dict
+    return result
+
+
+def get_elastic(path):
+    result = requests.get(f"{elastic_search_url}/_doc{path}")
     return result

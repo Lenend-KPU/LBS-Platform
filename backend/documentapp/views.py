@@ -1,7 +1,7 @@
 import sys
 
 sys.path.append("..")
-from utils import utils, responses
+from utils import utils, responses, decorators
 from django.http import HttpResponse, HttpRequest
 from django.views import View
 from rest_framework.views import APIView  # For swagger
@@ -238,6 +238,7 @@ class ElementView(APIView):
         # # modifyProfileSucceed TODO
         return utils.send_json(responses.modifyDocumentSucceed)
 
+    @decorators.elastic_delete
     def delete(
         self, request: HttpRequest, profile_pk: int, document_pk: int
     ) -> HttpResponse:

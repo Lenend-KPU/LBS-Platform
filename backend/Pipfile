@@ -20,6 +20,12 @@ djangorestframework = "*"
 django-createsuperuserwithpassword = "*"
 djangorestframework-jwt = "*"
 pillow = "*"
+requests = "*"
+elasticsearch = "*"
+pytest = "*"
+hypothesis = "*"
+pytest-django = "*"
+pytest-cov = "*"
 
 [dev-packages]
 

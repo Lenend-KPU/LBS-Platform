@@ -35,14 +35,18 @@ class GetView(APIView):
 
         result = responses.ok
         result["result"] = {}
-        result["result"]["user"] = utils.to_dict(Profile.objects.filter(pk=profile_pk))[0]
+        result["result"]["user"] = utils.to_dict(Profile.objects.filter(pk=profile_pk))[
+            0
+        ]
         result["result"]["followers"] = followers
         result["result"]["followings"] = followings
         return utils.send_json(result)
 
 
 class ElementView(APIView):
-    def post(self, request: HttpRequest, profile_pk: int, following_pk: int) -> HttpResponse:
+    def post(
+        self, request: HttpRequest, profile_pk: int, following_pk: int
+    ) -> HttpResponse:
         me = Profile.objects.filter(pk=profile_pk).first()
         friend = Profile.objects.filter(pk=following_pk).first()
 
@@ -65,7 +69,9 @@ class ElementView(APIView):
         result = responses.createFriendSucceed
         return utils.send_json(result)
 
-    def delete(self, request: HttpRequest, profile_pk: int, following_pk: int) -> HttpResponse:
+    def delete(
+        self, request: HttpRequest, profile_pk: int, following_pk: int
+    ) -> HttpResponse:
         me = Profile.objects.filter(pk=profile_pk).first()
         friend = Profile.objects.filter(pk=following_pk).first()
 

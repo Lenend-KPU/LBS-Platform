@@ -1,0 +1,43 @@
+version: "3"
+
+services:
+  es01:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.12.0-arm64
+    container_name: es01
+    environment:
+      - bootstrap.memory_lock=true
+      - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+      - TZ=Asia/Seoul
+    volumes:
+      - ./elastic_data:/usr/share/elasticsearch/data
+      - ./elastic_data_backup:/opt/elasticsearch/backup
+      - ./elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    ports:
+      - 9200:9200
+      - 9300:9300
+    networks:
+      - elastic
+    user: root
+    restart: always
+    privileged: true
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.12.0
+    container_name: kibana
+    environment:
+      - TZ=Asia/Seoul
+    volumes:
+      - ./kibana.yml:/usr/share/kibana/config/kibana.yml
+    ports:
+      - 5601:5601
+    networks:
+      - elastic
+    depends_on:
+      - es01
+    restart: always
+    privileged: true
+
+networks:
+  elastic:
+    driver: bridge

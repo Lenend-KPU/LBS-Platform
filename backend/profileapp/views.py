@@ -3,6 +3,7 @@ import sys
 sys.path.append("..")
 from userapp.models import User
 from utils import utils, responses
+from utils.decorators import elastic
 from django.http import HttpResponse, HttpRequest
 from django.views import View
 from rest_framework.views import APIView  # For swagger

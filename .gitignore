@@ -1,2 +1,4 @@
 .expo/
 .vscode/
+elasticsearch/elastic_data
+elasticsearch/elastic_data_backup

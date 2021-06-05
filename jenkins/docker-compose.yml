@@ -19,6 +19,11 @@ services:
       - "./jenkins_home:/var/jenkins_home"
     environment:
       TZ: "Asia/Seoul"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.35'
+          memory: 1G
 volumes:
   jenkins_home:
     driver: local

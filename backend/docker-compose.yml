@@ -8,7 +8,8 @@ networks:
   grafana-tier:
     driver: bridge
   elastic:
-    external: true
+    external:
+      name: elastic
 
 services:
   gunicorn-backend:

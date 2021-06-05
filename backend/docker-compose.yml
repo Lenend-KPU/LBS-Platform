@@ -7,6 +7,9 @@ networks:
     driver: bridge
   grafana-tier:
     driver: bridge
+  elastic:
+    external: true
+    driver: bridge
 
 services:
   gunicorn-backend:
@@ -23,6 +26,7 @@ services:
       - ./:/code
       - /var/jenkins_home/workspace:/var/jenkins_home/workspace
     networks:
+      - elastic
       - app-tier
       - db-tier
     expose:

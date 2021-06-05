@@ -13,7 +13,8 @@ services:
       - ./elastic_data:/usr/share/elasticsearch/data
       - ./elastic_data_backup:/opt/elasticsearch/backup
       - ./elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
-    expose: "9200"
+    expose:
+      - "9200"
     ports:
       - 9200:9200
       - 9300:9300
@@ -41,5 +42,4 @@ services:
 
 networks:
   elastic:
-    external: true
     driver: bridge

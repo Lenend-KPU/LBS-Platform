@@ -9,7 +9,6 @@ networks:
     driver: bridge
   elastic:
     external: true
-    driver: bridge
 
 services:
   gunicorn-backend:

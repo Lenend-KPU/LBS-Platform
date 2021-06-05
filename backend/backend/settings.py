@@ -33,7 +33,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 ALLOWED_HOSTS = ["*"]
 
-elastic_search_url = "http://127.0.0.1:9200/feed"
+elastic_search_url = "http://es01:9200/feed"
 
 
 # Application definition

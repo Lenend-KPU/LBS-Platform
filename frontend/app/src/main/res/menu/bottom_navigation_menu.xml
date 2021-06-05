@@ -7,6 +7,12 @@
         android:title="피드"/>
 
     <item
+        android:id="@+id/page_search"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_search_24"
+        android:title="검색"/>
+
+    <item
         android:id="@+id/page_add"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_add_24"

@@ -7,6 +7,11 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
+    kotlinOptions {
+        jvmTarget = '1.8'
+        noStdlib = true
+    }
+
     defaultConfig {
         applicationId "kr.ac.kpu.lbs_platform"
         minSdkVersion 23

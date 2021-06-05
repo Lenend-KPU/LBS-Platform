@@ -84,8 +84,13 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 supportFragmentManager.beginTransaction().replace(R.id.mainActivityfragment, FeedFragment()).commit()
                 return true
             }
+            R.id.page_search -> {
+                Log.i("MainActivity", "page_search")
+                supportFragmentManager.beginTransaction().replace(R.id.mainActivityfragment, SearchFragment()).commit()
+                return true
+            }
             R.id.page_add -> {
-                Log.i("MainActivity", "page_list")
+                Log.i("MainActivity", "page_add")
                 supportFragmentManager.beginTransaction().replace(R.id.mainActivityfragment, AddFragment()).commit()
                 return true
             }

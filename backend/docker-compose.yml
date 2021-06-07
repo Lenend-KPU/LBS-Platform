@@ -22,6 +22,8 @@ services:
       - DJANGO_SUPERUSER_USERNAME=${DJANGO_SUPERUSER_USERNAME}
       - DJANGO_SUPERUSER_EMAIL=${DJANGO_SUPERUSER_EMAIL}
       - IS_LOCAL=${IS_LOCAL}
+      - aws_access_key_id=${aws_access_key_id}
+      - aws_secret_access_key=${aws_secret_access_key}
     volumes:
       - ./:/code
       - /var/jenkins_home/workspace:/var/jenkins_home/workspace

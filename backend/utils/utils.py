@@ -3,6 +3,7 @@ import json
 from decimal import Decimal
 
 import sys
+import os
 
 sys.path.append("..")
 from urllib import parse
@@ -100,3 +101,18 @@ def get_user(users):
 def get_elastic(path):
     result = requests.get(f"{elastic_search_url}/_doc{path}")
     return result
+
+
+def s3_upload(file, file_name):
+    s3_client = boto3.client(
+        "s3",
+        aws_access_key_id=os.environ.get("aws_access_key_id"),
+        aws_secret_access_key=os.environ.get("aws_secret_access_key"),
+    )
+
+    s3_client.upload_fileobj(
+        file, "lbs-bucket", file_name, ExtraArgs={"ContentType": file.content_type}
+    )
+
+    host_image_url = "https://lbs-bucket.s3.ap-northeast-2.amazonaws.com/"+file_name
+    return host_image_url

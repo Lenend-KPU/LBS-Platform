@@ -1,5 +1,6 @@
 from rest_framework.views import APIView  # For swagger
 from django.http import HttpResponse, HttpRequest
+from django.core.files.uploadedfile import InMemoryUploadedFile
 import sys
 import os
 import boto3
@@ -18,19 +19,29 @@ class FileView(APIView):
             aws_secret_access_key=os.environ.get("aws_secret_access_key"),
         )
 
-        if not request:
+        if not request.FILES:
             return utils.send_json(responses.fileDoesNotExists)
-        file = request.FILES["file"]
-        print(file)
-        file_img = Image.open(file)
-        file_name = str(image_hash.average_hash(file_img))
+        file: InMemoryUploadedFile = request.FILES["file"]
 
-        s3_client.upload_fileobj(
-            file, "lbs-bucket", file_name, ExtraArgs={"ContentType": "image/png"}
+        temp_file_name = "temp.png"
+
+        with open(temp_file_name, "wb") as w:
+            w.write(file.open().file.read())
+
+        file_img = Image.open(temp_file_name)
+        file_name = str(image_hash.average_hash(file_img)) + ".png"
+
+        s3_client.upload_file(
+            temp_file_name,
+            "lbs-bucket",
+            file_name,
+            ExtraArgs={"ContentType": "image/png", "ACL": "public-read"},
         )
 
+        os.remove("temp.png")
+
         host_image_url = (
-            f"https://lbs-bucket.s3.ap-northeast-2.amazonaws.com/images/{file_name}.png"
+            f"https://lbs-bucket.s3.ap-northeast-2.amazonaws.com/{file_name}"
         )
 
         return HttpResponse(host_image_url, status=200)

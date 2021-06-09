@@ -4,10 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.util.Log
 import androidx.fragment.app.Fragment
-import com.android.volley.AuthFailureError
-import com.android.volley.Request
-import com.android.volley.RequestQueue
-import com.android.volley.VolleyError
+import com.android.volley.*
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.JsonRequest
 import com.android.volley.toolbox.StringRequest
@@ -41,6 +38,7 @@ class RequestHelper private constructor(
         var urlParameter: String = ""
         var params: Map<String, String> = mapOf()
         var jsonObj: JSONObject? = null
+        var formObj: ByteArray? = null
         var method: Int = Request.Method.POST
         var queue: RequestQueue? = null
         var bodyContentType: String = defaultBodyContentType
@@ -61,6 +59,10 @@ class RequestHelper private constructor(
                     FragmentChanger.change(it, destFragment)
                 }
             }
+        }
+
+        var rawOnSuccessCallback: (responseObject: NetworkResponse) -> Unit = {
+
         }
 
         fun fn() {
@@ -124,6 +126,18 @@ class RequestHelper private constructor(
                         { e -> onResponse(e.toString())},
                         { e -> onError(e)}
                     ) {}
+                    queue?.add(req)
+                }
+                "form" -> {
+                    val req = object : VolleyMultipartRequest(
+                        method, "${baseUrl}/$urlParameter",
+                        { e -> rawOnSuccessCallback(e)},
+                        { e -> onError(e)}
+                    ) {
+                        override fun getByteData(): MutableMap<String, DataPart> {
+                            return mutableMapOf(Pair("file", DataPart("image1.png", formObj)))
+                        }
+                    }
                     queue?.add(req)
                 }
                 else -> {

@@ -1,16 +1,20 @@
 package kr.ac.kpu.lbs_platform.activity
 
 import android.Manifest
+import android.R.attr
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import com.android.volley.NetworkResponse
 import com.google.android.gms.maps.MapsInitializer
-import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -19,7 +23,12 @@ import com.gun0912.tedpermission.TedPermission
 import kr.ac.kpu.lbs_platform.R
 import kr.ac.kpu.lbs_platform.databinding.ActivityMainBinding
 import kr.ac.kpu.lbs_platform.fragment.*
+import kr.ac.kpu.lbs_platform.fragment.AddProfileFragment.Companion.instance
 import kr.ac.kpu.lbs_platform.global.RequestCode
+import kr.ac.kpu.lbs_platform.global.RequestHelper
+import kr.ac.kpu.lbs_platform.global.VolleyMultipartRequest
+import kr.ac.kpu.lbs_platform.poko.remote.Request
+import splitties.toast.toast
 import java.util.*
 
 
@@ -130,9 +139,51 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                     AddDocumentFragment.instance.notifyDataHasChanged()
                 }
             }
+            RequestCode.IMAGE_UPLOAD_REQUEST_CODE -> {
+                data?.let {
+                    val selectedImage = it.data
+                    val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, selectedImage)
+                    AddProfileFragment.instance.imageBitMap = bitmap
+                    AddProfileFragment.instance.addProfileImageView.setImageBitmap(bitmap)
+                    postImage(bitmap, AddProfileFragment.instance) {
+                        toast(it.data.toString())
+                        Log.i("IMAGE_UPLOAD_REQUEST_CODE", it.data.toString())
+                        AddProfileFragment.instance.imageUrl = it.data.toString()
+                    }
+                }
+            }
+            RequestCode.IMAGE_EDIT_REQUEST_CODE -> {
+                data?.let {
+                    val selectedImage = it.data
+                    val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, selectedImage)
+                    ProfileEditFragment.instance.imageBitMap = bitmap
+                    ProfileEditFragment.instance.addProfileImageView.setImageBitmap(bitmap)
+                    postImage(bitmap, ProfileEditFragment.instance) {
+                        toast(it.data.toString())
+                        Log.i("IMAGE_EDIT_REQUEST_CODE", it.data.toString())
+                        ProfileEditFragment.instance.imageUrl = it.data.toString()
+                    }
+                }
+            }
             else -> {
                 return
             }
         }
+    }
+
+    fun postImage(bitmap: Bitmap, instance: Fragment, callback: (NetworkResponse) -> Unit) {
+        RequestHelper.Builder(Request::class)
+            .apply {
+                this.currentFragment = instance
+                this.destFragment = null
+                this.urlParameter = "s3_upload/"
+                this.requestType = "form"
+                this.method = com.android.volley.Request.Method.POST
+                this.formObj = VolleyMultipartRequest.bitmapToByteArray(bitmap)
+                this.bypassFail = true
+                this.rawOnSuccessCallback = callback
+            }
+            .build()
+            .request()
     }
 }

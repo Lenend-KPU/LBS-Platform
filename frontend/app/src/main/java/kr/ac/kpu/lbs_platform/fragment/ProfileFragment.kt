@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import kr.ac.kpu.lbs_platform.R
 import kr.ac.kpu.lbs_platform.global.FragmentChanger
 import kr.ac.kpu.lbs_platform.global.Profile
@@ -23,6 +25,12 @@ class ProfileFragment : Fragment() {
         val inflated = inflater.inflate(R.layout.fragment_profile, container, false)
 
         val profileTextView = inflated.findViewById<TextView>(R.id.profileTextView)
+
+        val profileActivityImageView = inflated.findViewById<ImageView>(R.id.profileActivityImageView)
+
+        Profile.profile?.let {
+            Glide.with(this).load(it.fields.photo).into(profileActivityImageView)
+        }
 
         profileTextView.text = Profile.profile?.let {
             return@let it.fields.profile_name

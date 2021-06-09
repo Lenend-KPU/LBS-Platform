@@ -39,7 +39,8 @@ class FileView(APIView):
             ExtraArgs={"ContentType": "image/png", "ACL": "public-read"},
         )
 
-        os.remove("temp.png")
+        if os.path.exists(temp_file_name):
+            os.remove(temp_file_name)
 
         host_image_url = (
             f"https://lbs-bucket.s3.ap-northeast-2.amazonaws.com/{file_name}"

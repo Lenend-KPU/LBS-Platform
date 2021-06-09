@@ -1,3 +1,7 @@
+import io
+from PIL import Image
+import imagehash
+from utils import utils, responses
 from rest_framework.views import APIView  # For swagger
 from django.http import HttpResponse, HttpRequest
 from django.core.files.uploadedfile import InMemoryUploadedFile
@@ -6,9 +10,6 @@ import os
 import boto3
 
 sys.path.append("..")
-from utils import utils, responses, image_hash
-from PIL import Image
-import io
 
 
 class FileView(APIView):
@@ -29,7 +30,7 @@ class FileView(APIView):
             w.write(file.open().file.read())
 
         file_img = Image.open(temp_file_name)
-        file_name = str(image_hash.average_hash(file_img)) + ".png"
+        file_name = str(imagehash.average_hash(file_img)) + ".png"
 
         s3_client.upload_file(
             temp_file_name,

@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-numpy = { path = "numpy-1.22.0.dev0+97.g4635fc852-cp39-cp39-macosx_11_0_arm64.whl" }
+numpy = "*"
 asgiref = "==3.3.1"
 dj-database-url = "==0.5.0"
 pytz = "==2021.1"
@@ -33,6 +33,7 @@ typing-extensions = "==3.10.0.0"
 PyJWT = "*"
 Pillow = "*"
 Cython = "==0.29.23"
+imagehash = "*"
 
 [dev-packages]
 

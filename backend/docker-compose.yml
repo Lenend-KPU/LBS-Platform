@@ -122,7 +122,7 @@ services:
       - /var/run:/var/run:rw
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker:ro
-      - /cgroup:/cgroup:ro
+      - /var/cgroup:/cgroup:ro
     ports:
       - 8080:8080
     networks:

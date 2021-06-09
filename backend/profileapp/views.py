@@ -87,7 +87,13 @@ class ElementView(APIView):
 
         # 변경하려는 profile_name이 기존에 존재하는지 처리 분기문
         if dic["name"]:
-            if Profile.objects.filter(profile_name=dic["name"]):
+            profile_already_filtered = Profile.objects.filter(
+                profile_name=dic["name"]
+            ).first()
+            if (
+                profile_already_filtered is not None
+                and profile_already_filtered.pk != profile_pk
+            ):
                 return utils.send_json(responses.profileNameAlreadyRegistered)
 
         filtered = Profile.objects.filter(pk=profile_pk)

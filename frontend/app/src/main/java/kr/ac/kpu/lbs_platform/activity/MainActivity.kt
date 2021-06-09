@@ -143,7 +143,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 data?.let {
                     val selectedImage = it.data
                     val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, selectedImage)
-                    AddProfileFragment.instance.imageBitMap = bitmap
                     AddProfileFragment.instance.addProfileImageView.setImageBitmap(bitmap)
                     postImage(bitmap, AddProfileFragment.instance) {
                         toast(it.data.toString())
@@ -156,7 +155,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 data?.let {
                     val selectedImage = it.data
                     val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, selectedImage)
-                    ProfileEditFragment.instance.imageBitMap = bitmap
                     ProfileEditFragment.instance.addProfileImageView.setImageBitmap(bitmap)
                     postImage(bitmap, ProfileEditFragment.instance) {
                         toast(it.data.toString())

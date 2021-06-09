@@ -31,7 +31,6 @@ open class AddProfileFragment : Fragment() {
     }
 
     lateinit var addProfileImageView: ImageView
-    var imageBitMap: Bitmap? = null
     var imageUrl = ""
 
     override fun onCreateView(

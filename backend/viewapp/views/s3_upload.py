@@ -8,6 +8,7 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 import sys
 import os
 import boto3
+import uuid
 
 sys.path.append("..")
 
@@ -24,7 +25,8 @@ class FileView(APIView):
             return utils.send_json(responses.fileDoesNotExists)
         file: InMemoryUploadedFile = request.FILES["file"]
 
-        temp_file_name = "temp.png"
+        uuid_value = uuid.uuid1()
+        temp_file_name = f"{uuid_value}.png"
 
         with open(temp_file_name, "wb") as w:
             w.write(file.open().file.read())

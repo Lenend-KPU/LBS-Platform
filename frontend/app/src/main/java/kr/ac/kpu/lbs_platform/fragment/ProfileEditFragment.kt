@@ -13,11 +13,13 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.RadioButton
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import kr.ac.kpu.lbs_platform.R
 import kr.ac.kpu.lbs_platform.global.*
 import kr.ac.kpu.lbs_platform.poko.remote.ProfilesRequest
 import kr.ac.kpu.lbs_platform.poko.remote.Request
 import splitties.toast.toast
+import splitties.views.imageBitmap
 
 
 class ProfileEditFragment : Fragment() {
@@ -31,7 +33,6 @@ class ProfileEditFragment : Fragment() {
     }
 
     lateinit var addProfileImageView: ImageView
-    var imageBitMap: Bitmap? = null
     var imageUrl = ""
 
     override fun onCreateView(
@@ -45,6 +46,12 @@ class ProfileEditFragment : Fragment() {
         val privateRadioButton = inflated.findViewById<RadioButton>(R.id.addProfilePrivateRadioButton)
         val submitButton = inflated.findViewById<Button>(R.id.addProfileSubmitButton)
         val imageUploadButton = inflated.findViewById<Button>(R.id.addProfileUploadImageButton)
+        val nameEditText = inflated.findViewById<EditText>(R.id.addProfileNameEditText)
+
+        privateRadioButton.isChecked = Profile.profile!!.fields.profile_private
+        nameEditText.setText(Profile.profile!!.fields.profile_name)
+        imageUrl = Profile.profile!!.fields.photo
+        Glide.with(this).load(imageUrl).into(addProfileImageView)
 
         imageUploadButton.setOnClickListener {
             requireActivity().startActivityForResult(
@@ -60,7 +67,6 @@ class ProfileEditFragment : Fragment() {
             buttonView.isChecked = !isChecked
         }
         submitButton.setOnClickListener {
-            val nameEditText = inflated.findViewById<EditText>(R.id.addProfileNameEditText)
             val name = nameEditText.text.toString()
             if(name == "" || imageUrl == "") {
                 toast("비어있는 필드가 있습니다.")

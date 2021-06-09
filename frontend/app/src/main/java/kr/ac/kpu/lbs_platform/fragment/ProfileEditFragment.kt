@@ -88,7 +88,9 @@ class ProfileEditFragment : Fragment() {
                 this.params = params
                 this.onSuccessCallback = {
                     Log.i(this::class.java.name, it.toString())
-                    Profile.profile = it.result!![0]
+                    Profile.profile!!.fields.photo = params["photo"].toString()
+                    Profile.profile!!.fields.profile_name = params["name"].toString()
+                    Profile.profile!!.fields.profile_private = params["private"].toBoolean()
                     FragmentChanger.change(this@ProfileEditFragment, FeedFragment())
                 }
             }

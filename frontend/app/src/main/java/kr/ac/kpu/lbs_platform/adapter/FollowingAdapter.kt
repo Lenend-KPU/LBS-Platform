@@ -44,7 +44,7 @@ class FollowingAdapter(private val request: FriendRequest, val fragment: Fragmen
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         viewHolder.followerIdTextView.text = request.result.followings[position].fields.friend_profile.fields.profile_name
-        Glide.with(fragment).load(request.result.followings[position].fields.friend_profile.fields.photo).into(viewHolder.followerImageView)
+        Glide.with(fragment).load(request.result.followings[position].fields.friend_profile.fields.profile_photo).into(viewHolder.followerImageView)
     }
 
     // Return the size of your dataset (invoked by the layout manager)

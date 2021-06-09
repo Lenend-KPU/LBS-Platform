@@ -32,7 +32,7 @@ class SelectPlaceActivity : AppCompatActivity() {
                 currentFragment = null,
                 currentActivity = this@SelectPlaceActivity
             ) { placeRequest ->
-                selectPlaceRecyclerView.adapter = SelectPlaceAdapter(placeRequest.result!!) {
+                selectPlaceRecyclerView.adapter = SelectPlaceAdapter(placeRequest.result!!, this@SelectPlaceActivity) {
                     val itemPosition: Int = selectPlaceRecyclerView.getChildLayoutPosition(it)
                     val item: Place = placeRequest.result[itemPosition]
                     val intent = Intent()

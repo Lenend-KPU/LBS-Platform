@@ -5,6 +5,8 @@ import android.R.attr
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -14,6 +16,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.android.volley.NetworkResponse
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.Target
 import com.google.android.gms.maps.MapsInitializer
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.widget.Autocomplete
@@ -141,25 +145,43 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             }
             RequestCode.IMAGE_UPLOAD_REQUEST_CODE -> {
                 data?.let {
-                    val selectedImage = it.data
-                    val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, selectedImage)
-                    AddProfileFragment.instance.addProfileImageView.setImageBitmap(bitmap)
+                    it.data ?: return
+                    val stream = contentResolver.openInputStream(Uri.parse(it.dataString))
+                    val bitmap = BitmapFactory.decodeStream(stream)
                     postImage(bitmap, AddProfileFragment.instance) {
-                        toast(it.data.toString())
-                        Log.i("IMAGE_UPLOAD_REQUEST_CODE", it.data.toString())
-                        AddProfileFragment.instance.imageUrl = it.data.toString()
+                        val imageUrl = String(it.data)
+                        AddProfileFragment.instance.imageUrl = imageUrl
+                        toast(imageUrl)
+                        Glide.with(this).load(imageUrl).fitCenter().override(Target.SIZE_ORIGINAL).into(AddProfileFragment.instance.addProfileImageView)
+                        Log.i("IMAGE_UPLOAD_REQUEST_CODE", imageUrl)
                     }
                 }
             }
             RequestCode.IMAGE_EDIT_REQUEST_CODE -> {
                 data?.let {
-                    val selectedImage = it.data
-                    val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, selectedImage)
-                    ProfileEditFragment.instance.addProfileImageView.setImageBitmap(bitmap)
+                    it.data ?: return
+                    val stream = contentResolver.openInputStream(Uri.parse(it.dataString))
+                    val bitmap = BitmapFactory.decodeStream(stream)
                     postImage(bitmap, ProfileEditFragment.instance) {
-                        toast(it.data.toString())
-                        Log.i("IMAGE_EDIT_REQUEST_CODE", it.data.toString())
-                        ProfileEditFragment.instance.imageUrl = it.data.toString()
+                        val imageUrl = String(it.data)
+                        ProfileEditFragment.instance.imageUrl = imageUrl
+                        toast(imageUrl)
+                        Glide.with(this).load(imageUrl).fitCenter().override(Target.SIZE_ORIGINAL).into(ProfileEditFragment.instance.addProfileImageView)
+                        Log.i("IMAGE_EDIT_REQUEST_CODE", imageUrl)
+                    }
+                }
+            }
+            RequestCode.PLACE_IMAGE_UPLOAD_REQUEST_CODE -> {
+                data?.let {
+                    it.data ?: return
+                    val stream = contentResolver.openInputStream(Uri.parse(it.dataString))
+                    val bitmap = BitmapFactory.decodeStream(stream)
+                    postImage(bitmap, AddPlaceFragment.instance) {
+                        val imageUrl = String(it.data)
+                        AddPlaceFragment.instance.imageUrl = imageUrl
+                        toast(imageUrl)
+                        Glide.with(this).load(imageUrl).fitCenter().override(Target.SIZE_ORIGINAL).into(AddPlaceFragment.instance.addPlaceImageView)
+                        Log.i("PLACE_IMAGE_UPLOAD_REQUEST_CODE", imageUrl)
                     }
                 }
             }

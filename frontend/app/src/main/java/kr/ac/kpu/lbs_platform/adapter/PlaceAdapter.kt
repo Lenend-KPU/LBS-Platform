@@ -1,16 +1,24 @@
 package kr.ac.kpu.lbs_platform.adapter
 
+import android.app.Activity
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.RatingBar
 import android.widget.TextView
+import androidx.core.text.isDigitsOnly
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.Target
 import kr.ac.kpu.lbs_platform.R
+import kr.ac.kpu.lbs_platform.fragment.AddPlaceFragment
 import kr.ac.kpu.lbs_platform.poko.remote.Place
 import kr.ac.kpu.lbs_platform.poko.remote.PlaceRequest
 
-open class PlaceAdapter(private val dataSet: Array<Place>):
+open class PlaceAdapter(private val dataSet: Array<Place>, private val fragment: Fragment? = null, private val activity: Activity? = null):
     RecyclerView.Adapter<PlaceAdapter.ViewHolder>() {
 
     init {
@@ -21,9 +29,9 @@ open class PlaceAdapter(private val dataSet: Array<Place>):
      * (custom ViewHolder).
      */
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val photoTextView: TextView = view.findViewById(R.id.placeItemPhotoTextView)
+        val placeItemImageView: ImageView = view.findViewById(R.id.placeItemImageView)
         val nameTextView: TextView = view.findViewById(R.id.placeItemNameTextView)
-        val rateTextView: TextView = view.findViewById(R.id.placeRateTextView)
+        val ratingBar: RatingBar = view.findViewById(R.id.placeRatingBar)
     }
 
     // Create new views (invoked by the layout manager)
@@ -40,9 +48,17 @@ open class PlaceAdapter(private val dataSet: Array<Place>):
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        viewHolder.photoTextView.text = dataSet[position].fields.place_photo
+        fragment?.let {
+            Glide.with(it).load(dataSet[position].fields.place_photo).fitCenter().override(Target.SIZE_ORIGINAL).into(viewHolder.placeItemImageView)
+        }
+        activity?.let {
+            Glide.with(it).load(dataSet[position].fields.place_photo).fitCenter().override(Target.SIZE_ORIGINAL).into(viewHolder.placeItemImageView)
+        }
+
         viewHolder.nameTextView.text = dataSet[position].fields.place_name
-        viewHolder.rateTextView.text = dataSet[position].fields.place_rate
+        if(dataSet[position].fields.place_rate.isDigitsOnly()) {
+            viewHolder.ratingBar.rating = dataSet[position].fields.place_rate.toFloat()
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)

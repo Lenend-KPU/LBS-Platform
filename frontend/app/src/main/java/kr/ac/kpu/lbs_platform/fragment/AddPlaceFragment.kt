@@ -1,12 +1,12 @@
 package kr.ac.kpu.lbs_platform.fragment
 
+import android.content.Intent
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
+import android.widget.*
 import androidx.fragment.app.Fragment
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
@@ -28,6 +28,8 @@ class AddPlaceFragment : Fragment() {
     var currentPlace: Place? = null
     var _inflated: View? = null
     val inflated get() = _inflated!!
+    var imageUrl = ""
+    lateinit var addPlaceImageView: ImageView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,10 +47,24 @@ class AddPlaceFragment : Fragment() {
                 activity?.startActivityForResult(intent, RequestCode.AUTOCOMPLETE_REQUEST_CODE)
             }
         }
+
+        addPlaceImageView = inflated.findViewById(R.id.addPlaceImageView)
+        val addImageButton = inflated.findViewById<Button>(R.id.addPlaceAddImageButton)
         val placeSubmitButton = inflated.findViewById<Button>(R.id.submitPlaceButton)
-        val rateEditText = inflated.findViewById<EditText>(R.id.placeContentEditText)
+        val ratingBar = inflated.findViewById<RatingBar>(R.id.addPlaceRatingBar)
+
+        addImageButton.setOnClickListener {
+            requireActivity().startActivityForResult(
+                Intent(
+                    Intent.ACTION_PICK,
+                    MediaStore.Images.Media.INTERNAL_CONTENT_URI
+                ),
+                RequestCode.PLACE_IMAGE_UPLOAD_REQUEST_CODE
+            )
+        }
+
         placeSubmitButton.setOnClickListener {
-            val rate = rateEditText.text.toString()
+            val rate = ratingBar.rating.toInt().toString()
             if(currentPlace == null || rate == "") {
                 toast("비어있는 필드가 있습니다.")
                 return@setOnClickListener
@@ -57,6 +73,9 @@ class AddPlaceFragment : Fragment() {
                 postPlaceToserver(it, rate)
             }
         }
+
+        ratingBar.setOnRatingBarChangeListener { _, rating, _ -> ratingBar.rating = rating }
+
         return inflated
     }
 
@@ -65,11 +84,11 @@ class AddPlaceFragment : Fragment() {
         _inflated = null
     }
 
-    fun postPlaceToserver(place: Place, content: String) {
+    fun postPlaceToserver(place: Place, rate: String) {
         val params = mutableMapOf<String, String>()
         params["name"] = place.name.toString()
-        params["rate"] = content
-        params["photo"] = "0"
+        params["rate"] = rate
+        params["photo"] = imageUrl
         params["private"] = "true"
         params["latitude"] = place.latLng?.let {
             return@let it.latitude.toString()

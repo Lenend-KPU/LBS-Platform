@@ -14,6 +14,7 @@ import android.widget.ImageView
 import android.widget.RadioButton
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.Target
 import kr.ac.kpu.lbs_platform.R
 import kr.ac.kpu.lbs_platform.global.*
 import kr.ac.kpu.lbs_platform.poko.remote.ProfilesRequest
@@ -48,10 +49,12 @@ class ProfileEditFragment : Fragment() {
         val imageUploadButton = inflated.findViewById<Button>(R.id.addProfileUploadImageButton)
         val nameEditText = inflated.findViewById<EditText>(R.id.addProfileNameEditText)
 
+        submitButton.text = "프로필 수정"
+
         privateRadioButton.isChecked = Profile.profile!!.fields.profile_private
         nameEditText.setText(Profile.profile!!.fields.profile_name)
-        imageUrl = Profile.profile!!.fields.photo
-        Glide.with(this).load(imageUrl).into(addProfileImageView)
+        imageUrl = Profile.profile!!.fields.profile_photo
+        Glide.with(this).load(imageUrl).fitCenter().override(Target.SIZE_ORIGINAL).into(addProfileImageView)
 
         imageUploadButton.setOnClickListener {
             requireActivity().startActivityForResult(
@@ -94,7 +97,7 @@ class ProfileEditFragment : Fragment() {
                 this.params = params
                 this.onSuccessCallback = {
                     Log.i(this::class.java.name, it.toString())
-                    Profile.profile!!.fields.photo = params["photo"].toString()
+                    Profile.profile!!.fields.profile_photo = params["photo"].toString()
                     Profile.profile!!.fields.profile_name = params["name"].toString()
                     Profile.profile!!.fields.profile_private = params["private"].toBoolean()
                     FragmentChanger.change(this@ProfileEditFragment, FeedFragment())

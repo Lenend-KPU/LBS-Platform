@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.*
@@ -105,7 +106,7 @@ class DocumentAdapter(private val dataSet: DocumentRequest, private val state: B
             return@let it[position].fields.document_name
         }
         viewHolder.documentPlaceRecyclerView.layoutManager = LinearLayoutManager(activity)
-        viewHolder.documentPlaceRecyclerView.adapter = PlaceAdapter(dataSet.result[position].places)
+        viewHolder.documentPlaceRecyclerView.adapter = PlaceAdapter(dataSet.result[position].places, fragment as Fragment)
         viewHolder.commentRecyclerView.layoutManager = LinearLayoutManager(activity)
         viewHolder.commentRecyclerView.adapter = CommentAdapter(dataSet.result[position].comments, dataSet.result[position].fields.profile, fragment)
         viewHolder.documentLikeCountTextView.text = dataSet.result[position].likes.size.toString()

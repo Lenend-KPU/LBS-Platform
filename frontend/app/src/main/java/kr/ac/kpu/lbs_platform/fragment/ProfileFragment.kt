@@ -10,6 +10,7 @@ import android.widget.RadioButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.Target
 import kr.ac.kpu.lbs_platform.R
 import kr.ac.kpu.lbs_platform.global.FragmentChanger
 import kr.ac.kpu.lbs_platform.global.Profile
@@ -29,7 +30,7 @@ class ProfileFragment : Fragment() {
         val profileActivityImageView = inflated.findViewById<ImageView>(R.id.profileActivityImageView)
 
         Profile.profile?.let {
-            Glide.with(this).load(it.fields.photo).into(profileActivityImageView)
+            Glide.with(this).load(it.fields.profile_photo).fitCenter().override(Target.SIZE_ORIGINAL).into(profileActivityImageView)
         }
 
         profileTextView.text = Profile.profile?.let {

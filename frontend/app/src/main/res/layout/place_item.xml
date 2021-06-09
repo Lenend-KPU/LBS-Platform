@@ -10,13 +10,11 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/placeItemPhotoTextView"
+        <ImageView
+            android:id="@+id/placeItemImageView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="TextView" />
+            android:layout_height="100dp"
+            tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/placeItemNameTextView"
@@ -26,19 +24,15 @@
             android:gravity="center"
             android:text="TextView" />
 
-        <TextView
-            android:id="@+id/placeRateTextView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="TextView" />
-
-        <ImageView
-            android:id="@+id/placeImageView"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            tools:srcCompat="@tools:sample/avatars" />
+        <RatingBar
+            android:id="@+id/placeRatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:clickable="false"
+            android:contextClickable="false"
+            android:isIndicator="true"
+            android:numStars="5" />
 
         <View
             android:id="@+id/divider2"

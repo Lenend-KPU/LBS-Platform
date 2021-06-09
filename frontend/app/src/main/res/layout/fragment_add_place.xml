@@ -7,10 +7,21 @@
     android:background="@color/white"
     tools:context=".fragment.AddPlaceFragment">
 
+    <ImageView
+        android:id="@+id/addPlaceImageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="72dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars" />
+
     <LinearLayout
         android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="200dp"
         android:layout_marginTop="200dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -42,13 +53,19 @@
             android:textSize="22sp" />
 
 
-        <EditText
-            android:id="@+id/placeContentEditText"
+        <RatingBar
+            android:id="@+id/addPlaceRatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:numStars="5"
+            android:stepSize="1" />
+
+        <Button
+            android:id="@+id/addPlaceAddImageButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="문구 입력"
-            android:inputType="textPersonName" />
+            android:text="이미지 추가" />
 
     </LinearLayout>
 

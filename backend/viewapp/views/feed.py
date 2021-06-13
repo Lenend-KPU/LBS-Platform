@@ -19,7 +19,7 @@ class Rootview(APIView):
     @decorators.elastic
     def get(self, request: HttpRequest) -> HttpResponse:
         # 리미트: TODO
-        documents = Document.objects.all()
+        documents = Document.objects.all().order_by('-pk') 
 
         if len(documents) == 0:
             return utils.send_json(responses.noDocument)

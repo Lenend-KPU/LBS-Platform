@@ -48,10 +48,13 @@ class RootView(APIView):
         if filtered.count():
             return utils.send_json(responses.profileAlreadyRegistered)
 
-        matched_user = User.objects.filter(pk=dic["userid"])
+        filtered = Profile.objects.filter(profile_name=dic["name"])
+        if filtered.count():
+            return utils.send_json(responses.profileNameAlreadyRegistered)
 
+        matched_user = User.objects.filter(pk=dic["userid"])
         if matched_user.count() != 1:
-            return utils.send_json(responses.noProfile)
+            return utils.send_json(responses.noUser)
 
         matched_user = matched_user.first()
 

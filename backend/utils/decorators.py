@@ -31,10 +31,13 @@ def login_required(func):
 def elastic(func):
     def wrapper(self, request: HttpRequest, *args, **kwargs):
         result: HttpResponse = func(self, request, *args, **kwargs)
-        response = json.loads(result.content)
-        for elem in response["result"]:
-            pk = elem["pk"]
-            elastic_result = requests.put(f"{elastic_search_url}/_doc/{pk}", json=elem)
+        if result is not None:
+            response = json.loads(result.content)
+            for elem in response["result"]:
+                pk = elem["pk"]
+                elastic_result = requests.put(
+                    f"{elastic_search_url}/_doc/{pk}", json=elem
+                )
         return result
 
     return wrapper

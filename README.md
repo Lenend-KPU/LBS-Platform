@@ -26,7 +26,8 @@ TODO
 
 ## Architecture
 
-![Architecture](https://user-images.githubusercontent.com/22572874/113485131-13793980-94e7-11eb-82e6-d3941ca487db.png)
+![아키텍쳐](https://user-images.githubusercontent.com/22572874/122595837-f98dd280-d0a3-11eb-85fb-48f6b769a8b9.png)
+
 
 ## Tech-Stack
 

@@ -19,15 +19,14 @@ class Rootview(APIView):
     @decorators.elastic
     def get(self, request: HttpRequest) -> HttpResponse:
         # 리미트: TODO
-        documents = Document.objects.all().order_by('-pk') 
-
-        if len(documents) == 0:
-            return utils.send_json(responses.noDocument)
-
+        documents = Document.objects.all().order_by("-pk")
         documents = utils.to_dict(documents)
 
         result = responses.ok
         result["result"] = documents
+
+        if len(documents) == 0:
+            return utils.send_json(result)
 
         for key, document in enumerate(documents):
             place_dict = []

@@ -17,6 +17,7 @@ import kr.ac.kpu.lbs_platform.poko.remote.FriendRequest
 class FollowerFragment : Fragment(), Invalidatable {
 
     lateinit var followerRecyclerView: RecyclerView
+    val selectedProfile = Profile.selectedProfile ?: Profile.profile
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +38,7 @@ class FollowerFragment : Fragment(), Invalidatable {
 
     fun getFriendsFromServer(recyclerView: RecyclerView) {
         Log.i(this::class.java.name, "getFriendsFromServer")
-        val profileNumber = Profile.profile!!.pk
+        val profileNumber = selectedProfile!!.pk
         RequestHelper.Builder(FriendRequest::class)
             .apply {
                 this.currentFragment = this@FollowerFragment

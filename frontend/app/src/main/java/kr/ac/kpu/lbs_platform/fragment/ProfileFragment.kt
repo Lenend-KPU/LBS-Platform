@@ -1,5 +1,6 @@
 package kr.ac.kpu.lbs_platform.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -29,21 +30,23 @@ class ProfileFragment : Fragment() {
 
         val profileActivityImageView = inflated.findViewById<ImageView>(R.id.profileActivityImageView)
 
-        Profile.profile?.let {
-            Glide.with(this).load(it.fields.profile_photo).fitCenter().override(Target.SIZE_ORIGINAL).into(profileActivityImageView)
+        val selectedProfile = Profile.selectedProfile ?: Profile.profile
+
+        selectedProfile?.let {
+            Glide.with(this).load(it.fields.profile_photo).fitCenter().into(profileActivityImageView)
         }
 
-        profileTextView.text = Profile.profile?.let {
+        profileTextView.text = selectedProfile?.let {
             return@let it.fields.profile_name
         } ?: ""
 
         val follwingCountTextView = inflated.findViewById<TextView>(R.id.followingCountTextView)
         val followersCountTextView = inflated.findViewById<TextView>(R.id.followersCountTextView)
 
-        follwingCountTextView.text = Profile.profile?.let {
+        follwingCountTextView.text = selectedProfile?.let {
             return@let it.fields.profile_following.toString()
         } ?: "0"
-        followersCountTextView.text = Profile.profile?.let {
+        followersCountTextView.text = selectedProfile?.let {
             return@let it.fields.profile_follower.toString()
         } ?: "0"
 
@@ -76,6 +79,11 @@ class ProfileFragment : Fragment() {
 
         // Inflate the layout for this fragment
         return inflated
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Profile.selectedProfile = null
     }
 
 }

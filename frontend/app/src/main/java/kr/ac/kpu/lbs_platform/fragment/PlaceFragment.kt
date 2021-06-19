@@ -43,11 +43,13 @@ class PlaceFragment : Fragment() {
     }
 
     companion object {
+        val selectedProfile = Profile.selectedProfile ?: Profile.profile
+
         fun getPlacesFromServer(currentFragment: Fragment? = null,
                                 currentActivity: Activity? = null,
                                 callback: (PlaceRequest) -> Unit = {})
         {
-            val profileId = Profile.profile!!.pk
+            val profileId = selectedProfile!!.pk
             RequestHelper.Builder(PlaceRequest::class)
                 .apply {
                     this.currentFragment = currentFragment

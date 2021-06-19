@@ -49,10 +49,10 @@ open class PlaceAdapter(private val dataSet: Array<Place>, private val fragment:
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         fragment?.let {
-            Glide.with(it).load(dataSet[position].fields.place_photo).fitCenter().override(Target.SIZE_ORIGINAL).into(viewHolder.placeItemImageView)
+            Glide.with(it).load(dataSet[position].fields.place_photo).fitCenter().into(viewHolder.placeItemImageView)
         }
         activity?.let {
-            Glide.with(it).load(dataSet[position].fields.place_photo).fitCenter().override(Target.SIZE_ORIGINAL).into(viewHolder.placeItemImageView)
+            Glide.with(it).load(dataSet[position].fields.place_photo).fitCenter().into(viewHolder.placeItemImageView)
         }
 
         viewHolder.nameTextView.text = dataSet[position].fields.place_name

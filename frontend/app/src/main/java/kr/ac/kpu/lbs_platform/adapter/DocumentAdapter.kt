@@ -15,11 +15,15 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
 import kr.ac.kpu.lbs_platform.R
+import kr.ac.kpu.lbs_platform.fragment.AddProfileFragment
 import kr.ac.kpu.lbs_platform.fragment.Invalidatable
+import kr.ac.kpu.lbs_platform.fragment.ProfileFragment
+import kr.ac.kpu.lbs_platform.global.FragmentChanger
 import kr.ac.kpu.lbs_platform.global.Profile
 import kr.ac.kpu.lbs_platform.global.RequestHelper
 import kr.ac.kpu.lbs_platform.poko.remote.Document
 import kr.ac.kpu.lbs_platform.poko.remote.DocumentRequest
+import kr.ac.kpu.lbs_platform.poko.remote.ProfileRequest
 import kr.ac.kpu.lbs_platform.poko.remote.Request
 
 class DocumentAdapter(private val dataSet: DocumentRequest, private val state: Bundle?, private val activity: Activity, private val fragment: Invalidatable):
@@ -38,6 +42,8 @@ class DocumentAdapter(private val dataSet: DocumentRequest, private val state: B
      */
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view), OnMapReadyCallback {
         lateinit var document: Document
+        val documentProfileName: TextView = view.findViewById(R.id.documentProfileName)
+        val documentProfileButton: TextView = view.findViewById(R.id.documentProfileButton)
         val documentItemName: TextView = view.findViewById(R.id.documentItemName)
         val documentPlaceRecyclerView: RecyclerView = view.findViewById(R.id.documentPlaceRecyclerView)
         val commentRecyclerView: RecyclerView = view.findViewById(R.id.commentRecyclerView)
@@ -69,8 +75,8 @@ class DocumentAdapter(private val dataSet: DocumentRequest, private val state: B
             }
             var bounds: LatLngBounds? = null
             for(index in 0 until latLngs.size - 1) {
-                var first = latLngs[index]
-                var second = latLngs[index+1]
+                val first = latLngs[index]
+                val second = latLngs[index+1]
                 val newBounds = if(second.latitude > first.latitude) LatLngBounds(first, second) else LatLngBounds(second, first)
                 if(bounds == null) {
                     bounds = newBounds
@@ -105,6 +111,17 @@ class DocumentAdapter(private val dataSet: DocumentRequest, private val state: B
         viewHolder.documentItemName.text = dataSet.result.let {
             return@let it[position].fields.document_name
         }
+        dataSet.result.let {
+            getProfileFromServer(viewHolder, position, it[position].fields.profile) {
+                val profile = it.result!!
+                viewHolder.documentProfileName.text = profile.fields.profile_name
+                viewHolder.documentProfileButton.setOnClickListener {
+                    Profile.selectedProfile = profile
+                    FragmentChanger.change(fragment as Fragment, ProfileFragment())
+                }
+            }
+        }
+
         viewHolder.documentPlaceRecyclerView.layoutManager = LinearLayoutManager(activity)
         viewHolder.documentPlaceRecyclerView.adapter = PlaceAdapter(dataSet.result[position].places, fragment as Fragment)
         viewHolder.commentRecyclerView.layoutManager = LinearLayoutManager(activity)
@@ -125,6 +142,19 @@ class DocumentAdapter(private val dataSet: DocumentRequest, private val state: B
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.result.size
+
+    fun getProfileFromServer(viewHolder: ViewHolder, position: Int, profileId: Int, callback: (ProfileRequest) -> Unit) {
+        Log.i(this::class.java.name, "getProfileFromServer")
+        RequestHelper.Builder(ProfileRequest::class)
+            .apply {
+                this.destFragment = null
+                this.urlParameter = "profiles/$profileId/"
+                this.method = com.android.volley.Request.Method.GET
+                this.onSuccessCallback = callback
+            }
+            .build()
+            .request()
+    }
 
     fun sendCommentToServer(viewHolder: ViewHolder, position: Int, comment: String) {
         Log.i(this::class.java.name, "sendCommentToServer")

@@ -19,6 +19,7 @@ class DocumentFragment : Fragment(), Invalidatable {
 
     lateinit var documentRecyclerView: RecyclerView
     var bundle: Bundle? = null
+    val selectedProfile = Profile.selectedProfile ?: Profile.profile
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +38,7 @@ class DocumentFragment : Fragment(), Invalidatable {
 
     fun getDocumentsFromServer(recyclerView: RecyclerView, savedInstanceState: Bundle?) {
         Log.i(this::class.java.name, "getDocumentsFromServer")
-        val profileNumber = Profile.profile!!.pk
+        val profileNumber = selectedProfile!!.pk
         RequestHelper.Builder(DocumentRequest::class)
             .apply {
                 this.currentFragment = this@DocumentFragment

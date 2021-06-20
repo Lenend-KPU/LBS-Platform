@@ -1,5 +1,7 @@
 package kr.ac.kpu.lbs_platform.poko.remote
 
+import java.io.Serializable
+
 data class PlaceFields(
     val profile: Int = 0,
     val place_name: String = "",
@@ -8,4 +10,4 @@ data class PlaceFields(
     val place_latitude: String = "",
     val place_longitude: String = "",
     val place_private: Boolean = true,
-)
+) : Serializable

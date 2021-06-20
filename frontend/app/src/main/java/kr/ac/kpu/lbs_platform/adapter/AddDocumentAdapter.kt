@@ -7,13 +7,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kr.ac.kpu.lbs_platform.R
+import kr.ac.kpu.lbs_platform.poko.remote.Place
+import java.net.URLDecoder
 
-open class AddDocumentAdapter(private val data: MutableList<Int>):
+open class AddDocumentAdapter(private val data: MutableList<Place>):
     RecyclerView.Adapter<AddDocumentAdapter.ViewHolder>() {
 
-    init {
-        Log.i("DocumentAdapter", data.toString())
-    }
     /**
      * Provide a reference to the type of views that you are using
      * (custom ViewHolder).
@@ -36,7 +35,7 @@ open class AddDocumentAdapter(private val data: MutableList<Int>):
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        viewHolder.documentCountTextView.text = String.format(viewHolder.documentCountTextView.text.toString(), position + 1)
+        viewHolder.documentCountTextView.text = String.format(viewHolder.documentCountTextView.text.toString(), URLDecoder.decode(data[position].fields.place_name, "UTF-8"))
     }
 
     // Return the size of your dataset (invoked by the layout manager)

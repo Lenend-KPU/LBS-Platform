@@ -3,6 +3,7 @@ package kr.ac.kpu.lbs_platform.activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Parcelable
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -36,7 +37,7 @@ class SelectPlaceActivity : AppCompatActivity() {
                     val itemPosition: Int = selectPlaceRecyclerView.getChildLayoutPosition(it)
                     val item: Place = placeRequest.result[itemPosition]
                     val intent = Intent()
-                    intent.putExtra("pk", item.pk)
+                    intent.putExtra("place", item)
                     setResult(RESULT_OK, intent)
                     finish();
                 }

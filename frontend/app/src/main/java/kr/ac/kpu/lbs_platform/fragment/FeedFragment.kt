@@ -68,7 +68,7 @@ class FeedFragment : Fragment(), Invalidatable {
                 FragmentChanger.change(this, AddDocumentFragment())
             }
             R.id.saved -> {
-                FragmentChanger.change(this, ProfileFragment())
+                FragmentChanger.change(this, SavedLocationFragment())
             }
             R.id.profile_edit -> {
                 FragmentChanger.change(this, ProfileEditFragment())

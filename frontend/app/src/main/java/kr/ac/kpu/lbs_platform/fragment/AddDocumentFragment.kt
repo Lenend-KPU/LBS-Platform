@@ -18,6 +18,7 @@ import kr.ac.kpu.lbs_platform.adapter.AddDocumentAdapter
 import kr.ac.kpu.lbs_platform.global.Profile
 import kr.ac.kpu.lbs_platform.global.RequestCode
 import kr.ac.kpu.lbs_platform.global.RequestHelper
+import kr.ac.kpu.lbs_platform.poko.remote.Place
 import kr.ac.kpu.lbs_platform.poko.remote.Request
 import splitties.toast.toast
 
@@ -27,7 +28,7 @@ class AddDocumentFragment : Fragment() {
     }
 
     companion object {
-        var places = mutableListOf<Int>()
+        var places = mutableListOf<Place>()
         lateinit var instance: AddDocumentFragment
     }
 
@@ -36,7 +37,7 @@ class AddDocumentFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         instance = this
-        places = mutableListOf<Int>()
+        places = mutableListOf<Place>()
         inflated = inflater.inflate(R.layout.fragment_add_document, container, false)
 
         val addPlaceButton = inflated.findViewById<Button>(R.id.addPlaceButton)
@@ -74,7 +75,7 @@ class AddDocumentFragment : Fragment() {
         var cnt = 0
         for(place in places) {
             cnt += 1
-            params["place$cnt"] = place.toString()
+            params["place$cnt"] = place.pk.toString()
         }
         val profileNumber = Profile.profile?.pk.toString()
         RequestHelper.Builder(Request::class)

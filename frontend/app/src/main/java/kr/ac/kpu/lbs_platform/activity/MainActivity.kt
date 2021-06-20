@@ -31,6 +31,7 @@ import kr.ac.kpu.lbs_platform.fragment.AddProfileFragment.Companion.instance
 import kr.ac.kpu.lbs_platform.global.RequestCode
 import kr.ac.kpu.lbs_platform.global.RequestHelper
 import kr.ac.kpu.lbs_platform.global.VolleyMultipartRequest
+import kr.ac.kpu.lbs_platform.poko.remote.Place
 import kr.ac.kpu.lbs_platform.poko.remote.Request
 import splitties.toast.toast
 import java.util.*
@@ -137,9 +138,9 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             }
             RequestCode.SELECT_PLACE_REQUEST_CODE -> {
                 data?.let {
-                    val pk = it.getIntExtra("pk", 0)
-                    Log.i(this::class.java.name, pk.toString())
-                    AddDocumentFragment.places.add(pk)
+                    val place = it.getSerializableExtra("place") as Place
+                    Log.i(this::class.java.name, place.pk.toString())
+                    AddDocumentFragment.places.add(place)
                     AddDocumentFragment.instance.notifyDataHasChanged()
                 }
             }

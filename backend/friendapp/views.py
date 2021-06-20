@@ -44,6 +44,24 @@ class GetView(APIView):
 
 
 class ElementView(APIView):
+    def get(
+        self, request: HttpRequest, profile_pk: int, following_pk: int
+    ) -> HttpResponse:
+        me = Profile.objects.filter(pk=profile_pk).first()
+        friend = Profile.objects.filter(pk=following_pk).first()
+
+        if None in [me, friend]:
+            return utils.send_json(responses.noFriend)
+
+        filtered = Friend.objects.filter(profile=me, friend_profile=friend)
+        result = responses.ok
+        if filtered.count():
+            result["result"] = True
+            return utils.send_json(result)
+            
+        result["result"] = False
+        return utils.send_json(result)
+
     def post(
         self, request: HttpRequest, profile_pk: int, following_pk: int
     ) -> HttpResponse:

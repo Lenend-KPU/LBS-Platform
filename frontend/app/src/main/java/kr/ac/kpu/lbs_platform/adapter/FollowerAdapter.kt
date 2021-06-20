@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -26,7 +27,7 @@ class FollowerAdapter(private val request: FriendRequest, val fragment: Fragment
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val followerIdTextView: TextView = view.findViewById(R.id.followerIdTextView)
         val followerImageView: ImageView = view.findViewById(R.id.followerImageView)
-        val unfollowImageView: TextView = view.findViewById(R.id.unfollowImageView)
+        val unfollowImageView: AppCompatImageView = view.findViewById(R.id.unfollowImageView)
 
     }
 

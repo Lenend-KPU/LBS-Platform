@@ -5,12 +5,11 @@ import android.content.Context
 import android.util.Log
 import androidx.fragment.app.Fragment
 import com.android.volley.*
+import com.android.volley.RequestQueue.RequestFinishedListener
 import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.JsonRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
-import com.google.gson.JsonObject
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kr.ac.kpu.lbs_platform.activity.MainActivity
@@ -18,6 +17,7 @@ import org.json.JSONObject
 import splitties.toast.toast
 import java.nio.charset.Charset
 import kotlin.reflect.KClass
+
 
 class RequestHelper private constructor(
     private val fn: () -> Unit
@@ -74,6 +74,9 @@ class RequestHelper private constructor(
             }
             if (queue == null) {
                 queue = Volley.newRequestQueue(MainActivity.instance!!.applicationContext!!)
+                queue!!.addRequestFinishedListener { it: Request<Any> ->
+                    queue!!.getCache().clear()
+                }
             }
 
             val onResponse = { response: String ->
@@ -117,6 +120,7 @@ class RequestHelper private constructor(
                             return this@Builder.params
                         }
                     }
+                    req.setShouldCache(false)
                     queue?.add(req)
                 }
                 "json" -> {
@@ -126,6 +130,7 @@ class RequestHelper private constructor(
                         { e -> onResponse(e.toString())},
                         { e -> onError(e)}
                     ) {}
+                    req.setShouldCache(false)
                     queue?.add(req)
                 }
                 "form" -> {
@@ -138,13 +143,14 @@ class RequestHelper private constructor(
                             return mutableMapOf(Pair("file", DataPart("image1.png", formObj)))
                         }
                     }
+                    req.setShouldCache(false)
                     queue?.add(req)
                 }
                 else -> {
                     return
                 }
             }
-
+            queue!!.getCache().clear()
         }
 
         fun build(): RequestHelper {

@@ -34,6 +34,10 @@ open class PlaceAdapter(private val dataSet: Array<Place>, private val fragment:
         val ratingBar: RatingBar = view.findViewById(R.id.placeRatingBar)
     }
 
+    open fun hideRatingBarAction(viewHolder: ViewHolder) {
+        viewHolder.ratingBar.visibility = View.GONE
+    }
+
     // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         // Create a new view, which defines the UI of the list item
@@ -45,6 +49,7 @@ open class PlaceAdapter(private val dataSet: Array<Place>, private val fragment:
 
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
+        hideRatingBarAction(viewHolder)
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element

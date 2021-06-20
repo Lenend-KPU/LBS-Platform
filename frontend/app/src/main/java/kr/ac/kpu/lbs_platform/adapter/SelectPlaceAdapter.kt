@@ -26,4 +26,9 @@ class SelectPlaceAdapter(val _dataSet: Array<Place>, activity: Activity, private
 
         return ViewHolder(view)
     }
+
+    override fun hideRatingBarAction(viewHolder: ViewHolder) {
+
+    }
+
 }

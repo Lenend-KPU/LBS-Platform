@@ -70,6 +70,17 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="1.0" />
 
+            <Button
+                android:id="@+id/profileFollowButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="120dp"
+                android:layout_marginTop="4dp"
+                android:backgroundTint="#03A9F4"
+                android:text="Follow"
+                app:layout_constraintStart_toEndOf="@+id/profileTextView"
+                app:layout_constraintTop_toTopOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout

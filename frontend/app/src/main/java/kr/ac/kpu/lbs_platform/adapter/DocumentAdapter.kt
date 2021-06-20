@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -53,6 +54,7 @@ class DocumentAdapter(private val dataSet: DocumentRequest, private val state: B
         val documentSaveButton: TextView = view.findViewById(R.id.documentSaveButton)
         val commentSubmitButton: TextView = view.findViewById(R.id.commentSubmitButton)
         val commentEditText: TextView = view.findViewById(R.id.commentEditText)
+        val documentDeleteButton: Button = view.findViewById(R.id.documentDeleteButton)
 
         val mapView: MapView = view.findViewById(R.id.mapView)
 
@@ -121,6 +123,19 @@ class DocumentAdapter(private val dataSet: DocumentRequest, private val state: B
                 }
             }
         }
+
+        viewHolder.documentDeleteButton.let {
+            if (Profile.profile!!.pk == dataSet.result[position].fields.profile) {
+                it.visibility = View.VISIBLE
+                it.setOnClickListener {
+                    deleteDocumentToServer(position)
+                }
+            } else {
+                it.visibility = View.GONE
+            }
+        }
+
+
 
         viewHolder.documentPlaceRecyclerView.layoutManager = LinearLayoutManager(activity)
         viewHolder.documentPlaceRecyclerView.adapter = PlaceAdapter(dataSet.result[position].places, fragment as Fragment)
@@ -219,6 +234,23 @@ class DocumentAdapter(private val dataSet: DocumentRequest, private val state: B
                     fragment.invalidateRecyclerView()
                 }
                 this.params = params
+            }
+            .build()
+            .request()
+    }
+
+    fun deleteDocumentToServer(position: Int) {
+        Log.i(this::class.java.name, "sendSaveToServer")
+        val profileNumber = dataSet.result[position].fields.profile
+        val documentNumber = dataSet.result[position].pk
+        RequestHelper.Builder(Request::class)
+            .apply {
+                this.destFragment = null
+                this.urlParameter = "profiles/$profileNumber/documents/$documentNumber/"
+                this.method = com.android.volley.Request.Method.DELETE
+                this.onSuccessCallback = {
+                    fragment.invalidateRecyclerView()
+                }
             }
             .build()
             .request()

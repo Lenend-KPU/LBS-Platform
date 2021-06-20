@@ -41,6 +41,13 @@
 
         </LinearLayout>
 
+        <Button
+            android:id="@+id/documentDeleteButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="게시글 삭제" />
+
         <com.google.android.gms.maps.MapView
             android:id="@+id/mapView"
             android:layout_width="match_parent"

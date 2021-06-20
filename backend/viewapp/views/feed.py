@@ -11,6 +11,7 @@ from placeapp.models import Place
 from pathapp.models import Path
 from commentapp.models import Comment
 from likeapp.models import Like
+from saveapp.models import Save
 
 # from maximumapp.models import Maximum
 
@@ -44,6 +45,10 @@ class Rootview(APIView):
             likes = Like.objects.filter(document=document_pk)
             likes = utils.to_dict(likes)
             result["result"][key]["likes"] = likes
+
+            saves = Save.objects.filter(document=document_pk)
+            saves = utils.to_dict(saves)
+            result["result"][key]["saves"] = saves
 
             paths = Path.objects.filter(document=document_pk).order_by("path_order")
 

@@ -16,6 +16,7 @@ import kr.ac.kpu.lbs_platform.global.FragmentChanger
 import kr.ac.kpu.lbs_platform.global.Profile
 import kr.ac.kpu.lbs_platform.global.RequestHelper
 import kr.ac.kpu.lbs_platform.poko.remote.DocumentRequest
+import splitties.toast.toast
 
 class SavedLocationFragment : Fragment(), Invalidatable {
     lateinit var feedRecyclerView: RecyclerView
@@ -33,9 +34,7 @@ class SavedLocationFragment : Fragment(), Invalidatable {
         MainActivity.instance?.binding?.bottomNavigationView?.selectedItemId = R.id.page_feed
         // Inflate the layout for this fragment
         val toolbar = inflated.findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
-        toolbar.setOnMenuItemClickListener {
-            return@setOnMenuItemClickListener onOptionsItemSelected(it)
-        }
+        toolbar.visibility = View.GONE
         feedRecyclerView = inflated.findViewById<RecyclerView>(R.id.feedRecyclerView)
         feedRecyclerView.layoutManager = LinearLayoutManager(this.activity)
         getSavesFromServer(feedRecyclerView, savedInstanceState)
@@ -53,6 +52,10 @@ class SavedLocationFragment : Fragment(), Invalidatable {
                 this.method = com.android.volley.Request.Method.GET
                 this.onSuccessCallback = {
                     recyclerView.adapter = DocumentAdapter(it, savedInstanceState, MainActivity.instance!!, this@SavedLocationFragment)
+                }
+                this.onFailureCallback = {
+                    toast("저장된 Document가 없습니다.")
+                    FragmentChanger.change(this@SavedLocationFragment, FeedFragment())
                 }
             }
             .build()

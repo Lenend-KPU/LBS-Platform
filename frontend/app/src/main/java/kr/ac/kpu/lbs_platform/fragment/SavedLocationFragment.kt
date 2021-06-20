@@ -16,6 +16,7 @@ import kr.ac.kpu.lbs_platform.global.FragmentChanger
 import kr.ac.kpu.lbs_platform.global.Profile
 import kr.ac.kpu.lbs_platform.global.RequestHelper
 import kr.ac.kpu.lbs_platform.poko.remote.DocumentRequest
+import splitties.toast.toast
 
 class SavedLocationFragment : Fragment(), Invalidatable {
     lateinit var feedRecyclerView: RecyclerView
@@ -53,6 +54,7 @@ class SavedLocationFragment : Fragment(), Invalidatable {
                     recyclerView.adapter = DocumentAdapter(it, savedInstanceState, MainActivity.instance!!, this@SavedLocationFragment)
                 }
                 this.onFailureCallback = {
+                    toast("저장된 Document가 없습니다.")
                     FragmentChanger.change(this@SavedLocationFragment, FeedFragment())
                 }
             }

@@ -107,6 +107,6 @@ class ListView(APIView):
             documents.append(document[0])
 
         documents = utils.to_dict(documents)
-        result["documents"] = documents
+        result["result"] = documents
 
         return utils.send_json(result)

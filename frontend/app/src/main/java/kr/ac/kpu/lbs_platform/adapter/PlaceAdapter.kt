@@ -17,6 +17,7 @@ import kr.ac.kpu.lbs_platform.R
 import kr.ac.kpu.lbs_platform.fragment.AddPlaceFragment
 import kr.ac.kpu.lbs_platform.poko.remote.Place
 import kr.ac.kpu.lbs_platform.poko.remote.PlaceRequest
+import java.net.URLDecoder
 
 open class PlaceAdapter(private val dataSet: Array<Place>, private val fragment: Fragment? = null, private val activity: Activity? = null):
     RecyclerView.Adapter<PlaceAdapter.ViewHolder>() {
@@ -60,7 +61,7 @@ open class PlaceAdapter(private val dataSet: Array<Place>, private val fragment:
             Glide.with(it).load(dataSet[position].fields.place_photo).fitCenter().into(viewHolder.placeItemImageView)
         }
 
-        viewHolder.nameTextView.text = dataSet[position].fields.place_name
+        viewHolder.nameTextView.text = URLDecoder.decode(dataSet[position].fields.place_name, "UTF-8")
         if(dataSet[position].fields.place_rate.isDigitsOnly()) {
             viewHolder.ratingBar.rating = dataSet[position].fields.place_rate.toFloat()
         }

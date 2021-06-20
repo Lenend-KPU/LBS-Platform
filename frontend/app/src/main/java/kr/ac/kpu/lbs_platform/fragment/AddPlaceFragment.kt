@@ -7,11 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.view.forEach
 import androidx.fragment.app.Fragment
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kr.ac.kpu.lbs_platform.R
+import kr.ac.kpu.lbs_platform.activity.MainActivity
+import kr.ac.kpu.lbs_platform.global.FragmentChanger
 import kr.ac.kpu.lbs_platform.global.Profile
 import kr.ac.kpu.lbs_platform.global.RequestCode
 import kr.ac.kpu.lbs_platform.global.RequestHelper
@@ -100,9 +104,20 @@ class AddPlaceFragment : Fragment() {
         RequestHelper.Builder(Request::class)
             .apply {
                 this.currentFragment = this@AddPlaceFragment
-                this.destFragment = ProfileFragment()
+                this.destFragment = null
                 this.urlParameter = "profiles/$profileNumber/places/"
                 this.params = params
+                this.onSuccessCallback = {
+                    MainActivity.instance!!.let {
+                        val bottomNavView = it.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+                        val menu = bottomNavView.menu
+                        menu.forEach {
+                            it.isChecked = false
+                        }
+                        menu.findItem(R.id.page_profile).isChecked = true
+                        FragmentChanger.change(this@AddPlaceFragment, ProfileFragment())
+                    }
+                }
             }
             .build()
             .request()

@@ -7,113 +7,62 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/documentItemName"
+            android:id="@+id/outerDocumentItemName"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_height="50dp"
             android:gravity="center"
             android:text="TextView" />
 
-        <LinearLayout
+        <View
+            android:id="@+id/divider8"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
 
-            <TextView
-                android:id="@+id/documentProfileName"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="TextView" />
-
-            <Button
-                android:id="@+id/documentProfileButton"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="프로필 보러가기" />
-
-        </LinearLayout>
+        <TextView
+            android:id="@+id/outerDocumentProfileName"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="TextView" />
 
         <Button
-            android:id="@+id/documentDeleteButton"
+            android:id="@+id/outerDocumentGoInnerButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="게시글 삭제" />
-
-        <com.google.android.gms.maps.MapView
-            android:id="@+id/mapView"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_weight="1" />
-
-        <View
-            android:id="@+id/divider3"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="?android:attr/listDivider" />
+            android:text="상세 페이지로 이동" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/documentPlaceRecyclerView"
+            android:id="@+id/outerDocumentPlaceRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/outerDocumentCommentRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
 
         </androidx.recyclerview.widget.RecyclerView>
 
         <View
-            android:id="@+id/divider4"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="?android:attr/listDivider" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/commentRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1" >
-
-        </androidx.recyclerview.widget.RecyclerView>
-
-        <View
-            android:id="@+id/divider5"
+            android:id="@+id/divider7"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="?android:attr/listDivider" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/commentEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="내용"
-                android:inputType="textPersonName" />
-
-            <Button
-                android:id="@+id/commentSubmitButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="댓글 작성" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_height="50dp"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -125,25 +74,19 @@
                 <ImageView
                     android:id="@+id/imageView2"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/ic_baseline_emoji_emotions_24" />
 
                 <TextView
-                    android:id="@+id/documentLikeCountTextView"
+                    android:id="@+id/outerDocumentLikeCountTextView"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="left"
+                    android:gravity="center"
                     android:text="50" />
 
-                <Button
-                    android:id="@+id/documentLikeButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Like" />
             </LinearLayout>
 
             <LinearLayout
@@ -155,25 +98,19 @@
                 <ImageView
                     android:id="@+id/imageView3"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/ic_baseline_bookmark_24" />
 
                 <TextView
-                    android:id="@+id/documentSaveCountTextView"
+                    android:id="@+id/outerDocumentSaveCountTextView"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="left"
+                    android:gravity="center"
                     android:text="50" />
 
-                <Button
-                    android:id="@+id/documentSaveButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Save" />
             </LinearLayout>
 
         </LinearLayout>

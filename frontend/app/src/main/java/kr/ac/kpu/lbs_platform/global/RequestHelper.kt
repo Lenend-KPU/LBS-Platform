@@ -74,9 +74,6 @@ class RequestHelper private constructor(
             }
             if (queue == null) {
                 queue = Volley.newRequestQueue(MainActivity.instance!!.applicationContext!!)
-                queue!!.addRequestFinishedListener { it: Request<Any> ->
-                    queue!!.getCache().clear()
-                }
             }
 
             val onResponse = { response: String ->
@@ -120,7 +117,6 @@ class RequestHelper private constructor(
                             return this@Builder.params
                         }
                     }
-                    req.setShouldCache(false)
                     queue?.add(req)
                 }
                 "json" -> {
@@ -130,7 +126,6 @@ class RequestHelper private constructor(
                         { e -> onResponse(e.toString())},
                         { e -> onError(e)}
                     ) {}
-                    req.setShouldCache(false)
                     queue?.add(req)
                 }
                 "form" -> {
@@ -143,14 +138,12 @@ class RequestHelper private constructor(
                             return mutableMapOf(Pair("file", DataPart("image1.png", formObj)))
                         }
                     }
-                    req.setShouldCache(false)
                     queue?.add(req)
                 }
                 else -> {
                     return
                 }
             }
-            queue!!.getCache().clear()
         }
 
         fun build(): RequestHelper {

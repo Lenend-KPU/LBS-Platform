@@ -8,11 +8,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.findFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.*
-import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
@@ -64,7 +62,7 @@ class InnerDocumentFragment(var document: Document) : Fragment(), Invalidatable,
         documentProfileButton = view.findViewById(R.id.documentProfileButton)
         documentItemName = view.findViewById(R.id.documentItemName)
         documentPlaceRecyclerView = view.findViewById(R.id.documentPlaceRecyclerView)
-        commentRecyclerView = view.findViewById(R.id.commentRecyclerView)
+        commentRecyclerView = view.findViewById(R.id.documentCommentRecyclerView)
         documentLikeCountTextView = view.findViewById(R.id.documentLikeCountTextView)
         documentLikeButton = view.findViewById(R.id.documentLikeButton)
         documentSaveCountTextView = view.findViewById(R.id.documentSaveCountTextView)

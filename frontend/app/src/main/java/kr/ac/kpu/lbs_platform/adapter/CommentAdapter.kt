@@ -18,7 +18,7 @@ import kr.ac.kpu.lbs_platform.poko.remote.ProfileRequest
 import kr.ac.kpu.lbs_platform.poko.remote.Request
 import splitties.toast.toast
 
-class CommentAdapter(private val comments: Array<Comment>, private val author: Int, private val fragment: Invalidatable) : RecyclerView.Adapter<CommentAdapter.ViewHolder>() {
+class CommentAdapter(private val comments: Array<Comment>, private val author: Int, private val fragment: Invalidatable, private val edit: Boolean = true) : RecyclerView.Adapter<CommentAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentAdapter.ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.comment_item, parent, false)
@@ -34,7 +34,7 @@ class CommentAdapter(private val comments: Array<Comment>, private val author: I
         holder.commentTextTextView.text = comments[position].fields.comment_text
 
         val isMyComment = comments[position].fields.profile == Profile.profile!!.pk
-        val submitButtonVisibility = if(isMyComment) View.VISIBLE else View.GONE
+        val submitButtonVisibility = if(isMyComment && edit) View.VISIBLE else View.GONE
 
         holder.commentEditButton.visibility = submitButtonVisibility
         holder.commentEditLayout.visibility = View.GONE

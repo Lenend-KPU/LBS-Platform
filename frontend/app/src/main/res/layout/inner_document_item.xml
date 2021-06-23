@@ -76,7 +76,7 @@
                 android:background="?android:attr/listDivider" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/commentRecyclerView"
+                android:id="@+id/documentCommentRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 

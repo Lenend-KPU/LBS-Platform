@@ -85,8 +85,7 @@ class InnerDocumentFragment(var document: Document) : Fragment(), Invalidatable,
             val profile = it.result!!
             documentProfileName.text = profile.fields.profile_name
             documentProfileButton.setOnClickListener {
-                Profile.selectedProfile = profile
-                FragmentChanger.change(this as Fragment, ProfileFragment())
+                FragmentChanger.change(this as Fragment, ProfileFragment(profile))
             }
         }
 

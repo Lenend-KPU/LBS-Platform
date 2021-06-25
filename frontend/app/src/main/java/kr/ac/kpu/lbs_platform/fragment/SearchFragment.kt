@@ -59,6 +59,7 @@ class SearchFragment : Fragment(), Invalidatable {
 
     fun searchFromServer(searchView: RecyclerView, bundle: Bundle?) {
         val requestBody = "{\n" +
+                " \"min_score\": 0.5,\n" +
                 "  \"query\": {\n" +
                 "    \"bool\": {\n" +
                 "      \"must\": [\n" +

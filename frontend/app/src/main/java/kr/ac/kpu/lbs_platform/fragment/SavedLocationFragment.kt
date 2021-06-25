@@ -30,8 +30,6 @@ class SavedLocationFragment : Fragment(), Invalidatable {
                               savedInstanceState: Bundle?): View? {
         bundle = savedInstanceState
         val inflated = inflater.inflate(R.layout.fragment_feed, container, false)
-        MainActivity.instance?.binding?.bottomNavigationView?.visibility = View.VISIBLE
-        MainActivity.instance?.binding?.bottomNavigationView?.selectedItemId = R.id.page_feed
         // Inflate the layout for this fragment
         val toolbar = inflated.findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
         toolbar.visibility = View.GONE

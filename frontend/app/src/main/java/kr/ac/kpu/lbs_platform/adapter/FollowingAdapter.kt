@@ -26,7 +26,7 @@ class FollowingAdapter(private val request: FriendRequest, val fragment: Fragmen
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val followerIdTextView: TextView = view.findViewById(R.id.followerIdTextView)
         val followerImageView: ImageView = view.findViewById(R.id.followerImageView)
-        val unfollowImageView: TextView = view.findViewById(R.id.unfollowImageView)
+        val unfollowImageView: ImageView = view.findViewById(R.id.unfollowImageView)
     }
 
 
@@ -48,6 +48,6 @@ class FollowingAdapter(private val request: FriendRequest, val fragment: Fragmen
     }
 
     // Return the size of your dataset (invoked by the layout manager)
-    override fun getItemCount() = request.result.followers.size
+    override fun getItemCount() = request.result.followings.size
 
 }

@@ -20,7 +20,7 @@ import kr.ac.kpu.lbs_platform.poko.remote.FriendRequest
 import kr.ac.kpu.lbs_platform.poko.remote.Request
 import splitties.toast.toast
 
-class ProfileFragment : Fragment() {
+class ProfileFragment(val selectedProfile: kr.ac.kpu.lbs_platform.poko.remote.Profile) : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -34,15 +34,14 @@ class ProfileFragment : Fragment() {
         profileFollowButton = inflated.findViewById(R.id.profileFollowButton)
         val profileTextView = inflated.findViewById<TextView>(R.id.profileTextView)
         val profileActivityImageView = inflated.findViewById<ImageView>(R.id.profileActivityImageView)
-        val selectedProfile = Profile.selectedProfile ?: Profile.profile
 
-        selectedProfile?.let {
+        selectedProfile.let {
             Glide.with(this).load(it.fields.profile_photo).fitCenter().into(profileActivityImageView)
         }
 
-        profileTextView.text = selectedProfile?.let {
+        profileTextView.text = selectedProfile.let {
             return@let it.fields.profile_name
-        } ?: ""
+        }
 
 
         profileFollowButton.let {
@@ -75,20 +74,20 @@ class ProfileFragment : Fragment() {
 
         follwingCountTextView.text = selectedProfile?.let {
             return@let it.fields.profile_following.toString()
-        } ?: "0"
+        }
         followersCountTextView.text = selectedProfile?.let {
             return@let it.fields.profile_follower.toString()
-        } ?: "0"
+        }
 
         val followersLayout = inflated.findViewById<LinearLayout>(R.id.followersLayout)
         val followingLayout = inflated.findViewById<LinearLayout>(R.id.followingLayout)
 
         followersLayout.setOnClickListener {
-            FragmentChanger.change(this, FollowerFragment())
+            FragmentChanger.change(this, FollowerFragment(selectedProfile))
         }
 
         followingLayout.setOnClickListener {
-            FragmentChanger.change(this, FollowingFragment())
+            FragmentChanger.change(this, FollowingFragment(selectedProfile))
         }
 
 
@@ -162,10 +161,4 @@ class ProfileFragment : Fragment() {
             .build()
             .request()
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        Profile.selectedProfile = null
-    }
-
 }

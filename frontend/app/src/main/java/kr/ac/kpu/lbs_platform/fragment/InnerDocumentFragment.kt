@@ -21,6 +21,7 @@ import kr.ac.kpu.lbs_platform.global.FragmentChanger
 import kr.ac.kpu.lbs_platform.global.Profile
 import kr.ac.kpu.lbs_platform.global.RequestHelper
 import kr.ac.kpu.lbs_platform.poko.remote.*
+import kotlin.math.min
 
 
 class InnerDocumentFragment(var document: Document) : Fragment(), Invalidatable, OnMapReadyCallback {
@@ -85,8 +86,7 @@ class InnerDocumentFragment(var document: Document) : Fragment(), Invalidatable,
             val profile = it.result!!
             documentProfileName.text = profile.fields.profile_name
             documentProfileButton.setOnClickListener {
-                Profile.selectedProfile = profile
-                FragmentChanger.change(this as Fragment, ProfileFragment())
+                FragmentChanger.change(this as Fragment, ProfileFragment(profile))
             }
         }
 
@@ -134,16 +134,19 @@ class InnerDocumentFragment(var document: Document) : Fragment(), Invalidatable,
                     .title("place $idx")
             )
         }
-        val maxLat = latLngs.reduce { acc, latLng -> if(acc.latitude < latLng.latitude ) latLng else acc }
-        val minLat = latLngs.reduce { acc, latLng -> if(acc.latitude > latLng.latitude ) latLng else acc }
-        val maxLong = latLngs.reduce { acc, latLng -> if(acc.latitude > latLng.longitude ) latLng else acc }
-        val minLong = latLngs.reduce { acc, latLng -> if(acc.latitude < latLng.longitude ) latLng else acc }
+        if(latLngs.size > 0) {
+            val maxLat = latLngs.map { e -> e.latitude } .reduce { acc, d -> maxOf(acc, d) }
+            val minLat = latLngs.map { e -> e.latitude } .reduce { acc, d -> minOf(acc, d) }
+            val maxLong = latLngs.map { e -> e.longitude } .reduce { acc, d -> maxOf(acc, d) }
+            val minLong = latLngs.map { e -> e.longitude } .reduce { acc, d -> minOf(acc, d) }
 
-        val bounds = LatLngBounds(LatLng(minLat.latitude, maxLong.longitude), LatLng(maxLat.latitude, minLong.longitude))
+            val bounds = LatLngBounds(LatLng(minLat, minLong), LatLng(maxLat, maxLong))
 
-        requireActivity().runOnUiThread {
-            map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 40))
+            requireActivity().runOnUiThread {
+                map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 40))
+            }
         }
+
     }
 
     fun getProfileFromServer(profileId: Int, callback: (ProfileRequest) -> Unit) {

@@ -115,7 +115,7 @@ class AddPlaceFragment : Fragment() {
                             it.isChecked = false
                         }
                         menu.findItem(R.id.page_profile).isChecked = true
-                        FragmentChanger.change(this@AddPlaceFragment, ProfileFragment())
+                        FragmentChanger.change(this@AddPlaceFragment, ProfileFragment(Profile.profile!!))
                     }
                 }
             }

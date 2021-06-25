@@ -14,11 +14,9 @@ import kr.ac.kpu.lbs_platform.global.Profile
 import kr.ac.kpu.lbs_platform.global.RequestHelper
 import kr.ac.kpu.lbs_platform.poko.remote.FriendRequest
 
-class FollowingFragment : Fragment(), Invalidatable {
+class FollowingFragment(val selectedProfile: kr.ac.kpu.lbs_platform.poko.remote.Profile) : Fragment(), Invalidatable {
 
     lateinit var followingRecyclerView: RecyclerView
-    val selectedProfile = Profile.selectedProfile ?: Profile.profile
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

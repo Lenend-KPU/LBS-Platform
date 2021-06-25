@@ -28,6 +28,7 @@ import kr.ac.kpu.lbs_platform.R
 import kr.ac.kpu.lbs_platform.databinding.ActivityMainBinding
 import kr.ac.kpu.lbs_platform.fragment.*
 import kr.ac.kpu.lbs_platform.fragment.AddProfileFragment.Companion.instance
+import kr.ac.kpu.lbs_platform.global.Profile
 import kr.ac.kpu.lbs_platform.global.RequestCode
 import kr.ac.kpu.lbs_platform.global.RequestHelper
 import kr.ac.kpu.lbs_platform.global.VolleyMultipartRequest
@@ -110,7 +111,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             }
             R.id.page_profile -> {
                 Log.i("MainActivity", "page_profile")
-                supportFragmentManager.beginTransaction().replace(R.id.mainActivityfragment, ProfileFragment()).commit()
+                supportFragmentManager.beginTransaction().replace(R.id.mainActivityfragment, ProfileFragment(Profile.profile!!)).commit()
                 return true
             }
             else -> {

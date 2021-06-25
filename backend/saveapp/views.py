@@ -108,8 +108,10 @@ class ListView(APIView):
         for save in saves:
             document_pk = save["fields"]["document"]
             document = Document.objects.filter(pk=document_pk)
-            documents.append(document[0])
+            document = utils.to_dict(document)[0]
+            documents.append(document)
 
+        print(documents)
         result["result"] = documents
         for key, document in enumerate(documents):
             place_dict = []

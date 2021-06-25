@@ -115,6 +115,12 @@
 
         </LinearLayout>
 
+        <View
+            android:id="@+id/divider10"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

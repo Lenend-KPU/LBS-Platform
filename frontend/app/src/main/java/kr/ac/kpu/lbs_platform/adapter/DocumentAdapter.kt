@@ -20,6 +20,7 @@ import kr.ac.kpu.lbs_platform.global.RequestHelper
 import kr.ac.kpu.lbs_platform.poko.remote.Document
 import kr.ac.kpu.lbs_platform.poko.remote.DocumentRequest
 import kr.ac.kpu.lbs_platform.poko.remote.ProfileRequest
+import java.net.URLDecoder
 
 class DocumentAdapter(private val dataSet: DocumentRequest, private val state: Bundle?, private val activity: Activity, private val fragment: Invalidatable):
     RecyclerView.Adapter<DocumentAdapter.ViewHolder>() {
@@ -61,7 +62,7 @@ class DocumentAdapter(private val dataSet: DocumentRequest, private val state: B
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         viewHolder.documentItemName.text = dataSet.result.let {
-            return@let it[position].fields.document_name
+            return@let URLDecoder.decode(it[position].fields.document_name, "UTF-8")
         }
 
         viewHolder.outerDocumentPlaceRecyclerView.layoutManager = LinearLayoutManager(activity)

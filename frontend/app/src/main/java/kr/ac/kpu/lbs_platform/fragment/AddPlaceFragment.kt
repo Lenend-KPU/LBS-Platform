@@ -114,7 +114,9 @@ class AddPlaceFragment : Fragment() {
                         menu.forEach {
                             it.isChecked = false
                         }
-                        menu.findItem(R.id.page_profile).isChecked = true
+                        val item = menu.findItem(R.id.page_profile)
+                        item.isChecked = true
+                        MainActivity.instance!!.onNavigationItemSelected(item)
                         FragmentChanger.change(this@AddPlaceFragment, ProfileFragment(Profile.profile!!))
                     }
                 }

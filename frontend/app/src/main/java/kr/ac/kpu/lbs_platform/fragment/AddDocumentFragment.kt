@@ -36,6 +36,8 @@ class AddDocumentFragment : Fragment(), Invalidatable {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+        MainActivity.instance!!.invalidateBottomNavigationRoute()
+
         instance = this
         places = mutableListOf<Place>()
         inflated = inflater.inflate(R.layout.fragment_add_document, container, false)

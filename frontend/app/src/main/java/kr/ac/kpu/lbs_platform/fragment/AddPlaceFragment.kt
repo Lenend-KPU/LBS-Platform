@@ -39,6 +39,8 @@ class AddPlaceFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        MainActivity.instance!!.invalidateBottomNavigationRoute()
+
         instance = this
         _inflated = inflater.inflate(R.layout.fragment_add_place, container, false)
 

@@ -38,7 +38,7 @@ import splitties.toast.toast
 import java.util.*
 
 
-class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener, InvalidatableBottomNavigationManager {
     companion object {
         var instance: MainActivity? = null
         var previousItemId: Int = 0
@@ -83,6 +83,10 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
             .setPermissions(Manifest.permission.INTERNET, Manifest.permission.ACCESS_NETWORK_STATE)
             .check()
+    }
+
+    override fun invalidateBottomNavigationRoute() {
+        previousItemId = -1
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

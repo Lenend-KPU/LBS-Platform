@@ -15,6 +15,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
 import kr.ac.kpu.lbs_platform.R
+import kr.ac.kpu.lbs_platform.activity.MainActivity
 import kr.ac.kpu.lbs_platform.adapter.CommentAdapter
 import kr.ac.kpu.lbs_platform.adapter.PlaceAdapter
 import kr.ac.kpu.lbs_platform.global.FragmentChanger
@@ -49,6 +50,8 @@ class InnerDocumentFragment(var document: Document) : Fragment(), Invalidatable,
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        MainActivity.instance!!.invalidateBottomNavigationRoute()
+
         mapView = childFragmentManager.findFragmentById(R.id.mapView) as SupportMapFragment
         bindData()
     }

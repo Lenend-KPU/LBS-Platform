@@ -44,7 +44,8 @@ class SearchFragment : Fragment(), Invalidatable {
 
         submitButton.setOnClickListener {
             text = editText.text.toString()
-            text = URLEncoder.encode(text, "UTF-8")
+            Log.i("text", text)
+//            text = URLEncoder.encode(text, "UTF-8")
             if(text.isBlank()) {
                 toast("내용이 비었습니다.")
                 return@setOnClickListener

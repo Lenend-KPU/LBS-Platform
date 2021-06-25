@@ -8,6 +8,10 @@ from rest_framework.views import APIView  # For swagger
 from documentapp.models import Document
 from profileapp.models import Profile
 from .models import Save
+from placeapp.models import Place
+from pathapp.models import Path
+from commentapp.models import Comment
+from likeapp.models import Like
 
 # Create your views here.
 class RootView(APIView):
@@ -106,7 +110,34 @@ class ListView(APIView):
             document = Document.objects.filter(pk=document_pk)
             documents.append(document[0])
 
-        documents = utils.to_dict(documents)
         result["result"] = documents
+        for key, document in enumerate(documents):
+            place_dict = []
+            profile_pk = document["fields"]["profile"]
+            document_pk = document["pk"]
+
+            profile = Profile.objects.filter(pk=profile_pk)
+            profile = utils.to_dict(profile)[0]
+            result["result"][key]["profile"] = profile
+
+            comments = Comment.objects.filter(document=document_pk)
+            comments = utils.to_dict(comments)
+            result["result"][key]["comments"] = comments
+
+            likes = Like.objects.filter(document=document_pk)
+            likes = utils.to_dict(likes)
+            result["result"][key]["likes"] = likes
+
+            saves = Save.objects.filter(document=document_pk)
+            saves = utils.to_dict(saves)
+            result["result"][key]["saves"] = saves
+
+            paths = Path.objects.filter(document=document_pk).order_by("path_order")
+
+            for p in paths:
+                place = Place.objects.filter(pk=p.place.id)
+                place_dict.append(utils.to_dict(place)[0])
+
+            result["result"][key]["places"] = place_dict
 
         return utils.send_json(result)

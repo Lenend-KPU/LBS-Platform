@@ -141,6 +141,10 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 data?.let {
                     val place = it.getSerializableExtra("place") as Place
                     Log.i(this::class.java.name, place.pk.toString())
+                    if(AddDocumentFragment.places.contains(place)) {
+                        toast("중복된 place입니다.")
+                        return
+                    }
                     AddDocumentFragment.places.add(place)
                     AddDocumentFragment.instance.notifyDataHasChanged()
                 }

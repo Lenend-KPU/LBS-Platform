@@ -19,6 +19,7 @@ import kr.ac.kpu.lbs_platform.poko.remote.DocumentRequest
 import kr.ac.kpu.lbs_platform.poko.remote.SearchRequest
 import org.json.JSONObject
 import splitties.toast.toast
+import java.net.URLEncoder
 
 class SearchFragment : Fragment(), Invalidatable {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +44,7 @@ class SearchFragment : Fragment(), Invalidatable {
 
         submitButton.setOnClickListener {
             text = editText.text.toString()
+            text = URLEncoder.encode(text, "UTF-8")
             if(text.isBlank()) {
                 toast("내용이 비었습니다.")
                 return@setOnClickListener
@@ -79,6 +81,7 @@ class SearchFragment : Fragment(), Invalidatable {
                 "    }\n" +
                 "  }\n" +
                 "}"
+        Log.i("SearchFragment", requestBody)
         val jsonObj = JSONObject(requestBody)
         RequestHelper.Builder(SearchRequest::class)
             .apply {
@@ -87,10 +90,12 @@ class SearchFragment : Fragment(), Invalidatable {
                 this.baseUrl = "${ServerUrl.url}:9200"
                 this.method = Request.Method.POST
                 this.jsonObj = jsonObj
+                this.requestType = "json"
                 this.bodyContentType = "application/json; charset=UTF-8"
                 this.bypassFail = true
                 this.onSuccessCallback = {
-                    val documentRequest = DocumentRequest(result = it.hits.hits.map { e -> e._source }.toTypedArray() )
+                    Log.i("SearchFragment", it.toString())
+                    val documentRequest = DocumentRequest(true, 200, "", result = it.hits.hits.map { e -> e._source }.toTypedArray() )
                     Log.i("onSuccess", documentRequest.toString())
                     searchView.adapter = DocumentAdapter(documentRequest, bundle, this.activity!!, this@SearchFragment)
                 }

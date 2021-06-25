@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kr.ac.kpu.lbs_platform.R
+import kr.ac.kpu.lbs_platform.fragment.Invalidatable
 import kr.ac.kpu.lbs_platform.poko.remote.Place
 import java.net.URLDecoder
 
-open class AddDocumentAdapter(private val data: MutableList<Place>):
+open class AddDocumentAdapter(private val data: MutableList<Place>, private val fragment: Invalidatable):
     RecyclerView.Adapter<AddDocumentAdapter.ViewHolder>() {
 
     /**
@@ -19,6 +20,7 @@ open class AddDocumentAdapter(private val data: MutableList<Place>):
      */
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val documentCountTextView: TextView = view.findViewById(R.id.documentCountTextView)
+        val addDocumentDeleteButton: TextView = view.findViewById(R.id.addDocumentDeleteButton)
     }
 
     // Create new views (invoked by the layout manager)
@@ -36,6 +38,10 @@ open class AddDocumentAdapter(private val data: MutableList<Place>):
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         viewHolder.documentCountTextView.text = String.format(viewHolder.documentCountTextView.text.toString(), URLDecoder.decode(data[position].fields.place_name, "UTF-8"))
+        viewHolder.addDocumentDeleteButton.setOnClickListener {
+            data.removeAt(position)
+            fragment.invalidateRecyclerView()
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)

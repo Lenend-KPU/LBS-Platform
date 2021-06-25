@@ -22,7 +22,7 @@ import kr.ac.kpu.lbs_platform.poko.remote.Place
 import kr.ac.kpu.lbs_platform.poko.remote.Request
 import splitties.toast.toast
 
-class AddDocumentFragment : Fragment() {
+class AddDocumentFragment : Fragment(), Invalidatable {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -62,7 +62,7 @@ class AddDocumentFragment : Fragment() {
         }
         val addDocumentRecyclerView = inflated.findViewById<RecyclerView>(R.id.addDocumentRecyclerView)
         addDocumentRecyclerView.layoutManager = LinearLayoutManager(this.activity)
-        addDocumentRecyclerView.adapter = AddDocumentAdapter(places)
+        addDocumentRecyclerView.adapter = AddDocumentAdapter(places, this)
         // Inflate the layout for this fragment
         return inflated
     }
@@ -92,6 +92,10 @@ class AddDocumentFragment : Fragment() {
 
     fun notifyDataHasChanged() {
         val addDocumentRecyclerView = inflated.findViewById<RecyclerView>(R.id.addDocumentRecyclerView)
-        addDocumentRecyclerView.adapter = AddDocumentAdapter(places)
+        addDocumentRecyclerView.adapter = AddDocumentAdapter(places, this)
+    }
+
+    override fun invalidateRecyclerView() {
+        notifyDataHasChanged()
     }
 }

@@ -17,7 +17,7 @@ import kr.ac.kpu.lbs_platform.global.RequestHelper
 import kr.ac.kpu.lbs_platform.global.Profile
 import kr.ac.kpu.lbs_platform.poko.remote.PlaceRequest
 
-class PlaceFragment : Fragment() {
+class PlaceFragment(private val selectedProfile: kr.ac.kpu.lbs_platform.poko.remote.Profile) : Fragment() {
     lateinit var placeRecyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +34,7 @@ class PlaceFragment : Fragment() {
         placeRecyclerView.layoutManager = layoutManager
 
         GlobalScope.launch {
-            getPlacesFromServer(this@PlaceFragment) {
+            getPlacesFromServer(selectedProfile, this@PlaceFragment) {
                 placeRecyclerView.adapter = PlaceAdapter(it.result!!, this@PlaceFragment)
             }
         }
@@ -43,9 +43,9 @@ class PlaceFragment : Fragment() {
     }
 
     companion object {
-        val selectedProfile = Profile.selectedProfile ?: Profile.profile
 
-        fun getPlacesFromServer(currentFragment: Fragment? = null,
+        fun getPlacesFromServer(selectedProfile: kr.ac.kpu.lbs_platform.poko.remote.Profile,
+                                currentFragment: Fragment? = null,
                                 currentActivity: Activity? = null,
                                 callback: (PlaceRequest) -> Unit = {})
         {

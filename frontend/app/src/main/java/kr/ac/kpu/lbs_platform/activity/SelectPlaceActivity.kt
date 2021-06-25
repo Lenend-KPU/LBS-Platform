@@ -14,6 +14,7 @@ import kr.ac.kpu.lbs_platform.databinding.ActivityMainBinding
 import kr.ac.kpu.lbs_platform.databinding.ActivitySelectPlaceBinding
 import kr.ac.kpu.lbs_platform.fragment.PlaceFragment
 import kr.ac.kpu.lbs_platform.poko.remote.Place
+import kr.ac.kpu.lbs_platform.poko.remote.Profile
 
 class SelectPlaceActivity : AppCompatActivity() {
     lateinit var binding: ActivitySelectPlaceBinding
@@ -30,6 +31,7 @@ class SelectPlaceActivity : AppCompatActivity() {
 
         GlobalScope.launch {
             PlaceFragment.getPlacesFromServer(
+                kr.ac.kpu.lbs_platform.global.Profile.profile!!,
                 currentFragment = null,
                 currentActivity = this@SelectPlaceActivity
             ) { placeRequest ->

@@ -45,7 +45,7 @@ class ProfileFragment(val selectedProfile: kr.ac.kpu.lbs_platform.poko.remote.Pr
 
 
         profileFollowButton.let {
-            if(Profile.selectedProfile != null) {
+            if(Profile.profile != selectedProfile) {
                 it.visibility = View.VISIBLE
                 followingUserAction(selectedProfile!!.pk,
                     {
@@ -57,9 +57,9 @@ class ProfileFragment(val selectedProfile: kr.ac.kpu.lbs_platform.poko.remote.Pr
                 it.setOnClickListener {
                     followingUserAction(selectedProfile!!.pk,
                         {
-                            unfollowUser(Profile.selectedProfile!!.pk)
+                            unfollowUser(selectedProfile!!.pk)
                         }, {
-                            followUser(Profile.selectedProfile!!.pk)
+                            followUser(selectedProfile!!.pk)
                         }
                     )
                 }
@@ -97,12 +97,12 @@ class ProfileFragment(val selectedProfile: kr.ac.kpu.lbs_platform.poko.remote.Pr
         routesRadioButton.setOnClickListener {
             routesRadioButton.isChecked = true
             placesRadioButton.isChecked = false
-            FragmentChanger.change(this, DocumentFragment(), R.id.profileFragment)
+            FragmentChanger.change(this, DocumentFragment(selectedProfile), R.id.profileFragment)
         }
         placesRadioButton.setOnClickListener {
             placesRadioButton.isChecked = true
             routesRadioButton.isChecked = false
-            FragmentChanger.change(this, PlaceFragment(), R.id.profileFragment)
+            FragmentChanger.change(this, PlaceFragment(selectedProfile), R.id.profileFragment)
         }
         routesRadioButton.performClick()
 

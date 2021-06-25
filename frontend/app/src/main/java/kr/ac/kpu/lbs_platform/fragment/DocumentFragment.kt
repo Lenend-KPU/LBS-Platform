@@ -15,11 +15,10 @@ import kr.ac.kpu.lbs_platform.global.Profile
 import kr.ac.kpu.lbs_platform.global.RequestHelper
 import kr.ac.kpu.lbs_platform.poko.remote.DocumentRequest
 
-class DocumentFragment : Fragment(), Invalidatable {
+class DocumentFragment(private val selectedProfile: kr.ac.kpu.lbs_platform.poko.remote.Profile = Profile.profile!!) : Fragment(), Invalidatable {
 
     lateinit var documentRecyclerView: RecyclerView
     var bundle: Bundle? = null
-    val selectedProfile = Profile.selectedProfile ?: Profile.profile
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

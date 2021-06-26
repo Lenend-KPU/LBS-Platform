@@ -28,14 +28,18 @@
         app:layout_constraintStart_toEndOf="@+id/followerImageView"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/unfollowImageView"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+    <Button
+        android:id="@+id/followerVisitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="26dp"
+        android:layout_marginBottom="26dp"
+        android:text="프로필 이동"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.85"
         app:layout_constraintStart_toEndOf="@+id/followerIdTextView"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_restore_from_trash_24" />
+        app:layout_constraintVertical_bias="0.0" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

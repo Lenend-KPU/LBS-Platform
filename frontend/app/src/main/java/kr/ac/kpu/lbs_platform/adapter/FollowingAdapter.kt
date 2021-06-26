@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -11,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kr.ac.kpu.lbs_platform.R
 import kr.ac.kpu.lbs_platform.fragment.Invalidatable
+import kr.ac.kpu.lbs_platform.fragment.ProfileFragment
+import kr.ac.kpu.lbs_platform.global.FragmentChanger
 import kr.ac.kpu.lbs_platform.poko.remote.FriendRequest
 
 class FollowingAdapter(private val request: FriendRequest, val fragment: Fragment):
@@ -26,7 +29,7 @@ class FollowingAdapter(private val request: FriendRequest, val fragment: Fragmen
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val followerIdTextView: TextView = view.findViewById(R.id.followerIdTextView)
         val followerImageView: ImageView = view.findViewById(R.id.followerImageView)
-        val unfollowImageView: ImageView = view.findViewById(R.id.unfollowImageView)
+        val followerVisitButton: Button = view.findViewById(R.id.followerVisitButton)
     }
 
 
@@ -44,6 +47,9 @@ class FollowingAdapter(private val request: FriendRequest, val fragment: Fragmen
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         viewHolder.followerIdTextView.text = request.result.followings[position].fields.friend_profile.fields.profile_name
+        viewHolder.followerVisitButton.setOnClickListener {
+            FragmentChanger.change(fragment, ProfileFragment(request.result.followings[position].fields.friend_profile))
+        }
         Glide.with(fragment).load(request.result.followings[position].fields.friend_profile.fields.profile_photo).into(viewHolder.followerImageView)
     }
 

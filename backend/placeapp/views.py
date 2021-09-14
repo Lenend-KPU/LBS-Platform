@@ -25,7 +25,7 @@ class Rootview(APIView):
             return utils.send_json(responses.noPlace)
 
         places = utils.to_dict(places)
-        result = responses.ok
+        result = responses.ok.copy()
         result["result"] = places
 
         return utils.send_json(result)
@@ -71,7 +71,7 @@ class ElementView(APIView):
             return utils.send_json(responses.noPlace)
 
         place = utils.to_dict(place)
-        result = responses.ok
+        result = responses.ok.copy()
         result["result"] = place
 
         return utils.send_json(result)
@@ -121,7 +121,9 @@ class ElementView(APIView):
         # modifyProfileSucceed TODO
         return utils.send_json(responses.modifyPlaceSucceed)
 
-    def delete(self, request: HttpRequest, profile_pk: int, place_pk: int) -> HttpResponse:
+    def delete(
+        self, request: HttpRequest, profile_pk: int, place_pk: int
+    ) -> HttpResponse:
         # 삭제, 수정은 해당 유저나 관리자가 할 수 있어야 하는데 해당 부분은 TODO
         profile = Profile.objects.filter(pk=profile_pk).first()
 

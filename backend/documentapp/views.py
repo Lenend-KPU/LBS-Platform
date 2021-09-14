@@ -37,7 +37,7 @@ class Rootview(APIView):
 
         documents = utils.to_dict(documents)
 
-        result = responses.ok
+        result = responses.ok.copy()
         result["result"] = documents
 
         for key, document in enumerate(documents):
@@ -162,7 +162,7 @@ class ElementView(APIView):
 
         document = utils.to_dict(document)
 
-        result = responses.ok
+        result = responses.ok.copy()
         result["result"] = document
 
         comments = Comment.objects.filter(document=document_pk)

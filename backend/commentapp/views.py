@@ -23,7 +23,7 @@ class RootView(APIView):
         if len(comments) == 0:
             return utils.send_json(responses.commentDoesNotExists)
         comments = utils.to_dict(comments)
-        result = responses.ok
+        result = responses.ok.copy()
         result["result"] = comments
         result = utils.send_json(result)
         return result

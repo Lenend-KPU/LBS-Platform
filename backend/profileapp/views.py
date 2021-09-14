@@ -29,7 +29,7 @@ class RootView(APIView):
             return utils.send_json(responses.noProfile)
 
         profile = utils.to_dict(profile)
-        result = responses.ok
+        result = responses.ok.copy()
         result["result"] = profile
         return utils.send_json(result)
 
@@ -64,7 +64,7 @@ class RootView(APIView):
             profile_photo=dic["photo"],
             profile_private=dic["private"],
         )
-        result = responses.ok
+        result = responses.ok.copy()
         return utils.send_json(result)
 
 
@@ -75,7 +75,7 @@ class ElementView(APIView):
             return utils.send_json(responses.noProfile)
         profile = utils.to_dict(profile)
         profile = profile[0]
-        result = responses.ok
+        result = responses.ok.copy()
         result["result"] = profile
         return utils.send_json(result)
 

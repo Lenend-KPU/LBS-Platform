@@ -33,7 +33,7 @@ class GetView(APIView):
                 Profile.objects, elem["fields"]["friend_profile"]
             )[0]
 
-        result = responses.ok
+        result = responses.ok.copy()
         result["result"] = {}
         result["result"]["user"] = utils.to_dict(Profile.objects.filter(pk=profile_pk))[
             0
@@ -54,11 +54,11 @@ class ElementView(APIView):
             return utils.send_json(responses.noFriend)
 
         filtered = Friend.objects.filter(profile=me, friend_profile=friend)
-        result = responses.ok
+        result = responses.ok.copy()
         if filtered.count():
             result["result"] = True
             return utils.send_json(result)
-            
+
         result["result"] = False
         return utils.send_json(result)
 

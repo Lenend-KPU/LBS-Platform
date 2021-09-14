@@ -23,7 +23,7 @@ class RootView(APIView):
         if len(likes) == 0:
             return utils.send_json(responses.likeDoesNotExists)
         likes = utils.to_dict(likes)
-        result = responses.ok
+        result = responses.ok.copy()
         result["result"] = likes
         result = utils.send_json(result)
         return result

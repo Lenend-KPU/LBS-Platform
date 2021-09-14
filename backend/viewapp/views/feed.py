@@ -23,7 +23,7 @@ class Rootview(APIView):
         documents = Document.objects.all().order_by("-pk")
         documents = utils.to_dict(documents)
 
-        result = responses.ok
+        result = responses.ok.copy()
         result["result"] = documents
 
         if len(documents) == 0:

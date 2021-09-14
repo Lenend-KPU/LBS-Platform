@@ -33,7 +33,7 @@ class RootView(APIView):
         # 리미트 TODO
         users = User.objects.all()
         users = utils.to_dict(users)
-        result = responses.ok
+        result = responses.ok.copy()
         result["result"] = users
 
         return utils.send_json(result)
@@ -74,7 +74,7 @@ class ElementView(APIView):
             return utils.send_json(responses.noUser)
         user = utils.to_dict(user)
         user = user[0]
-        result = responses.ok
+        result = responses.ok.copy()
         result["result"] = user
         return utils.send_json(result)
 

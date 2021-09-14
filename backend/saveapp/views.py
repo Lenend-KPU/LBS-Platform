@@ -27,7 +27,7 @@ class RootView(APIView):
         if len(saves) == 0:
             return utils.send_json(responses.saveDoesNotExists)
         saves = utils.to_dict(saves)
-        result = responses.ok
+        result = responses.ok.copy()
         result["result"] = saves
         result = utils.send_json(result)
         return result
@@ -102,7 +102,7 @@ class ListView(APIView):
 
         saves = utils.to_dict(saves)
 
-        result = responses.ok
+        result = responses.ok.copy()
         documents = []
 
         for save in saves:

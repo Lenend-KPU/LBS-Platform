@@ -51,6 +51,6 @@ exec pipenv run gunicorn ${DJANGO_WSGI_MODULE}:application \
 --name $NAME \
 --workers $NUM_WORKERS \
 --user=$USER \
---bind=unix:$SOCKFILE \
+--worker-class='gevent' \
 --log-level=debug \
 --log-file=-

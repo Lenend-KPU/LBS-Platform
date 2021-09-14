@@ -162,7 +162,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                         val imageUrl = String(it.data)
                         AddProfileFragment.instance.imageUrl = imageUrl
                         toast(imageUrl)
-                        Glide.with(this).load(imageUrl).fitCenter().into(AddProfileFragment.instance.addProfileImageView)
+                        Glide.with(this).load(imageUrl).fitCenter().override(Target.SIZE_ORIGINAL).into(AddProfileFragment.instance.addProfileImageView)
                         Log.i("IMAGE_UPLOAD_REQUEST_CODE", imageUrl)
                     }
                 }
@@ -176,7 +176,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                         val imageUrl = String(it.data)
                         ProfileEditFragment.instance.imageUrl = imageUrl
                         toast(imageUrl)
-                        Glide.with(this).load(imageUrl).fitCenter().into(ProfileEditFragment.instance.addProfileImageView)
+                        Glide.with(this).load(imageUrl).fitCenter().override(Target.SIZE_ORIGINAL).into(ProfileEditFragment.instance.addProfileImageView)
                         Log.i("IMAGE_EDIT_REQUEST_CODE", imageUrl)
                     }
                 }
@@ -190,7 +190,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                         val imageUrl = String(it.data)
                         AddPlaceFragment.instance.imageUrl = imageUrl
                         toast(imageUrl)
-                        Glide.with(this).load(imageUrl).fitCenter().into(AddPlaceFragment.instance.addPlaceImageView)
+                        Glide.with(this).load(imageUrl).fitCenter().override(Target.SIZE_ORIGINAL).into(AddPlaceFragment.instance.addPlaceImageView)
                         Log.i("PLACE_IMAGE_UPLOAD_REQUEST_CODE", imageUrl)
                     }
                 }

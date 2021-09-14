@@ -11,6 +11,7 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.Target
 import kr.ac.kpu.lbs_platform.R
 import kr.ac.kpu.lbs_platform.fragment.Invalidatable
 import kr.ac.kpu.lbs_platform.fragment.ProfileFragment
@@ -52,7 +53,8 @@ class FollowerAdapter(private val request: FriendRequest, val fragment: Fragment
         viewHolder.followerVisitButton.setOnClickListener {
             FragmentChanger.change(fragment, ProfileFragment(request.result.followers[position].fields.profile))
         }
-        Glide.with(fragment).load(request.result.followers[position].fields.profile.fields.profile_photo).into(viewHolder.followerImageView)
+        Glide.with(fragment).load(request.result.followers[position].fields.profile.fields.profile_photo).override(
+            Target.SIZE_ORIGINAL).into(viewHolder.followerImageView)
     }
 
     // Return the size of your dataset (invoked by the layout manager)

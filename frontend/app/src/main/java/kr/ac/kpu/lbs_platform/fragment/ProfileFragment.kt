@@ -36,7 +36,7 @@ class ProfileFragment(val selectedProfile: kr.ac.kpu.lbs_platform.poko.remote.Pr
         val profileActivityImageView = inflated.findViewById<ImageView>(R.id.profileActivityImageView)
 
         selectedProfile.let {
-            Glide.with(this).load(it.fields.profile_photo).fitCenter().into(profileActivityImageView)
+            Glide.with(this).load(it.fields.profile_photo).fitCenter().override(Target.SIZE_ORIGINAL).into(profileActivityImageView)
         }
 
         profileTextView.text = selectedProfile.let {

@@ -54,7 +54,7 @@ class ProfileEditFragment : Fragment() {
         privateRadioButton.isChecked = Profile.profile!!.fields.profile_private
         nameEditText.setText(Profile.profile!!.fields.profile_name)
         imageUrl = Profile.profile!!.fields.profile_photo
-        Glide.with(this).load(imageUrl).fitCenter().into(addProfileImageView)
+        Glide.with(this).load(imageUrl).fitCenter().override(Target.SIZE_ORIGINAL).into(addProfileImageView)
 
         imageUploadButton.setOnClickListener {
             requireActivity().startActivityForResult(

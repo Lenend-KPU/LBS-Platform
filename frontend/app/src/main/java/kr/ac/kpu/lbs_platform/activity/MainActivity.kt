@@ -23,7 +23,7 @@ import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.gun0912.tedpermission.PermissionListener
-import com.gun0912.tedpermission.TedPermission
+import com.gun0912.tedpermission.normal.TedPermission
 import kr.ac.kpu.lbs_platform.R
 import kr.ac.kpu.lbs_platform.databinding.ActivityMainBinding
 import kr.ac.kpu.lbs_platform.fragment.*
@@ -78,7 +78,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 ).show()
             }
         }
-        TedPermission.with(this)
+        TedPermission.create()
             .setPermissionListener(permissionlistener)
             .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
             .setPermissions(Manifest.permission.INTERNET, Manifest.permission.ACCESS_NETWORK_STATE)
